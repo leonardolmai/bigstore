@@ -1,10 +1,10 @@
 import React,{Fragment} from 'react';
-import { BsChevronCompactRight as Right,
-         BsChevronCompactLeft as Left,
-         BsFillCartFill as Cart,
-         BsFillCreditCard2BackFill as CreditCard,
-         BsFillPinMapFill as Address} from 'react-icons/bs'
 
+import {ChevronLeft as Left,
+        ChevronRight as Right,
+        ShoppingCart as Cart,
+        CreditCard as CreditCard,
+        MapPin as Address} from 'lucide-react';
 interface B_carouselProps {
     direction: "right" | "left"
 }
@@ -25,44 +25,39 @@ export function B_carousel({direction}: B_carouselProps){
 
 
 interface B_forms {
-  name: "Freet" | "Buy_now" | "Cart" | "Alter_Address";
+  name: "freight" | "Buy_now" | "Cart" | "Alter_Address";
   size: "small" | "medium" | "large";
 }
 
 export function B_forms({ name, size }: B_forms) {
   let buttonWidthClass = '';
-
   if (size === "small") {
-    buttonWidthClass = 'w-[10rem]';
+    buttonWidthClass = 'w-40';
   } else if (size === "medium") {
-    buttonWidthClass = 'w-[15rem]';
+    buttonWidthClass = 'w-60';
   } else if (size === "large") {
-    buttonWidthClass = 'w-[20rem]';
+    buttonWidthClass = 'w-80';
   }
   let text_info: React.ReactNode = '';
-  if (name == 'Freet'){
-    text_info = 
-    <React.Fragment>
-      <p>Calculate</p>
-      </React.Fragment>;
-  } else if (name == 'Buy_now'){
-    <React.Fragment>
-      <CreditCard size ={15}/>
-      <p className='px1'>Buy Now</p>
+  if (name === 'freight'){
+    text_info = <React.Fragment><p>Calculate</p></React.Fragment>;
+
+  }else if (name === 'Buy_now'){
+    text_info = <React.Fragment>
+      <CreditCard color="black" size={15}/>
+      <p className='px-1'>Buy Now</p>
     </React.Fragment>
-  }else if (name == 'Cart'){
-    <React.Fragment>
-      <Cart size={15}/>
+
+  }else if (name === 'Cart'){
+    text_info = <React.Fragment>
+      <Cart color="black" size={15} />
       <p className='px-1'>Add to Cart</p>
     </React.Fragment>
-  }else if (name == "Alter_Address"){
-    <React.Fragment>
-      <Address size={15}/>
-      <p className='px1'>Alter Address</p>
-        constructor(parameters) {
-          
-        }
-      }
+
+  }else if (name === "Alter_Address"){
+    text_info = <React.Fragment>
+      <Address/>
+      <p className='px-1'>Alter Address</p>
     </React.Fragment>
   }
 

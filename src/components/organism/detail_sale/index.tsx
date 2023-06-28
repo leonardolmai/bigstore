@@ -1,6 +1,6 @@
 import React from 'react';
-import {B_forms} from '../../atomic/buttons'
-import InputField from '../../atomic/inputs';
+import {B_forms} from '@/components/atomic/buttons'
+import InputField from '@/components/atomic/inputs';
 
 
 
@@ -11,23 +11,26 @@ export default function detail_sale(){
         <div className='w-full h-full flex flex-col '>
             <div>
             <h1>Titulo do Poduto</h1>
-        </div><form className="flex flex-col">
-                <label htmlFor="frete" className="mb-2 italic">Calcula Frete</label>
+        </div>
+        <form className="flex flex-col">
+                
+                
                 <InputField
-                label="Nome:"
-                className="w-full border-gray-300"
+                label="calculate the freight"
+                style="input-text-sales"
                 name="name"
                 id="name-input"
-                
+                size="small" />
+  
+                <InputField
+                label="calculate the freight"
+                style="input-text-sales"
+                name="name"
+                id="name-input"
+                size="small"
                 />
-                <input
-                    className="mb-4 border-b-2"
-                    id="frete"
-                    name="frete"
-                    type="text"
-                    autoComplete=""
-                    required />
-                    <B_forms name='Freet' size='large'/>
+                 <B_forms name='freight' size='small'/>
+
                 <div className="flex flex-row">
                     <p>Valor do Freete: R$</p> <span></span>
                 </div>

@@ -1,8 +1,8 @@
 
 'use client';
 import React, { useState } from 'react';
-import Buttons_carousel from '../../molecule/buttons_carousel'
-import { B_carousel } from "../../atomic/buttons"
+import Buttons_carousel from '@/components/molecule/buttons_carousel'
+import { B_carousel } from "@/components/atomic/buttons"
 
 
 
@@ -37,7 +37,7 @@ const Carousel = () => {
         const handlePrevSlide = () => {
         SetCurentIndex((prevIndex) => (prevIndex === 0 ? slides.length - 1 : prevIndex - 1));
         };
-
+        
     return (
     <div style={{ backgroundImage: `url(${slides[currentIndex].url})` }}  className= "w-full h-full rounded-2xl bg-center bg-cover duration-500">
                 <button onClick={handlePrevSlide}><B_carousel direction='left' /></button>
