@@ -6,17 +6,28 @@ import axios from 'axios';
 import { useCounter } from '@/components/molecule/counter';
 // import { calculateFreight } from '@/components/api_extenal/calculatefreight';
 
+
+interface Freight{
+  valorpac: String;
+  prazopac: string;
+  valorsedex:string;
+  prazosedex:string;
+  localidade:string;
+  uf:string;
+
+}
+
 export default function Freight() {
-  const [cep, setCep] = useState('');
-  const [freightValue, setFreightValue] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [cidade, setCidae] = useState('');
-  const [Uf,setUf] =useState('');
+  const locale = {}
+  const details = {}
+
 
 
   const handleCepChange = (event) => {
     setCep(event.target.value);
   };
+
+  
 
   const handleCalculateFreight = async () => {
     if (cep) {
@@ -24,15 +35,20 @@ export default function Freight() {
 
       try {
         // Obter informações de endereço com base no CEP usando a API ViaCEP
-        const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+        locale = {response} = await axios.get<Freight>(`https://viacep.com.br/ws/${cep}/json/`);
 
         // Simulação do cálculo de frete com base nas informações de endereço obtidas
-        const freight = calculateFreight(response.data);
-        setFreightValue(freight);
-        const {cidade,localidade} =response.data;
-        setCidae(`${localidade},ㅤ`);
-        const {Uf, uf} = response.data;
-        setUf(`${uf}`);
+        datails = {details} = await axios.get<Freight>(`https://cepcerto.com/ws/json-frete/01153000/${cep}/500`);
+        
+        // const freight = calculateFreight(response.data);
+        // setFreightValue(freight);
+
+        // const{Prazopac,prazopac} = details.data;
+        // setpacprazo(`${prazopac}`);
+
+        
+
+        
       } catch (error) {
         console.error('Erro ao calcular frete:', error);
       }
@@ -45,10 +61,10 @@ export default function Freight() {
     // Simulação do cálculo de frete com base nas informações de endereço
     // Aqui você pode implementar a lógica real para o cálculo do frete
     // Neste exemplo, estamos apenas retornando um valor fixo de R$ 10.00
-    return 25.00;
+    return 0.00;
   };
 
-  const { count } = useCounter();
+  // const { count } = useCounter();
   
   return (
     <div>
@@ -62,18 +78,19 @@ export default function Freight() {
         onChange={handleCepChange}
       />
       <B_forms onclick={handleCalculateFreight} size="small" name="freight"/>
+
       {loading && <p>Calculando frete...</p>}
       <div className='flex flex-row'>
           <p className='font-bold'>Valor do frete:ㅤ</p>
-      {freightValue !== null && (
-          <p> R$ {freightValue.toFixed(2)}</p>
-        )}
+          {  <p> {data.uf} </p> } 
       </div>
       <div className='flex flex-row'>
           <p className='font-bold'>Enviar para:ㅤ</p>
-          {<p>{cidade}{Uf}</p>}
+          {<p>{data.uf}</p>}
+
+          
       </div>
-      <p className='font-bold'>Quantidade:{count}</p>
+      {/* <p className='font-bold'>Quantidade:{count}</p> */}
     </div>
   );
 }
