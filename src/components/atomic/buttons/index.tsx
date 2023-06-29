@@ -1,5 +1,4 @@
-import React,{Fragment} from 'react';
-
+import React,{Fragment,createContext, useContext, useState} from 'react';
 import {ChevronLeft as Left,
         ChevronRight as Right,
         ShoppingCart as Cart,
@@ -27,9 +26,10 @@ export function B_carousel({direction}: B_carouselProps){
 interface B_forms {
   name: "freight" | "Buy_now" | "Cart" | "Alter_Address";
   size: "small" | "medium" | "large";
+  onclick: string;
 }
 
-export function B_forms({ name, size }: B_forms) {
+export function B_forms({ name, size,onclick }: B_forms) {
   let buttonWidthClass = '';
   if (size === "small") {
     buttonWidthClass = 'w-40';
@@ -67,10 +67,49 @@ export function B_forms({ name, size }: B_forms) {
 
   return (
     <button
+      onClick={onclick}
       type="submit"
-      className={` ${buttonWidthClass} px-2 py-2 font-bold bg-[#FEBD2F] text-black rounded-md shadow-md hover:bg-[#FFBD1F]`}>
+      className={` ${buttonWidthClass} px-2 py-2 font-bold bg-[#FEBD2F] text-black rounded-md shadow-md hover:bg-[#FFBD1F]`}
+      >
       <div className='flex flex-row items-center justify-center'>{text_info}
       </div>
     </button>
   );
+}
+
+
+
+
+// Cria o contexto do contador
+const CounterContext = createContext();
+
+// Provider do contexto
+export function CounterProvider({ children }) {
+  const [count, setCount] = useState(0);
+
+  const handleIncrement = () => {
+    setCount(count + 1);
+  };
+
+  const handleDecrement = () => {
+    setCount(count - 1);
+  };
+
+  // Define os valores e funções que serão compartilhados com os componentes filhos
+  const contextValue = {
+    count,
+    handleIncrement,
+    handleDecrement,
+  };
+
+  return (
+    <CounterContext.Provider value={contextValue}>
+      {children}
+    </CounterContext.Provider>
+  );
+}
+
+// Hook personalizado para acessar o contexto do contador
+export function useCounter() {
+  return useContext(CounterContext);
 }
