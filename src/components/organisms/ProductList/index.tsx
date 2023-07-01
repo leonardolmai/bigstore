@@ -12,7 +12,7 @@ export async function ProductList() {
   return (
     <section>
       <ProductFilter />
-      <div className="m-auto grid min-h-screen max-w-7xl grid-cols-[repeat(auto-fit,minmax(250px,1fr))] justify-between gap-10 text-black">
+      <div className="m-auto grid max-w-7xl grid-cols-[repeat(auto-fit,minmax(250px,1fr))] justify-between gap-10 text-black">
         {products.map((product: Product) => {
           if (product.images.length > 0) {
             return <ProductCard key={product.id} product={product} />
