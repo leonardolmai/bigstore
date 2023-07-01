@@ -15,3 +15,7 @@ export interface Product {
   category: string
   images: ProductImage[]
 }
+
+export interface ProductProps {
+  product: Product
+}

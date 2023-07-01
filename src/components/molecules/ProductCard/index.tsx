@@ -1,9 +1,9 @@
 import { AddToCart } from '@/components/atoms/AddToCart'
-import { Product } from '@/types/product'
+import { ProductProps } from '@/types/product'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({ product }: ProductProps) {
   return (
     <div>
       <div className="m-auto rounded-lg border border-gray-200 bg-white shadow transition-shadow hover:shadow-lg">
