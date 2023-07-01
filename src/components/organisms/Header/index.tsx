@@ -2,7 +2,7 @@
 import { CategorySelect } from '@/components/molecules/CategorySelect'
 import { SearchBar } from '@/components/molecules/SearchBar'
 import Link from 'next/link'
-import { ShoppingCart, Menu } from 'lucide-react'
+import { LuShoppingCart, LuMenu } from 'react-icons/lu'
 import { useState } from 'react'
 import { Logo } from '@/components/atoms/Logo'
 
@@ -32,11 +32,15 @@ export function Header() {
           Login
         </Link>
         <Link href={'/cart'} className="self-center lg:pr-6">
-          <ShoppingCart className="cursor-pointer hover:stroke-primary-dark" />
+          <LuShoppingCart
+            className="cursor-pointer hover:stroke-primary-dark"
+            size={24}
+          />
         </Link>
       </nav>
-      <Menu
+      <LuMenu
         className="m-auto mr-6 shrink-0 cursor-pointer hover:stroke-primary-dark lg:hidden"
+        size={24}
         onClick={toggleMenu}
       />
     </header>

@@ -1,5 +1,5 @@
 import { Logo } from '@/components/atoms/Logo'
-import { Facebook, Instagram, Linkedin } from 'lucide-react'
+import { LuFacebook, LuInstagram, LuLinkedin } from 'react-icons/lu'
 
 export function Footer() {
   return (
@@ -44,13 +44,22 @@ export function Footer() {
           </h2>
           <div className="flex justify-around">
             <a href="">
-              <Facebook className="cursor-pointer stroke-primary hover:stroke-primary-dark" />
+              <LuFacebook
+                className="cursor-pointer stroke-primary hover:stroke-primary-dark"
+                size={24}
+              />
             </a>
             <a href="">
-              <Instagram className="cursor-pointer stroke-primary hover:stroke-primary-dark" />
+              <LuInstagram
+                className="cursor-pointer stroke-primary hover:stroke-primary-dark"
+                size={24}
+              />
             </a>
             <a href="">
-              <Linkedin className="cursor-pointer stroke-primary hover:stroke-primary-dark" />
+              <LuLinkedin
+                className="cursor-pointer stroke-primary hover:stroke-primary-dark"
+                size={24}
+              />
             </a>
           </div>
         </div>

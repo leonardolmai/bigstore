@@ -1,4 +1,4 @@
-import { PlusIcon, ShoppingCartIcon } from 'lucide-react'
+import { LuPlus, LuShoppingCart } from 'react-icons/lu'
 
 export function AddToCart() {
   return (
@@ -7,9 +7,9 @@ export function AddToCart() {
       title="Adicionar ao Carrinho"
     >
       <div className="absolute right-2 top-0.5 flex items-center justify-center">
-        <PlusIcon className="h-3 w-3" />
+        <LuPlus className="h-3 w-3" size={24} />
       </div>
-      <ShoppingCartIcon className="h-5 w-5" />
+      <LuShoppingCart className="h-5 w-5" size={24} />
     </button>
   )
 }
