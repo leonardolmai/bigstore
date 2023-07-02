@@ -1,29 +1,35 @@
 'use client';
-
 import React, { useState } from 'react';
 import { B_forms } from '@/components/atoms/buttons';
 import InputField from '@/components/atoms/inputs';
 import Freight from '@/components/molecules/freight';
 import Counter from '@/components/molecules/CountValue';
+import { Product } from '@/types/product';
+import { api } from '@/utils/api';
 
+interface DetailSaleProps {
+    product: Product;
+}
 
-export default function detail_sale() {
+export default function DetailSale({ product }: DetailSaleProps) {
     const [cont, setCont] = useState(1);
+
+
     return (
         <div className='flex flex-col  items-center'>
             <div className='w-11/12 ml-4 mr-4  w-full h-full item-center' >
                 <article className='flex flex-row justify-center mt-4'>
-                    <div className='  mb-6  p-3 bg-[#D9D9D9] w-40 rounded-xl text-center  '>
-                        <h1>Titulo do Poduto</h1>
+                    <div className='  mb-6  p-3 bg-[#D9D9D9] w-full rounded-xl text-center  '>
+                        <h1>{product.name}</h1>
                     </div>
                 </article>
                 <div className='bg-[#F9EDC8] m-1 p-2 rounded-xl bg-gradient-to-r from-transparent'>
                     <Freight />
                     <div className='mt-6 mb-6'>
-                        <h1>Quantity</h1>
-                        <Counter />
+                        <h1>Quantity |{product.quantity}|</h1>
+                        <Counter product={product} />
                     </div>
-                    <p> Valor: R$</p>
+                    <p> Valor: R$ {product && (product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 }))}</p>
                     <div className='mt-6 mb-3'>
                         <h1 className=' mt-1 mb-1'>Send The Product to Cart</h1>
                         <B_forms size="small" onClick="" name="Carrinho" type="Cart" />

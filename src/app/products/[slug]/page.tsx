@@ -19,9 +19,11 @@ export default async function Products({ params }: { params: { slug: string } })
                 {fetchedProduct && <p>{fetchedProduct.description}</p>}
             </div>
             <div className='bg-[#F1F1F4] w-10/12  basis-40 ml-14 rounded-xl items-center   '>
-                <Detail_sale />
+                <Detail_sale product={fetchedProduct} />
             </div>
         </div>
     );
 }
+
+
 
