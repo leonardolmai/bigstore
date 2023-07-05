@@ -3,18 +3,15 @@ import React, { useState } from 'react';
 import { B_forms } from '@/components/atoms/buttons';
 import InputField from '@/components/atoms/inputs';
 import Freight from '@/components/molecules/freight';
-import Counter from '@/components/molecules/CountValue';
+import {Counter} from '@/components/molecules/CountValue/';
 import { Product } from '@/types/product';
 import { api } from '@/utils/api';
+import { ProductProps } from '@/types/product';
 
-interface DetailSaleProps {
-    product: Product;
-}
 
-export default function DetailSale({ product }: DetailSaleProps) {
+export default function DetailSale({ product }: ProductProps) {
     const [cont, setCont] = useState(1);
-
-
+    
     return (
         <div className='flex flex-col  items-center'>
             <div className='w-11/12 ml-4 mr-4  w-full h-full item-center' >
@@ -27,7 +24,7 @@ export default function DetailSale({ product }: DetailSaleProps) {
                     <Freight />
                     <div className='mt-6 mb-6'>
                         <h1>Quantity |{product.quantity}|</h1>
-                        <Counter product={product} />
+                        <Counter maxLimit={product.quantity} />
                     </div>
                     <p> Valor: R$ {product && (product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 }))}</p>
                     <div className='mt-6 mb-3'>
