@@ -19,9 +19,8 @@ interface FreightPrice {
   prazo: string;
 }
 
-export default function Freight() {
+export default function Freight({ multiply }) {
   const [cep, setCep] = useState('');
-  console.log(cep);
   const [freightLocale, setFreightLocale] = useState<FreightLocale | null>(null);
   const [freightPrice, setFreightPrice] = useState<FreightPrice | null>(null);
   const [loading, setLoading] = useState(false);
@@ -37,13 +36,9 @@ export default function Freight() {
       try {
         const response1 = await axios.get<FreightLocale>(`https://viacep.com.br/ws/${cep}/json/`);
         setFreightLocale(response1.data);
-
-        // Fazer a solicitação para a API dos Correios para calcular o frete
-
         const mock = new MockAdapter(axios);
-        const mockResponse = { valor: '25.00', prazo: '16 dias úteis' };
+        const mockResponse = { valor: 15.50, prazo: '16 dias úteis' };
         mock.onGet(`/frete?cepOrigem=01153000&cepDestino=${cep}&peso=500`).reply(200, mockResponse);
-
         const response2 = await axios.get<FreightPrice>(`/frete?cepOrigem=01153000&cepDestino=${cep}&peso=500`);
         setFreightPrice(response2.data);
 
@@ -70,13 +65,23 @@ export default function Freight() {
 
       {loading && <p>Calculando frete...</p>}
       <div className='flex flex-row'>
-        <p className='font-bold mt-3 mb-3'>Valor do frete:ㅤ{freightPrice && (<p className='font-light'>{freightPrice.valor}</p>)}</p>
+      <p className='font-bold mt-3 mb-3'>Valor do frete: {' '}
+        {multiply == 1 && multiply && freightPrice && (
+          <p className='font-light'>{freightPrice.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+        )}
+        {multiply % 2 === 0 && freightPrice && (
+          <p className='font-light'>{(freightPrice.valor * multiply).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+        )}
+        {multiply % 2 !== 0 && multiply > 1 && freightPrice && (
+          <p className='font-light'>{(freightPrice.valor * (multiply - 1)).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+        )}
+      </p>
+
 
       </div>
       <div className='flex flex-row'>
         <p className='font-bold mt-3 mb-3'>Enviar para:ㅤ</p>
-
-        {freightLocale && (<p> <Image src={v_location} alt="Locale" priority={true} /> {freightLocale?.localidade}, {freightLocale?.uf}.</p>)}
+        {freightLocale && (<p className='flex flex-row items-center'> <Image src={v_location} alt="Locale" priority={true} />ㅤ {freightLocale?.localidade}, {freightLocale?.uf}.</p>)}
       </div>
     </div>
   );

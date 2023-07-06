@@ -10,8 +10,23 @@ import { ProductProps } from '@/types/product';
 
 
 export default function DetailSale({ product }: ProductProps) {
-    const [cont, setCont] = useState(1);
     
+    const [cont, setCont] = useState(1);
+    const [QuantitySelect, setQuantitySelect] = useState(1);
+    const handleCountChange = (count: number) => {
+        setQuantitySelect(count);
+      };
+
+      const handleAddToCart = () => {
+        const cartItem = {
+            QuantitySelect,
+            product,
+          
+        };
+    
+        // Armazenar cartItem no localStorage
+        localStorage.setItem((product.id.toString()), JSON.stringify(cartItem));
+      };
     return (
         <div className='flex flex-col  items-center'>
             <div className='w-11/12 ml-4 mr-4  w-full h-full item-center' >
@@ -21,19 +36,20 @@ export default function DetailSale({ product }: ProductProps) {
                     </div>
                 </article>
                 <div className='bg-[#F9EDC8] m-1 p-2 rounded-xl bg-gradient-to-r from-transparent'>
-                    <Freight />
+                    <Freight multiply={QuantitySelect} />
                     <div className='mt-6 mb-6'>
                         <h1>Quantity |{product.quantity}|</h1>
-                        <Counter maxLimit={product.quantity} />
+                        <Counter maxLimit={product.quantity} onCountChange={handleCountChange} />
+                        
                     </div>
-                    <p> Valor: R$ {product && (product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 }))}</p>
+                    <p> Valor: R$ {product && (product.price * QuantitySelect).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                     <div className='mt-6 mb-3'>
                         <h1 className=' mt-1 mb-1'>Send The Product to Cart</h1>
-                        <B_forms size="small" onClick="" name="Carrinho" type="Cart" />
+                        <B_forms size="small" onclick={handleAddToCart} name="Carrinho" type="Cart" />
                     </div>
                     <div className=' mt-6 mb-6'>
                         <h1 className=' mt-1 mb-1'>Finish Order now</h1>
-                        <B_forms size="small" onClick="" name="Carrinho" type="Buy_now" />
+                        <B_forms size="small" onclick="" name="Carrinho" type="Buy_now" />
                     </div>
 
                 </div>
@@ -48,7 +64,5 @@ export default function DetailSale({ product }: ProductProps) {
 }
 
 
-
-// pages/index.tsx
 
 

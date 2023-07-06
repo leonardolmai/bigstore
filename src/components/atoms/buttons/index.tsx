@@ -74,7 +74,7 @@ export function B_forms({ name, size, onclick, type }: B_form) {
     <button
       onClick={onclick}
       type="submit"
-      className={` ${buttonWidthClass} px-2 py-2 font-bold bg-[#FEBD2F] text-black rounded-md shadow-md hover:bg-[#FFBD1F]`}
+      className={` ${buttonWidthClass} px-2 py-2 font-bold bg-[#FEBD2F] active:bg-[#604201] text-black rounded-md shadow-md hover:bg-[#FFBD1F]`}
     >
       <div className='flex flex-row items-center justify-center'>{text_info}
       </div>
