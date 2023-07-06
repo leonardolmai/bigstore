@@ -1,21 +1,28 @@
 import React, { useState } from 'react';
 import { PlusCircle, MinusCircle } from 'lucide-react';
 
+type CounterProps = {
+  maxLimit: number;
+  initialQuantity: number;
+  onCountChange: (count: number) => void;
+};
 
-export function Counter({ maxLimit, onCountChange }: { maxLimit: number; onCountChange: (count: number) => void }) {
-  const [count, setCount] = useState(1);
+export function Counter({ maxLimit, initialQuantity, onCountChange }: CounterProps) {
+  const [count, setCount] = useState(initialQuantity);
 
   const increment = () => {
     if (count < maxLimit) {
-      setCount(count + 1);
-      onCountChange(count + 1); // Chama a função de retorno de chamada com o novo valor de count
+      const newCount = count + 1;
+      setCount(newCount);
+      onCountChange(newCount);
     }
   };
 
   const decrement = () => {
     if (count > 1) {
-      setCount(count - 1);
-      onCountChange(count - 1); // Chama a função de retorno de chamada com o novo valor de count
+      const newCount = count - 1;
+      setCount(newCount);
+      onCountChange(newCount);
     }
   };
 
