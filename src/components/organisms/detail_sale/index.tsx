@@ -47,11 +47,11 @@ export default function DetailSale({ product }: ProductProps) {
                             </p>
                             <div className='mt-6 mb-3'>
                                 <h1 className=' mt-1 mb-1'>Send The Product to Cart</h1>
-                                <B_forms size='small' onclick={handleAddToCart} name='Carrinho' type='Cart' />
+                                <B_forms size='small' onclick={handleAddToCart} name='add to Cart' type='Cart' />
                             </div>
                             <div className=' mt-6 mb-6'>
                                 <h1 className=' mt-1 mb-1'>Finish Order now</h1>
-                                <B_forms size='small' onclick='' name='Carrinho' type='Buy_now' />
+                                <B_forms size='small' onclick='' name='Carrinho' type='Buy_now' name='Buy Now' />
                             </div>
                         </div>
                         <div className='text-center mt-14'>

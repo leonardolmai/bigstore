@@ -50,19 +50,19 @@ export function B_forms({ name, size, onclick, type }: B_form) {
   } else if (type === 'Buy_now') {
     text_info = <React.Fragment>
       <CreditCard color="black" size={15} />
-      <p className='px-1'>Buy Now</p>
+      <p className='px-1'>{name}</p>
     </React.Fragment>
 
   } else if (type === 'Cart') {
     text_info = <React.Fragment>
       <Cart color="black" size={15} />
-      <p className='px-1'>Add to Cart</p>
+      <p className='px-1'>{name}</p>
     </React.Fragment>
 
   } else if (type === "Alter_Address") {
     text_info = <React.Fragment>
       <Address />
-      <p className='px-1'>Alter Address</p>
+      <p className='px-1'>{name}</p>
     </React.Fragment>
   }
 

@@ -53,7 +53,7 @@ export default function Freight({ multiply }) {
   return (
     <div>
       <InputField
-        label="Digite algo:"
+        label="Your Cep:"
         name="input"
         id="input-field"
         style="input-text-sales"
@@ -61,26 +61,26 @@ export default function Freight({ multiply }) {
         value={cep}
         onChange={handleCepChange}
       />
-      <B_forms onclick={handleCalculateFreight} size="small" name="Calculate" type='freight' />
+      <B_forms onclick={handleCalculateFreight} size="small" name="Calculate" type='freight' name='freight' />
 
       {loading && <p>Calculando frete...</p>}
       <div className='flex flex-row'>
-      <p className='font-bold mt-3 mb-3'>Valor do frete: {' '}
-        {multiply == 1 && multiply && freightPrice && (
-          <p className='font-light'>{freightPrice.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-        )}
-        {multiply % 2 === 0 && freightPrice && (
-          <p className='font-light'>{(freightPrice.valor * multiply).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-        )}
-        {multiply % 2 !== 0 && multiply > 1 && freightPrice && (
-          <p className='font-light'>{(freightPrice.valor * (multiply - 1)).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-        )}
-      </p>
+        <p className='font-bold mt-3 mb-3 flex flex-row' >Freight Value: R$ {' '}
+          {multiply == 1 && multiply && freightPrice && (
+            <p className='font-light'>{freightPrice.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+          )}
+          {multiply % 2 === 0 && freightPrice && (
+            <p className='font-light'>{(freightPrice.valor * multiply).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+          )}
+          {multiply % 2 !== 0 && multiply > 1 && freightPrice && (
+            <p className='font-light'>{(freightPrice.valor * (multiply - 1)).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+          )}
+        </p>
 
 
       </div>
       <div className='flex flex-row'>
-        <p className='font-bold mt-3 mb-3'>Enviar para:ㅤ</p>
+        <p className='font-bold mt-3 mb-3'>Send to:ㅤ</p>
         {freightLocale && (<p className='flex flex-row items-center'> <Image src={v_location} alt="Locale" priority={true} />ㅤ {freightLocale?.localidade}, {freightLocale?.uf}.</p>)}
       </div>
     </div>
