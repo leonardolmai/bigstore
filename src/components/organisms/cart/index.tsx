@@ -4,6 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Counter } from '@/components/molecules/CountValue';
 import { Trash2 as Trash } from 'lucide-react';
+import InputField from '@/components/atoms/inputs'
+import { B_forms } from '@/components/atoms/buttons';
+import { Addresses } from '@/components/molecules/addresses';
+import { Payment } from '@/components/molecules/payment';
+import Cookies from 'js-cookie';
+import { access } from 'fs';
 
 export function getLocalStorage() {
   const localStorageItems = [];
@@ -20,13 +26,70 @@ export function getLocalStorage() {
 }
 
 export function LocalStorageData() {
+  const [accessToken, setAccessToken] = useState('');
   const [localStorageItems, setLocalStorageItems] = useState<any[]>([]);
   const [QuantitySelect, setQuantitySelect] = useState(1);
+  const [cupom, setCupom] = useState('');
+  const [cupomactivate, setCupomActivate] = useState(false);
+  let valued = '10%';
+
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [selectedItemsCount, setSelectedItemsCount] = useState(0);
+  const [totalValue, setTotalValue] = useState(0);
+
+  useEffect(() => {
+    Cookies.set('accessToken', '3a8e363d71ca88ed56a45d931057756f1249381b', { expires: 7 });
+  }, []);
+
+  useEffect(() => {
+    const token = Cookies.get('accessToken');
+    setAccessToken(token || '');
+  }, []);
 
   useEffect(() => {
     const items = getLocalStorage();
     setLocalStorageItems(items);
   }, []);
+
+  useEffect(() => {
+    let count = 0;
+    let total = 0;
+
+    localStorageItems.forEach((item) => {
+      const value = item.value;
+      const product = value.product || {};
+
+      if (selectedItems.includes(item.key)) {
+        count += value.QuantitySelect;
+        total += value.QuantitySelect * product.price;
+      }
+    });
+
+    setSelectedItemsCount(count);
+
+    if (cupomactivate) {
+      total = total - (total * 0.1);
+    }
+
+    setTotalValue(total);
+  }, [localStorageItems, selectedItems, cupomactivate]);
+
+  const handleCheckboxChange = (itemKey: string) => {
+    const item = localStorageItems.find((item) => item.key === itemKey);
+    if (!item) return;
+
+    const updatedItems = selectedItems.includes(itemKey)
+      ? selectedItems.filter((key) => key !== itemKey)
+      : [...selectedItems, itemKey];
+
+    setSelectedItems(updatedItems);
+  };
+
+  const handleDeleteItem = (itemKey: string) => {
+    localStorage.removeItem(itemKey);
+    const updatedItems = localStorageItems.filter((item) => item.key !== itemKey);
+    setLocalStorageItems(updatedItems);
+  };
 
   const handleCountChange = (count: number, itemKey: string) => {
     setQuantitySelect(count);
@@ -46,29 +109,12 @@ export function LocalStorageData() {
     );
   };
 
-  const handleDeleteItem = (itemKey: string) => {
-    localStorage.removeItem(itemKey);
-    // Atualize o estado para refletir a exclusão do item
-    const updatedItems = localStorageItems.filter((item) => item.key !== itemKey);
-    setLocalStorageItems(updatedItems);
-  };
-
-  const handleCheckboxChange = (itemKey: string) => {
-    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-    const updatedOrders = [...orders];
-
-    const index = updatedOrders.indexOf(itemKey);
-    if (index !== -1) {
-      updatedOrders.splice(index, 1);
-    } else {
-      updatedOrders.push(itemKey);
-    }
-
-    localStorage.setItem('orders', JSON.stringify(updatedOrders));
+  const handleActivateCupom = () => {
+    setCupomActivate(true);
   };
 
   return (
-    <div>
+    <div className="flex flex-row">
       <div className='w-11/12 ml-4 mr-4 w-full h-full item-center'>
         <article className='flex flex-row justify-start mt-4'>
           <div className='mb-6 p-3 bg-[#D9D9D9] w-42 rounded-xl text-start'>
@@ -85,12 +131,14 @@ export function LocalStorageData() {
             const isChecked = JSON.parse(localStorage.getItem('orders') || '[]').includes(item.key);
 
             return (
-              <div className='flex flex-row mb-6 p-3 bg-[#D9D9D9] w-full min-w- h-full min-h-full rounded-xl' key={index}>
+              <div className='flex flex-row  flex-wrap justify-center place-items-center mb-6 p-3 bg-[#D9D9D9] w-full min-w- h-full min-h-full rounded-xl' key={index}>
                 {firstImage && (
                   <>
-                    <a href={`products/${item.key}`}>
+                    <div><a href={`products/${item.key}`} className='item'>
                       <Image src={firstImage} width={96} height={96} className='rounded-xl' />
                     </a>
+                    </div>
+
                     <div className='flex flex-col ml-6'>
                       <h1>
                         <strong>ID:</strong>
@@ -104,20 +152,23 @@ export function LocalStorageData() {
                         <strong>price: R$</strong>
                         {value.product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </h1>
+
                       <Counter
                         maxLimit={product.quantity}
                         initialQuantity={value.QuantitySelect}
                         onCountChange={(count) => handleCountChange(count, item.key)}
                       />
-                    </div>
-                    <div className="flex flex-row-reverse w-full">
-                      <Trash color={'red'} size={24} className=' cursor-pointer active:stroke-red-950 place-self-center' onClick={() => handleDeleteItem(item.key)} />
-                      <input
-                        className='focus:bg-[#FEBD2F] rounded-xl'
+                      <div><br /> <input
+                        className='focus:bg-[#FEBD2F] rounded-xl w-4 h-4'
                         type="checkbox"
                         defaultChecked={isChecked}
                         onChange={() => handleCheckboxChange(item.key)}
-                      />
+                      /></div>
+                    </div>
+                    <div className="flex flex-row-reverse w-full">
+                      <Trash color={'red'} size={24} className=' cursor-pointer active:stroke-red-950 place-self-center' onClick={() => handleDeleteItem(item.key)} />
+
+
                     </div>
                   </>
                 )}
@@ -126,6 +177,56 @@ export function LocalStorageData() {
           })}
         </article>
       </div>
-    </div>
+      <div className='w-auto ml-4 mt-24 mr-4 mb-60 p-3 h-auto item-center bg-[#F1F1F4] rounded-xl'>
+        <article className='flex flex-row justify-center mt-4 ml-4 mr-4'>
+          <div className='mb-auto p-3  bg-[#D9D9D9] w-40 rounded-xl text-center'>
+            <h1>Finalizar compra</h1>
+          </div>
+        </article>
+        <div>
+          <InputField
+            label="Cupom:"
+            name="input"
+            id="input-field"
+            style="input-text-sales"
+            size="medium"
+            value={cupom}
+            onChange={(event) => setCupom(event.target.value)}
+          />
+
+          {cupom === valued ? (<p className="text-green-500 font-bold  " onClick={() => setCupomActivate(true)}>Cupom 10% desconto: <span className="text-black active:bg-green-200 rounded-xl bg-green-500 hover:bg-green-700 cursor-pointer rounder-xl  p-1 pointer" onClick={() => setCupomActivate(true)}> Click-me </span></p>
+          ) : (cupom === "" ? null : (
+            <p className="text-red-500" onClick={() => setCupomActivate(false)}>
+              Não tem Cupom
+            </p>
+          ))}
+
+          <label for="address" className='font-bold'>Address</label>
+          <div className='mb-auto font-bold   w-60 rounded-xl text-start  mt-6 mb-8'>
+            {accessToken ? (<Payment />) : (<Link href={"account/login"} className='mb-6 p-3  bg-[#FF9730] w-min-full rounded-xl text-start mt-6 mb-6'>Payment Method</Link>)}
+            {accessToken ? (<Addresses />) : (
+              <Link href={"account/login"} className='mb-6 p-3  bg-[#FF9730] w-min-full rounded-xl text-start mt-6 mb-6'>Adicionar Endereço</Link>)}
+
+            {/* <select className='mb-6 p-3  bg-[#FF9730] w-min-full rounded-xl text-start' name="cars" id="cars">
+              <option value="volvo">Address-1</option>
+              <option value="volvo">59900000</option>
+            </select> */}
+          </div>
+          <div className='mb-6 font-bold '>
+            <p className='mb-6'>End Value: {totalValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+            <p className='mb-6'>Quantity Product Selected: {selectedItemsCount}</p>
+          </div>
+
+
+          <button className="mb-6 p-3 bg-[#FF9730] w-min-full rounded-xl text-start" /*onClick={handleNewCreditCardClick}*/>
+            Finalizar Compra
+          </button>
+        </div>
+
+      </div >
+    </div >
   );
 }
+
+
+
