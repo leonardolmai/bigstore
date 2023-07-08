@@ -118,7 +118,7 @@ export function LocalStorageData() {
       <div className='w-11/12 ml-4 mr-4 w-full h-full item-center'>
         <article className='flex flex-row justify-start mt-4'>
           <div className='mb-6 p-3 bg-[#D9D9D9] w-42 rounded-xl text-start'>
-            <h1>Meu Carrinho</h1>
+            <h1>My Cart</h1>
           </div>
         </article>
         <article className='flex flex-col justify-start mt-4'>
@@ -180,7 +180,7 @@ export function LocalStorageData() {
       <div className='w-auto ml-4 mt-24 mr-4 mb-60 p-3 h-auto item-center bg-[#F1F1F4] rounded-xl'>
         <article className='flex flex-row justify-center mt-4 ml-4 mr-4'>
           <div className='mb-auto p-3  bg-[#D9D9D9] w-40 rounded-xl text-center'>
-            <h1>Finalizar compra</h1>
+            <h1>Complete purchase</h1>
           </div>
         </article>
         <div>
