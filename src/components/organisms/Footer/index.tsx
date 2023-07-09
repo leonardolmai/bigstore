@@ -1,7 +1,11 @@
 import { Logo } from '@/components/atoms/Logo'
 import { LuFacebook, LuInstagram, LuLinkedin } from 'react-icons/lu'
+import { cookies } from 'next/headers'
+import Link from 'next/link'
 
 export function Footer() {
+  const isAuthenticated = cookies().has('token')
+
   return (
     <footer className="flex flex-col justify-between bg-gray-200 p-6">
       <div className="flex flex-col items-center justify-center gap-3 pb-4 lg:flex-row lg:items-start lg:justify-around">
@@ -28,15 +32,17 @@ export function Footer() {
               Referencia da API
             </a>
           </div>
-          <div className="text-center lg:text-left">
-            <h2 className="pb-2 font-bold">Torne-se uma empresa</h2>
-            <a
-              href=""
-              className="text-sm font-semibold text-primary hover:text-primary-dark"
-            >
-              Junte-se à nossa rede
-            </a>
-          </div>
+          {isAuthenticated && (
+            <div className="text-center lg:text-left">
+              <h2 className="pb-2 font-bold">Torne-se uma empresa</h2>
+              <Link
+                href={'/become-company'}
+                className="text-sm font-semibold text-primary hover:text-primary-dark"
+              >
+                Junte-se à nossa rede
+              </Link>
+            </div>
+          )}
         </div>
         <div>
           <h2 className="pb-2 text-center font-bold lg:text-left">
