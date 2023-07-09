@@ -1,4 +1,4 @@
- 'use client';
+'use client';
 import React, { useState } from 'react';
 import { B_carousel } from '@/components/atoms/buttons';
 import { ProductProps } from '@/types/product';
@@ -28,7 +28,7 @@ const Carousel = ({ product }: ProductProps) => {
 
 export default function CarouselComponent({ product }: ProductProps): React.JSX.Element {
   return (
-    <div className="max-w-[1400px] h-[780px] w-full m-auto py-4 px-4 relative">
+    <div className="max-w-[1400px] h-full w-full m-auto py-4 px-4 relative">
       <Carousel product={product} />
     </div>
   );
