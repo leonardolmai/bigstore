@@ -4,8 +4,23 @@ import Menu_componente from '@/components/molecules/Company/Menu_componente/';
 import Menu_company from '@/components/molecules/Company/Menu_Company';
 import Menu_Products from "@/components/molecules/Company/Menu_Products";
 import Menu_repayment from "@/components/molecules/Company/Menu_repayment";
-export default function Home({ activeItem, screens, alingLists }) {
-  const { isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen } = screens;
+export default function Home({ activeItem, screens }) {
+  const [alingLists, setAlingLists] = useState('');
+
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (screens.isLargeScreen) {
+        setAlingLists(activeItem === 1 ? 'flex flex-col' : 'grid grid-cols-4 gap-5 m-2');
+      } else if (screens.isMediumScreen) {
+        setAlingLists(activeItem === 1 ? 'flex flex-col' : 'grid grid-cols-3 gap-5 m-2');
+      } else if (screens.isSmallScreen) {
+        setAlingLists(activeItem === 1 ? 'flex flex-col' : 'grid grid-cols-2 gap-5 m-2');
+      } else {
+        setAlingLists(activeItem === 1 ? 'flex flex-col' : 'flex flex-col justify-center gap-3 items-center');
+      }
+    }
+  }, [activeItem, screens.isLargeScreen, screens.isMediumScreen, screens.isSmallScreen, screens.isNanoScreen, screens.isSmallNanoScreen]);
 
   const handleItemClick = (index) => {
     if (typeof window !== 'undefined') {
