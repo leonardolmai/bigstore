@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Home from '@/components/organisms/company/home';
 import Product from '@/components/organisms/company/product';
 import Employer from '@/components/organisms/company/Employer';
+import Settings_Company from "@/components/organisms/company/Settings_Company"
 import { useMediaQuery } from 'react-responsive';
 
 import {
@@ -14,7 +15,9 @@ import {
   PackagePlus,
   Building2,
   Users,
+  SettingsIcon,
 } from 'lucide-react';
+import Settings from '@/components/organisms/company/Settings_Company';
 
 
 export default function Company() {
@@ -44,23 +47,23 @@ export default function Company() {
         setSizeIcons(28)
         setAlingLists(activeItem === 1 ? 'flex flex-col' : 'grid grid-cols-3 gap-5 m-2');
       } else if (isSmallScreen) {
-        setAlignNavbar('flex flex-row ')
+        setAlignNavbar('flex flex-row pl-12 pr-12 ')
         setalignFirstNavbar('flex flex-col')
         setSizeIcons(24)
         setAlingLists(activeItem === 1 ? 'flex flex-col' : 'grid grid-cols-2 gap-5 m-2');
       } else if (isNanoScreen) {
-        setAlignNavbar('flex flex-row')
+        setAlignNavbar('flex flex-row pl-6 pr-6')
         setalignFirstNavbar('flex flex-col')
         setSizeIcons(18)
         setAlingLists(activeItem === 1 ? 'flex flex-col' : 'flex flex-col justify-center gap-3 items-center');
       } else if (isSmallNanoScreen) {
-        setAlignNavbar('flex flex-row ')
+        setAlignNavbar('flex flex-row pl-6 pr-6')
         setalignFirstNavbar('flex flex-col')
         setSizeIcons(16)
         setAlingLists(activeItem === 1 ? 'flex flex-col' : 'flex flex-col justify-center gap-3 items-center');
       } else {
         setAlignNavbar(8)
-        setAlignNavbar('flex flex-row ')
+        setAlignNavbar('flex flex-row pl-6 pr-6')
         setAlingLists(activeItem === 1 ? 'flex flex-col' : 'flex flex-col justify-center gap-3 items-center');
       }
 
@@ -96,6 +99,9 @@ export default function Company() {
           </div>
           <div className={` justify-center items-center  pt-6 pb-6  text-center break-words ${alignNavbar}`}>
             <Users className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick(2)} />
+          </div>
+          <div className={` justify-center items-center  pt-6 pb-6  text-center break-words ${alignNavbar}`}>
+            <SettingsIcon className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick(3)} />
           </div>
         </div>
 
@@ -140,18 +146,25 @@ export default function Company() {
             <Home activeItem={activeItem} screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} alingLists={alingLists} /></> : ''}
           {activeNavbar === 1 ? <>
             <nav>
-              <div className="flex flex-row font-sans justify-center pl-3 pr-3 p-2 m-1 text-lg font-bold">
+              <div className="flex flex-row h-fit font-sans justify-center pl-3 pr-3 p-2 m-1 text-lg font-bold">
                 <p>Required New Product</p>
               </div>
             </nav>
             <Product screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} /></> : ''}
           {activeNavbar === 2 ? <>
             <nav>
-              <div className="flex flex-row font-sans justify-center pl-3 pr-3 p-2 m-1 text-lg font-bold">
+              <div className="flex flex-row h-fit font-sans justify-center pl-3 pr-3 p-2 m-1 text-lg font-bold">
                 <p>Employers List</p>
               </div>
             </nav>
             <Employer screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} items={20} /></> : ''}
+          {activeNavbar === 3 ? <>
+            <nav>
+              <div className="flex flex-row  font-sans justify-center pl-3 pr-3 p-2 m-1 text-lg font-bold">
+                <p>Settings</p>
+              </div>
+            </nav>
+            <Settings_Company screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} /></> : ''}
         </div>
       </div>
 
