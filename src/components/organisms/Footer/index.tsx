@@ -5,6 +5,13 @@ import Link from 'next/link'
 
 export function Footer() {
   const isAuthenticated = cookies().has('token')
+  const typeUser = cookies().has('typeUser') && cookies().get('typeUser')?.value
+  const canBecomeACompany = () => {
+    if (typeUser && (typeUser === 'Company' || typeUser === 'Bigstore')) {
+      return false
+    }
+    return true
+  }
 
   return (
     <footer className="flex flex-col justify-between bg-gray-200 p-6">
@@ -32,7 +39,7 @@ export function Footer() {
               Referencia da API
             </a>
           </div>
-          {isAuthenticated && (
+          {isAuthenticated && canBecomeACompany() && (
             <div className="text-center lg:text-left">
               <h2 className="pb-2 font-bold">Torne-se uma empresa</h2>
               <Link
