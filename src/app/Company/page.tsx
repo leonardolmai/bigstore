@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Home from '@/components/organisms/company/home';
 import Product from '@/components/organisms/company/product';
+import Employer from '@/components/organisms/company/Employer';
 import { useMediaQuery } from 'react-responsive';
 
 import {
@@ -12,7 +13,9 @@ import {
   Home as Home_page,
   PackagePlus,
   Building2,
+  Users,
 } from 'lucide-react';
+
 
 export default function Company() {
   const [activeItem, setActiveItem] = useState(0);
@@ -91,7 +94,9 @@ export default function Company() {
           <div className={` justify-center items-center  pt-6 pb-6  text-center break-words ${alignNavbar}`}>
             <PackagePlus className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick(1)} />
           </div>
-
+          <div className={` justify-center items-center  pt-6 pb-6  text-center break-words ${alignNavbar}`}>
+            <Users className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick(2)} />
+          </div>
         </div>
 
         <div>
@@ -136,10 +141,17 @@ export default function Company() {
           {activeNavbar === 1 ? <>
             <nav>
               <div className="flex flex-row font-sans justify-center pl-3 pr-3 p-2 m-1 text-lg font-bold">
-                <p>Requerindo Produto novo</p>
+                <p>Required New Product</p>
               </div>
             </nav>
             <Product screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} /></> : ''}
+          {activeNavbar === 2 ? <>
+            <nav>
+              <div className="flex flex-row font-sans justify-center pl-3 pr-3 p-2 m-1 text-lg font-bold">
+                <p>Employers List</p>
+              </div>
+            </nav>
+            <Employer screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} items={20} /></> : ''}
         </div>
       </div>
 
