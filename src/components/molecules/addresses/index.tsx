@@ -1,49 +1,19 @@
+'use client'
 import React, { useEffect, useState } from 'react';
+import { api } from '@/utils/api';
+import { Address } from '@/types/addresses';
 
-export function Addresses({ onAddressChange }) {
-  const [addresses, setAddresses] = useState([]);
+export async function Addresses({ onAddressChange }) {
   const [selectedAddress, setSelectedAddress] = useState('');
 
-  useEffect(() => {
-    const simulatedData = [
-      {
-        id: 1,
-        user: {
-          id: 1,
-          name: '',
-          email: 'momo@momo.com',
-          cpf: '',
-          phone: ''
-        },
-        postal_code: '59900000',
-        uf: 'RN',
-        city: 'pdf',
-        neighborhood: '2023',
-        street: '4_de_setembo',
-        number: '1500',
-        complement: ''
-      },
-      {
-        id: 2,
-        user: {
-          id: 1,
-          name: '',
-          email: 'momo@momo.com',
-          cpf: '',
-          phone: ''
-        },
-        postal_code: '59900000',
-        uf: 'RN',
-        city: 'pdf',
-        neighborhood: '2023',
-        street: '13_De_maio',
-        number: '123',
-        complement: ''
-      }
-    ];
+  const response = await api.get('/addresses/', {
+    headers: { 'Authorization': 'Token 856c410d23d4913544ee6daa87e7cbe516715c9a' }
+  });
 
-    setAddresses(simulatedData);
-  }, []);
+  const addresses: Address[] = response.data
+
+
+
 
   const handleAddressChange = (event) => {
     const selectedValue = event.target.value;
@@ -53,8 +23,7 @@ export function Addresses({ onAddressChange }) {
       window.location.href = '/cadastro-endereco';
     } else {
       const selectedAddress = addresses.find((address) => address.id === parseInt(selectedValue));
-      // Chame a função onAddressChange com os valores selecionados
-      onAddressChange(selectedAddress && selectedAddress.postal_code, selectedAddress && selectedAddress.id);
+      onAddressChange(selectedAddress?.postal_code, selectedAddress?.id);
     }
   };
 
@@ -75,6 +44,7 @@ export function Addresses({ onAddressChange }) {
             </option>
           ))
         ) : (
+
           <option value="new" className="cursor-pointer">
             Cadastrar novo endereço
           </option>
@@ -83,24 +53,3 @@ export function Addresses({ onAddressChange }) {
     </div>
   );
 }
-
-
-
-  // useEffect(() => {
-  //   const fetchAddresses = async () => {
-  //     try {
-  //       const response = await fetch('http://127.0.0.1:8000/api/addresses', {
-  //         headers: {
-  //           'X-Company-CNPJ': '00000000000000',
-  //           'Authorization': 'Bearer 3a8e363d71ca88ed56a45d931057756f1249381b'
-  //         }
-  //       });
-  //       const data = await response.json();
-  //       setAddresses(data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   fetchAddresses();
-  // }, []);

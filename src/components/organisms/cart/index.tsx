@@ -109,7 +109,7 @@ export function LocalStorageData() {
   };
 
   useEffect(() => {
-    Cookies.set('accessToken', '3a8e363d71ca88ed56a45d931057756f1249381b', { expires: 7 });
+    Cookies.set('accessToken', '856c410d23d4913544ee6daa87e7cbe516715c9a', { expires: 700000 });
   }, []);
 
   useEffect(() => {
@@ -201,7 +201,7 @@ export function LocalStorageData() {
             const isChecked = JSON.parse(localStorage.getItem('orders') || '[]').includes(item.key);
 
             return (
-              <div className='flex flex-row  flex-wrap justify-center place-items-center mb-6 p-3 bg-[#D9D9D9] w-full min-w- h-full min-h-full rounded-xl' key={index}>
+              <div className='flex flex-row  flex-wrap justify-center place-items-center mb-6 p-3 bg-[#D9D9D9] w-full min-w-[300px] h-full min-h-full rounded-xl' key={index}>
                 {firstImage && (
                   <>
                     <div>
@@ -289,17 +289,18 @@ export function LocalStorageData() {
               <p className='mb-6 font-extrabold'>Final Value: {finalValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
             ) : null}
           </div>
-          <div className='mb-auto font-bold  w-60 rounded-xl text-start mt-6 mb-6'>
-            {accessToken ? (
+          <div className='flex flex-col mb-auto font-bold  w-68 rounded-xl text-start mt-6 mb-6'>
+            {accessToken !== null ? (<>
               <Addresses onAddressChange={handleAddresssesOptionChange} />
-            ) : (
+              {/* <Payment onPaymentOptionChange={handlePaymentOptionChange} /> */}
+            </>
+
+            ) : (<>
               <Link href={"account/login"} className='mb-6 p-3 bg-[#FF9730] w-min-full rounded-xl text-start mt-6 mb-6'>Adicionar Endereço</Link>
-            )}
-            {accessToken ? (
-              <Payment onPaymentOptionChange={handlePaymentOptionChange} />
-            ) : (
               <Link href={"account/login"} className='mb-6 p-3 bg-[#FF9730] w-min-full rounded-xl text-start mt-6 mb-6'>Payment Method</Link>
+            </>
             )}
+
 
             {/* <select className='mb-6 p-3 bg-[#FF9730] w-min-full rounded-xl text-start' name="cars" id="cars">
               <option value="volvo">Address-1</option>

@@ -1,50 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { CreditCard } from 'lucide-react';
+import { api } from '@/utils/api';
+import { Cards } from '@/types/cards';
 
-export function Payment({ onPaymentOptionChange }) {
+export async function Payment({ onPaymentOptionChange }) {
   const [showCreditCardOptions, setShowCreditCardOptions] = useState(false);
   const [selectedCreditCard, setSelectedCreditCard] = useState('');
-  const [creditCards, setCreditCards] = useState([]);
-  const [selectedCardInfo, setSelectedCardInfo] = useState(null);
+  const [selectedCardInfo, setSelectedCardInfo] = useState(0);
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('');
 
-  useEffect(() => {
-    const simulatedData = [
-      {
-        id: 1,
-        user: {
-          id: 1,
-          name: '',
-          email: 'momo@momo.com',
-          cpf: '',
-          phone: ''
-        },
-        name: 'card4',
-        number: '0000000011110001',
-        expiration_month: '02',
-        expiration_year: '2023',
-        cvc: '123'
-      },
-      {
-        id: 5,
-        user: {
-          id: 1,
-          name: '',
-          email: 'momo@momo.com',
-          cpf: '',
-          phone: ''
-        },
-        name: 'card3',
-        number: '0000000011110101',
-        expiration_month: '02',
-        expiration_year: '2023',
-        cvc: '123'
-      }
-    ];
+  const response = await api.get('/cards/', {
+    headers: { 'Authorization': 'Token 856c410d23d4913544ee6daa87e7cbe516715c9a' }
+  });
 
-    setCreditCards(simulatedData);
-  }, []);
+  const creditCards: Cards[] = response.data
 
   useEffect(() => {
     const selectedCard = creditCards.find((card) => card.name === selectedCreditCard);
@@ -137,20 +106,3 @@ export function Payment({ onPaymentOptionChange }) {
 }
 
 
-// useEffect(() => {
-  //   const fetchCards = async () => {
-  //     try {
-  //       const response = await axios.get('http://127.0.0.1:8000/api/cards/', {
-  //         headers: {
-  //           'X-Company-CNPJ': '00000000000000',
-  //           'Authorization': 'Bearer 3a8e363d71ca88ed56a45d931057756f1249381b'
-  //         }
-  //       });
-  //       setCreditCards(response.data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   fetchCards();
-  // }, []);
