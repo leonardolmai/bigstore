@@ -1,24 +1,25 @@
+'use client'
 import React, { useEffect, useState } from 'react';
 import { CreditCard } from 'lucide-react';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 import { api } from '@/utils/api';
 import { Cards } from '@/types/cards';
 
-export async function Payment({ onPaymentOptionChange }) {
+const queryClient = new QueryClient();
+
+export function Payment({ onPaymentOptionChange }) {
   const [showCreditCardOptions, setShowCreditCardOptions] = useState(false);
   const [selectedCreditCard, setSelectedCreditCard] = useState('');
-  const [selectedCardInfo, setSelectedCardInfo] = useState(0);
+  const [selectedCardInfo, setSelectedCardInfo] = useState(null);
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('');
 
-  const response = await api.get('/cards/', {
-    headers: { 'Authorization': 'Token 856c410d23d4913544ee6daa87e7cbe516715c9a' }
-  });
-
-  const creditCards: Cards[] = response.data
+  const { data: creditCards = [], isLoading, isError } = useQuery<Cards[]>('creditCards', fetchCreditCards);
 
   useEffect(() => {
     const selectedCard = creditCards.find((card) => card.name === selectedCreditCard);
     setSelectedCardInfo(selectedCard);
-  }, [selectedCreditCard, creditCards]);
+    onPaymentOptionChange(selectedPaymentOption, selectedCard && selectedCard.id);
+  }, [selectedCreditCard, selectedPaymentOption, creditCards, onPaymentOptionChange]);
 
   const handlePaymentOptionChange = (event) => {
     const selectedOption = event.target.value;
@@ -31,27 +32,33 @@ export async function Payment({ onPaymentOptionChange }) {
       setShowCreditCardOptions(false);
       setSelectedCreditCard('');
     }
-
-    // Chame a função onPaymentOptionChange com os valores selecionados
-    onPaymentOptionChange(selectedOption, selectedCardInfo && selectedCardInfo.id);
   };
 
   const handleCreditCardOptionChange = (event) => {
     setSelectedCreditCard(event.target.value);
-    const selectedCard = creditCards.find((card) => card.name === event.target.value);
-    setSelectedCardInfo(selectedCard);
-    onPaymentOptionChange(selectedPaymentOption, selectedCard && selectedCard.id);
   };
 
   const handleNewCreditCardClick = () => {
     window.location.href = '/account/cards';
   };
 
+  async function fetchCreditCards() {
+    try {
+      const response = await api.get('/cards/', {
+        headers: { 'Authorization': 'Token 3a8e363d71ca88ed56a45d931057756f1249381b' }
+      });
+      const fetchedCreditCards: Cards[] = response.data;
+      return fetchedCreditCards;
+    } catch (error) {
+      throw new Error('Failed to fetch credit cards');
+    }
+  }
+
   return (
     <div>
       <div className='flex flex-row flex-wrap gap-5 mb-6'>
         <select
-          className="mb-6 p-3 bg-[#FF9730] w-min-full rounded-xl text-start"
+          className="mb-6 p-3 bg-[#FEBD2F]  w-min-full rounded-xl text-start"
           name="payment-option"
           id="payment-option"
           onChange={handlePaymentOptionChange}
@@ -66,7 +73,7 @@ export async function Payment({ onPaymentOptionChange }) {
           <>
             {creditCards.length > 0 ? (
               <select
-                className="mb-6 p-3 bg-[#FF9730] w-min-full rounded-xl text-start"
+                className="mb-6 p-3 bg-[#FEBD2F] w-min-full rounded-xl text-start"
                 name="card-option"
                 id="card-option"
                 value={selectedCreditCard}
@@ -78,7 +85,7 @@ export async function Payment({ onPaymentOptionChange }) {
                 ))}
               </select>
             ) : (
-              <button className="mb-6 p-3 bg-[#FF9730] w-min-full rounded-xl text-start" onClick={handleNewCreditCardClick}>
+              <button className="mb-6 p-3 bg-[#FEBD2F]  w-min-full rounded-xl text-start" onClick={handleNewCreditCardClick}>
                 Cadastrar novo cartão
               </button>
             )}
@@ -105,4 +112,10 @@ export async function Payment({ onPaymentOptionChange }) {
   );
 }
 
-
+export default function PaymentWithQueryClientProvider({ onPaymentOptionChange }) {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Payment onPaymentOptionChange={onPaymentOptionChange} />
+    </QueryClientProvider>
+  );
+}

@@ -7,10 +7,12 @@ import { Trash2 as Trash } from 'lucide-react';
 import InputField from '@/components/atoms/inputs'
 import { B_forms } from '@/components/atoms/buttons';
 import { Addresses } from '@/components/molecules/addresses';
-import { Payment } from '@/components/molecules/payment';
+import PaymentWithQueryClientProvider from '@/components/molecules/payment';
 import Cookies from 'js-cookie';
-import { access } from 'fs';
+import { api } from '@/utils/api';
 import Freight_router from '@/components/molecules/freight_router';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function getLocalStorage() {
   const localStorageItems = [];
@@ -27,11 +29,12 @@ export function getLocalStorage() {
 }
 
 export function LocalStorageData() {
-  const [accessToken, setAccessToken] = useState('');
+  const [accessToken, setAccessToken] = useState('3a8e363d71ca88ed56a45d931057756f1249381b');
   const [localStorageItems, setLocalStorageItems] = useState<any[]>([]);
   const [QuantitySelect, setQuantitySelect] = useState(1);
   const [cupom, setCupom] = useState('');
   const [cupomactivate, setCupomActivate] = useState(false);
+  const [toastactive, settoastactive] = useState(false);
   let valued = '10%';
 
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
@@ -68,11 +71,25 @@ export function LocalStorageData() {
     }
   };
 
+  //alert 
+  const showAlert = (message, type) => {
+    const alertElement = document.createElement('div');
+    alertElement.classList.add('alert');
+    alertElement.classList.add(type);
+    alertElement.textContent = message;
+
+    document.body.appendChild(alertElement);
+
+    // Remover o alerta após alguns segundos (opcional)
+    setTimeout(() => {
+      alertElement.remove();
+    }, 3000);
+  };
 
   const handlePostOrder = () => {
     const token = Cookies.get('accessToken');
     const headers = {
-      'Authorization': `Bearer ${token}`,
+      'Authorization': `Token ${token}`,
       'Content-Type': 'application/json',
     };
 
@@ -92,24 +109,30 @@ export function LocalStorageData() {
       products: selectedProducts,
     };
 
-    fetch('http://127.0.0.1:8000/api/orders/', {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(orderData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    api.post('/orders/', orderData, { headers })
+      .then((response) => {
         // Processar a resposta do servidor, se necessário
-        console.log(data);
+        settoastactive(true)
+
+        // Exibir o toast de compra efetuada com sucesso após a atualização da página
+        toast.success('Compra efetuada com sucesso', {
+          onClose: () => {
+            // Redirecionar para a página /cart após o fechamento do toast
+            window.location.href = '/cart';
+          },
+        });
+
+        console.log(response.data);
       })
       .catch((error) => {
         // Tratar erros da chamada POST
         console.error(error);
       });
+
   };
 
   useEffect(() => {
-    Cookies.set('accessToken', '856c410d23d4913544ee6daa87e7cbe516715c9a', { expires: 700000 });
+    Cookies.set('accessToken', '3a8e363d71ca88ed56a45d931057756f1249381b', { expires: 700000 });
   }, []);
 
   useEffect(() => {
@@ -183,8 +206,27 @@ export function LocalStorageData() {
   const handleActivateCupom = () => {
     setCupomActivate(true);
   };
+
+  const [addresses, setAddresses] = useState<Address[]>([]);
+
+  useEffect(() => {
+    const fetchAddresses = async () => {
+      try {
+        const response = await api.get('/addresses/', {
+          headers: { 'Authorization': 'Token 3a8e363d71ca88ed56a45d931057756f1249381b' }
+        });
+        setAddresses(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchAddresses();
+  }, []);
+
   return (
     <div className="flex flex-row">
+
       <div className='w-11/12 ml-4 mr-4 w-full h-full item-center'>
         <article className='flex flex-row justify-start mt-12'>
           <div className='mb-3 p-3 bg-[#D9D9D9] w-42 rounded-xl text-start'>
@@ -249,6 +291,8 @@ export function LocalStorageData() {
           })}
         </article>
       </div>
+      <ToastContainer />
+
       <div className='w-auto ml-4 mt-10 mr-4 mb-60 p-3 h-auto item-center bg-[#F1F1F4] rounded-xl'>
         <article className='flex flex-row justify-center mt-4 ml-4 mr-4'>
           <div className='mb-auto p-3 bg-[#D9D9D9] w-max rounded-xl text-center'>
@@ -290,37 +334,58 @@ export function LocalStorageData() {
             ) : null}
           </div>
           <div className='flex flex-col mb-auto font-bold  w-68 rounded-xl text-start mt-6 mb-6'>
-            {accessToken !== null ? (<>
-              <Addresses onAddressChange={handleAddresssesOptionChange} />
-              {/* <Payment onPaymentOptionChange={handlePaymentOptionChange} /> */}
-            </>
+            {accessToken !== null ? (
+              <>
+                <select
+                  className="mb-6 p-3 bg-[#FEBD2F]  w-min-full rounded-xl text-start"
+                  name="address"
+                  id="address"
+                  value={selectedAddressId}
+                  onChange={(event) => {
+                    const selectedValue = event.target.value;
+                    setSelectedAddressId(selectedValue);
 
-            ) : (<>
-              <Link href={"account/login"} className='mb-6 p-3 bg-[#FF9730] w-min-full rounded-xl text-start mt-6 mb-6'>Adicionar Endereço</Link>
-              <Link href={"account/login"} className='mb-6 p-3 bg-[#FF9730] w-min-full rounded-xl text-start mt-6 mb-6'>Payment Method</Link>
-            </>
+                    if (selectedValue === 'new') {
+                      window.location.href = '/cadastro-endereco';
+                    } else {
+                      const selectedAddress = addresses.find((address) => address.id === parseInt(selectedValue));
+                      handleAddresssesOptionChange(selectedAddress?.postal_code, selectedAddress?.id);
+                    }
+                  }}
+                >
+                  <option value="">Select an address</option>
+                  {addresses.map((address) => (
+                    <option key={address.id} value={address.id}>
+                      {address.postal_code}, {address.street}, {address.number}
+                    </option>
+                  ))}
+                  <option value="new">Cadastrar novo endereço</option>
+                </select>
+                <PaymentWithQueryClientProvider onPaymentOptionChange={handlePaymentOptionChange} />
+              </>
+            ) : (
+              <>
+                <Link href={"account/login"} className='mb-6 p-3 bg-[#FEBD2F] active::bg-[#FF9730] w-min-full rounded-xl text-start mt-6 mb-6'>Adicionar Endereço</Link>
+                <Link href={"account/login"} className='mb-6 p-3 bg-[#FEBD2F] active::bg-[#FF9730] w-min-full rounded-xl text-start mt-6 mb-6'>Payment Method</Link>
+              </>
             )}
-
-
-            {/* <select className='mb-6 p-3 bg-[#FF9730] w-min-full rounded-xl text-start' name="cars" id="cars">
-              <option value="volvo">Address-1</option>
-              <option value="volvo">59900000</option>
-            </select> */}
           </div>
-          {(!selectedAddressCep || !selectedPaymentOption || (selectedPaymentOption === 'card' && !selectedCardId) || selectedItemsCount === 0) ? (
-            <button className="mb-6 p-3 cursor-default bg-[#FF9730] w-min-full rounded-xl text-start">
+          {!selectedAddressCep || !selectedPaymentOption || (selectedPaymentOption === 'card' && !selectedCardId) || selectedItemsCount === 0 ? (
+            <button className="mb-6 p-3 cursor-default bg-[#FEBD2F] active::bg-[#FF9730] w-min-full rounded-xl text-start">
               Botão B
             </button>
-          ) : (
-            <button className="mb-6 p-3 bg-[#FF9730] w-min-full rounded-xl text-start" onClick={handlePostOrder}>
-              Botão A
-            </button>
+          ) : (toastactive !== true ? <> < button className="mb-6 p-3 bg-[#FEBD2F] active::bg-[#FF9730] w-min-full rounded-xl text-start" onClick={handlePostOrder}>
+            Botão A
+          </button></> : <><button className="mb-6 p-3 cursor-default bg-[#FEBD2F] active::bg-[#FF9730] w-min-full rounded-xl text-start">
+            Botão Await
+          </button></>
+
           )}
         </div>
-      </div>
-    </div>
+      </div >
+
+
+    </div >
+
   );
 }
-
-
-

@@ -7,7 +7,7 @@ export async function Addresses({ onAddressChange }) {
   const [selectedAddress, setSelectedAddress] = useState('');
 
   const response = await api.get('/addresses/', {
-    headers: { 'Authorization': 'Token 856c410d23d4913544ee6daa87e7cbe516715c9a' }
+    headers: { 'Authorization': 'Token 3a8e363d71ca88ed56a45d931057756f1249381b' }
   });
 
   const addresses: Address[] = response.data
