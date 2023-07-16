@@ -46,27 +46,31 @@ export default function Formulario({ screens }) {
   ]);
 
   const handleFileChange = (event) => {
+
     const fileList = event.target.files;
-    const selectedPhotos = Array.from(fileList);
-    setImages(selectedPhotos);
+
+    // const selectedPhotos = Array.from(fileList);
+    console.log(fileList)
+    setImages(fileList);
   };
 
   const handleSubmit = async (event) => {
     if (typeof window !== 'undefined') {
       event.preventDefault();
       try {
-        const imagesList: ProductImage[] = []; // Crie uma lista vazia para armazenar as imagens
-
-        // Adicione as imagens à lista
-        images.forEach((image, index) => {
-          const productImage: ProductImage = {
-            id: index + 1, // Atribua um ID único para cada imagem (pode ser um número sequencial)
-            image: image, // Atribua o caminho/nome do arquivo de imagem
-          };
-          imagesList.push(productImage); // Adicione a imagem à lista
-        });
-
-        const response = await api.post('/products/', { name, description, quantity, price, category, images: imagesList }, {
+        // const formData = new FormData();
+        // // formData.append('name', name);
+        // // formData.append('description', description);
+        // // formData.append('quantity', quantity);
+        // // formData.append('price', price);
+        // // formData.append('category', category);
+        // console.log(quantity, price, images)
+        // for (let index = 0; index < images.length; index++) {
+        //   formData.append(`images[${index}]`, images[index]);
+        // }
+        // console.log(formData)
+        // if (images.length)
+        const response = await api.post('/products/', { name, description, quantity, price, category, images: (images[0], images[1]) }, {
           headers: {
             'Authorization': 'Token 856c410d23d4913544ee6daa87e7cbe516715c9a',
             'Content-Type': 'multipart/form-data',
