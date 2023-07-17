@@ -1,10 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { api } from '@/utils/api'
-import { setCookie, getCookie } from 'cookies-next'
-import { ProductImage } from '@/types/product'; // Certifique-se de importar corretamente a interface ProductImage
+import { api } from '@/utils/api';
+import { Cards } from '@/types/cards';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import { setCookie, getCookie } from 'cookies-next';
 import Modal from 'react-modal';
 
-export default function User_Cards({ screens }) {
+// Função para buscar os cartões da API
+async function fetchCreditCards() {
+  try {
+    const response = await api.get('/cards/', {
+      headers: { 'Authorization': `Token ${getCookie('token')}` }
+    });
+    const fetchedCreditCards: Cards[] = response.data;
+    return fetchedCreditCards;
+  } catch (error) {
+    throw new Error('Failed to fetch credit cards');
+  }
+}
+
+export function User_Cards({ screens }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [quantity, setQuantity] = useState(0);
@@ -17,10 +31,28 @@ export default function User_Cards({ screens }) {
   const [alignbutton, setalignbutton] = useState('');
   const [aligncard, setaligncard] = useState('');
 
+
   const [cards, setCards] = useState([]);
-  const [selectcard, setselectcards] = useState(null);
+  const { data: creditCards = [], isLoading, isError } = useQuery<Cards[]>('creditCards', fetchCreditCards);
+  const [selectcard, setselectcard] = useState(null);
   const [createdform, setcreatedform] = useState(false);
   const [createdform2, setcreatedform2] = useState(false);
+
+  //post
+
+  const [number, setNumber] = useState('');
+  const [expirationMonth, setExpirationMonth] = useState('');
+  const [expirationYear, setExpirationYear] = useState('');
+  const [cvc, setCvc] = useState('');
+
+  //patch
+  const [updatedName, setUpdatedName] = useState('');
+  const [updatedNumber, setUpdatedNumber] = useState('');
+  const [updatedExpirationMonth, setUpdatedExpirationMonth] = useState('');
+  const [updatedExpirationYear, setUpdatedExpirationYear] = useState('');
+  const [updatedCvc, setUpdatedCvc] = useState('');
+
+
   useEffect(() => {
     const fetchCards = async () => {
       try {
@@ -29,13 +61,92 @@ export default function User_Cards({ screens }) {
             'Authorization': `Token ${getCookie('token')}`,
           },
         });
-        setCards(response.data);
+        const fetchedCreditCards: Cards[] = response.data;
+        setCards(fetchedCreditCards); // Atualizar o estado com os dados buscados
       } catch (error) {
         console.error('Erro ao obter a lista de cartões:', error);
       }
     };
     fetchCards();
   }, []);
+
+  const handleCreateCard = async () => {
+    try {
+      const response = await api.post(
+        '/cards/',
+        {
+          name,
+          number,
+          expiration_month: expirationMonth,
+          expiration_year: expirationYear,
+          cvc,
+        },
+        {
+          headers: {
+            'Authorization': `Token ${getCookie('token')}`,
+          },
+        }
+      );
+
+      // Se o cartão foi criado com sucesso, você pode fazer algo aqui, como exibir uma mensagem de sucesso ou atualizar a lista de cartões.
+      console.log('Cartão criado:', response.data);
+
+      // Limpar o formulário após criar o cartão
+      setName('');
+      setNumber('');
+      setExpirationMonth('');
+      setExpirationYear('');
+      setCvc('');
+      alert('Cartão criado com sucesso!');
+      setcreatedform(false)
+
+    } catch (error) {
+      console.error('Erro ao criar o cartão:', error);
+    }
+  };
+
+  const handlePatchCard = async () => {
+    try {
+      if (!selectcard) {
+        console.error('Nenhum cartão selecionado.');
+        return;
+      }
+
+      // Montar os dados atualizados do cartão
+      const updatedCardData = {
+        name: updatedName || selectcard.name,
+        number: updatedNumber || selectcard.number,
+        expiration_month: updatedExpirationMonth || selectcard.expiration_month,
+        expiration_year: updatedExpirationYear || selectcard.expiration_year,
+        cvc: updatedCvc || selectcard.cvc,
+      };
+
+      // Fazer a requisição PATCH para atualizar o cartão
+      const response = await api.patch(`/cards/${selectcard.id}/`, updatedCardData, {
+        headers: {
+          'Authorization': `Token ${getCookie('token')}`,
+        },
+      });
+
+      // Verificar se a requisição foi bem-sucedida e exibir o alerta
+      if (response.status === 200) {
+        alert('Cartão atualizado com sucesso!');
+      }
+
+      // Restaurar os campos do formulário para vazio após a atualização
+      setUpdatedName('');
+      setUpdatedNumber('');
+      setUpdatedExpirationMonth('');
+      setUpdatedExpirationYear('');
+      setUpdatedCvc('');
+      setcreatedform2(false)
+
+      // Atualizar o estado do cartão selecionado com os novos dados
+      setselectcard({ ...selectcard, ...updatedCardData });
+    } catch (error) {
+      console.error('Erro ao atualizar o cartão:', error);
+    }
+  };
 
 
   useEffect(() => {
@@ -78,23 +189,27 @@ export default function User_Cards({ screens }) {
   ]);
 
   const handleFileChange = (event) => {
-
     const fileList = event.target.files;
-
-    // const selectedPhotos = Array.from(fileList);
-    console.log(fileList)
     setImages(fileList);
   };
 
-  const handleCardSelection = (cardId) => {
-    const selectedCard = cards.find((card) => card.id === cardId);
+  const fetchCardDetails = async (cardId) => {
+    try {
+      const response = await api.get(`/cards/${cardId}`, {
+        headers: {
+          'Authorization': `Token ${getCookie('token')}`,
+        },
+      });
 
-    if (selectedCard) {
-      setselectcards(selectedCard)
-      setName(selectedCard.name);
-      setDescription(selectedCard.description);
-      // E assim por diante para os outros campos do formulário
+      const selectedCardDetails = response.data;
+      setselectcard(selectedCardDetails);
+    } catch (error) {
+      console.error('Erro ao obter detalhes do cartão:', error);
     }
+  };
+
+  const handleCardSelection = (cardId) => {
+    fetchCardDetails(cardId);
   };
 
   const toform = () => {
@@ -103,7 +218,6 @@ export default function User_Cards({ screens }) {
     } else {
       setcreatedform(false)
     }
-
   }
 
   const toform2 = () => {
@@ -112,9 +226,7 @@ export default function User_Cards({ screens }) {
     } else {
       setcreatedform2(false)
     }
-
   }
-
 
   const handleSubmit = async (event) => {
     if (typeof window !== 'undefined') {
@@ -154,82 +266,138 @@ export default function User_Cards({ screens }) {
     }
   };
 
-
   return (
     <form onSubmit={handleSubmit} className={`flex flex-col  items-center ${alingForm} h-full`}>
       <div className="flex flex-col  items-start ">
         <div className={` gap-6 flex ${screens.isSmallScreen === true ? "flex-row" : "flex-col"}  justify-center items-center`}>
           {createdform ? <div className='flex flex-col gap-6'>
             <div className='flex flex-col'>
-              <label>nameCard</label>
-              <input type='number' className=' pl-1 min-w-full max-w-[550px]  rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'></input>
-
+              <label>Name Card</label>
+              <input
+                type='text'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className='pl-1 min-w-full max-w-[550px] rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'
+              />
             </div>
-
             <div className='flex flex-col'>
-              <label>number Card</label>
-              <input type='text' className='  pl-1 min-w-full max-w-[550px]  rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'></input>
+              <label>Number Card</label>
+              <input
+                type='text'
+                value={number}
+                onChange={(e) => setNumber(e.target.value)}
+                className='pl-1 min-w-full max-w-[550px] rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'
+              />
             </div>
-
             <div className='flex flex-col'>
-              <label>number Card</label>
+              <label>Expiration Date</label>
               <div className='flex flex-row gap-2'>
-                <input type='number' oninput="this.value = this.value.slice(0, 2)" placeholder="month" className='  pl-1  max-w-[75px] min-w-[65px] rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'></input><p>/</p>
-                <input type='number' pattern="[0-9]{4}" placeholder="year" className='  pl-1  max-w-[75px] min-w-[65px]    rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'></input>
-
+                <input
+                  type='number'
+                  value={expirationMonth}
+                  onChange={(e) => setExpirationMonth(e.target.value)}
+                  placeholder='Month'
+                  className='pl-1 max-w-[75px] min-w-[65px] rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'
+                />
+                <p>/</p>
+                <input
+                  type='number'
+                  value={expirationYear}
+                  onChange={(e) => setExpirationYear(e.target.value)}
+                  placeholder='Year'
+                  className='pl-1 max-w-[75px] min-w-[65px] rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'
+                />
               </div>
-
-
             </div>
             <div className='flex flex-col'>
               <label>CVC</label>
-              <input type='password' pattern="[0-9]{3}" className='  pl-1 min-w-full max-w-[550px]  rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'></input>
+              <input
+                type='password'
+                value={cvc}
+                onChange={(e) => setCvc(e.target.value)}
+                pattern='[0-9]{3}'
+                className='pl-1 min-w-full max-w-[550px] rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'
+              />
             </div>
             <div>
-              <button onClick={toform} className='no-select p-1 mt-2 w-full active:bg-white active:text-black text-white rounded-xl shadow-md cursor-pointer bg-[#000000]'>back</button>
-              <button onClick={toform} className='no-select p-1 mt-2 w-full active:bg-orange-500 rounded-xl shadow-md  cursor-pointer bg-[#FEBF2F]'>Create Card</button>
+              <button onClick={toform} className='no-select p-1 mt-2 w-full active:bg-white active:text-black text-white rounded-xl shadow-md cursor-pointer bg-[#000000]'>
+                Back
+              </button>
+              <button onClick={handleCreateCard} className='no-select p-1 mt-2 w-full active:bg-orange-500 rounded-xl shadow-md cursor-pointer bg-[#FEBF2F]'>
+                Create Card
+              </button>
             </div>
+
 
           </div> : <>{createdform2 ? <div className='flex flex-col gap-6'>
             <div className='flex flex-col'>
               <label>nameCard2</label>
-              <input type='number' className=' pl-1 min-w-full max-w-[550px]  rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'></input>
-
+              <input
+                type='text'
+                className='pl-1 min-w-full max-w-[550px] rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'
+                value={updatedName || (selectcard && selectcard.name) || ''}
+                onChange={(e) => setUpdatedName(e.target.value)}
+              />
             </div>
-
             <div className='flex flex-col'>
               <label>number Card2</label>
-              <input type='text' className='  pl-1 min-w-full max-w-[550px]  rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'></input>
+              <input
+                type='number'
+                className='pl-1 min-w-full max-w-[550px] rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'
+                value={updatedNumber || (selectcard && selectcard.number) || ''}
+                onChange={(e) => setUpdatedNumber(e.target.value)}
+              />
             </div>
-
             <div className='flex flex-col'>
               <label>number Card2</label>
               <div className='flex flex-row gap-2'>
-                <input type='number' oninput="this.value = this.value.slice(0, 2)" placeholder="month" className='  pl-1  max-w-[75px] min-w-[65px] rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'></input><p>/</p>
-                <input type='number' pattern="[0-9]{4}" placeholder="year" className='  pl-1  max-w-[75px] min-w-[65px]    rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'></input>
-
+                <input
+                  type='number'
+                  onInput="this.value = this.value.slice(0, 2)"
+                  placeholder='month'
+                  className='pl-1 max-w-[75px] min-w-[65px] rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'
+                  value={updatedExpirationMonth || (selectcard && selectcard.expiration_month) || ''}
+                  onChange={(e) => setUpdatedExpirationMonth(e.target.value)}
+                />
+                <p>/</p>
+                <input
+                  type='number'
+                  pattern='[0-9]{4}'
+                  placeholder='year'
+                  className='pl-1 max-w-[75px] min-w-[65px] rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'
+                  value={updatedExpirationYear || (selectcard && selectcard.expiration_year) || ''}
+                  onChange={(e) => setUpdatedExpirationYear(e.target.value)}
+                />
               </div>
-
-
             </div>
             <div className='flex flex-col'>
               <label>CVC2</label>
-              <input type='password' pattern="[0-9]{3}" className='  pl-1 min-w-full max-w-[550px]  rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'></input>
+              <input
+                type='password'
+                pattern='[0-9]{3}'
+                className='pl-1 min-w-full max-w-[550px] rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'
+                value={updatedCvc || (selectcard && selectcard.cvc) || ''}
+                onChange={(e) => setUpdatedCvc(e.target.value)}
+              />
             </div>
             <div>
-              <button onClick={toform2} className='no-select p-1 mt-2 w-full active:bg-white active:text-black text-white rounded-xl shadow-md cursor-pointer bg-[#000000]'>back</button>
-              <button onClick={toform2} className='no-select p-1 mt-2 w-full active:bg-orange-500 rounded-xl shadow-md  cursor-pointer bg-[#FEBF2F]'>Create Card</button>
+              <button onClick={toform2} className='no-select p-1 mt-2 w-full active:bg-white active:text-black text-white rounded-xl shadow-md cursor-pointer bg-[#000000]'>
+                Back
+              </button>
+              <button onClick={handlePatchCard} className='no-select p-1 mt-2 w-full active:bg-orange-500 rounded-xl shadow-md cursor-pointer bg-[#FEBF2F]'>
+                Update Card
+              </button>
             </div>
 
           </div> : <><div className="flex flex-col w-48">
             <article className='flex flex-col items-center gap-6 '>
-              {selectcard == null ? <div className={`flex   ${aligncard} gap-2`}>
+
+              {selectcard !== null ? <div className={`flex   ${aligncard} gap-2`}>
                 <div className='bg-gradient-to-r from-purple-600 to-blue-600 text-white w-[250px]  h-[130px] ml-10  p-2 items-start rounded-xl shadow shadow-black'>
-                  <p className='mt-1 mb-1 no-select'>Name: x </p>
-                  <p className='mt-1 mb-1 no-select'>Number: x </p>
-                  {/* {selectcard.number} */}
-                  <p className='mt-1 mb-1 no-select'>Validate: xx/xx</p>
-                  <p className='mt-1 mb-1 no-select'>CVC: ***</p>
+                  <p className='mt-1 mb-1 no-select'>Name: {selectcard.name}</p>
+                  <p className='mt-1 mb-1 no-select'>Number: {selectcard.number}</p>
+                  <p className='mt-1 mb-1 no-select'>Validate: {selectcard.expiration_month}/{selectcard.expiration_year}</p>
+                  <p className='mt-1 mb-1 no-select'>CVC: {selectcard.cvc}</p>
                 </div>
                 <div className={`flex ${alignbutton}  gap-3   justify-center ml-2 items-center`}>
                   <button onClick={toform2} className='bg-green-400 shadow rounded-lg p-1 w-14 hover:bg-green-800 active:bg-green-200'>Edit</button>
@@ -238,10 +406,11 @@ export default function User_Cards({ screens }) {
               </div> : <div className='mb-32'></div>}
 
               <div>
-                <select id="category"
+                <select
+                  id="category"
                   name="category"
                   className="no-select rounded-md border m-2 border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-primary-dark focus:outline-none focus:ring-primary-dark"
-                  defaultValue={''}
+                  value={selectcard ? selectcard.id : ''} // Usar o valor de selectcard para selecionar a opção correta
                   onChange={(e) => handleCardSelection(e.target.value)}
                 >
                   <option value="" disabled>
@@ -265,5 +434,14 @@ export default function User_Cards({ screens }) {
         </div>
       </div>
     </form >
+  );
+}
+
+export default function UserCardsWrapper({ screens }) {
+  const queryClient = new QueryClient();
+  return (
+    <QueryClientProvider client={queryClient}>
+      <User_Cards screens={screens} />
+    </QueryClientProvider>
   );
 }

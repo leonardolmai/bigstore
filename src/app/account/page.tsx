@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import User from "@/components/organisms/Account/User"
 import Product from '@/components/organisms/Account/Product';
 import User_Cards from '@/components/organisms/Account/User_Cards';
+import UserCardsWrapper from '@/components/organisms/Account/User_Cards'; // Verifique se o caminho está correto
 // import Employer from '@/components/organisms/company/Employer';
 // import Settings_Company from "@/components/organisms/company/Settings_Company"
 import { useMediaQuery } from 'react-responsive';
@@ -158,7 +159,7 @@ export default function company() {
                 <p>Cards</p>
               </div>
             </nav>
-            <User_Cards screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} />
+            <UserCardsWrapper screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} />
           </> : ''}
           {activeNavbar === 3 ? <>
             <nav>
