@@ -193,7 +193,7 @@ export function User_Cards({ screens }) {
     setImages(fileList);
   };
 
-  const fetchCardDetails = async (cardId) => {
+  const fetchCardDetails = async (cardId: number) => {
     try {
       const response = await api.get(`/cards/${cardId}`, {
         headers: {
@@ -225,6 +225,20 @@ export function User_Cards({ screens }) {
       setcreatedform2(true)
     } else {
       setcreatedform2(false)
+    }
+  }
+
+  const toformDelete = async (cardId: number) => {
+    try {
+      const response = await api.delete(`/cards/${cardId}`, {
+        headers: {
+          'Authorization': `Token ${getCookie('token')}`,
+        },
+      });
+
+
+    } catch (error) {
+      console.error('Erro ao obter detalhes do cartão:', error);
     }
   }
 
@@ -401,7 +415,7 @@ export function User_Cards({ screens }) {
                 </div>
                 <div className={`flex ${alignbutton}  gap-3   justify-center ml-2 items-center`}>
                   <button onClick={toform2} className='bg-green-400 shadow rounded-lg p-1 w-14 hover:bg-green-800 active:bg-green-200'>Edit</button>
-                  <button onClick={toform2} className='bg-red-500 shadow  rounded-lg p-1 w-14 hover:bg-red-800 active:bg-red-200'>Delete</button>
+                  <button onClick={() => toformDelete(selectcard.id)} className='bg-red-500 shadow  rounded-lg p-1 w-14 hover:bg-red-800 active:bg-red-200'>Delete</button>
                 </div>
               </div> : <div className='mb-32'></div>}
 
