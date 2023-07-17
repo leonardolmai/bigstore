@@ -46,7 +46,8 @@ export default function InputField({ label, name, id, style, size, value, onChan
 
   if (style === "input-text-sales") {
     classnames.div = "flex flex-col font-bold";
-    classnames.input = "bg-[#E8E8E8] font-light text-[#6B6B6B] mt-3 mb-3 border rounded-md shadow-md outline-4 focus:outline-[#FEBD2F] px-3";
+    // classnames.input = "py-1 font-light text-[#6B6B6B] mt-3 mb-3  rounded-md shadow-md focus:outline-[#FEBD2F] px-3";
+    classnames.input = " mt-3 mb-3 rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-primary";
     inputtype = 'text';
   } else if (style === "input-date-see") {
     classnames.div = "flex flex-col font-bold";
