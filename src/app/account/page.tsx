@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import User from "@/components/organisms/Account/User"
 import Product from '@/components/organisms/Account/Product';
+import User_Cards from '@/components/organisms/Account/User_Cards';
 // import Employer from '@/components/organisms/company/Employer';
 // import Settings_Company from "@/components/organisms/company/Settings_Company"
 import { useMediaQuery } from 'react-responsive';
@@ -107,7 +108,7 @@ export default function company() {
         </div>
       </div>
       <div className="flex flex-1 justify-center mt-24 mb-20">
-        <div className="flex flex-col w-[1244px] min-h-[683px] max-w-max h-full rounded-3xl bg-[#febc2f36]">
+        <div className="flex flex-col w-[1244px] min-h-[683px] max-w-max h-full rounded-3xl bg-[#febc2f36]  shadow">
           {activeNavbar === 0 ? <>
             {/* <nav>
               <div className="flex flex-row font-sans justify-between pl-3 pr-3 p-2 m-1 text-lg font-bold">
@@ -157,7 +158,7 @@ export default function company() {
                 <p>Cards</p>
               </div>
             </nav>
-            {/* <Address screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} items={20} /> */}
+            <User_Cards screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} />
           </> : ''}
           {activeNavbar === 3 ? <>
             <nav>
