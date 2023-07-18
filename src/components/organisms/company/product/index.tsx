@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '@/utils/api'
+import { setCookie, getCookie } from 'cookies-next'
 import { ProductImage } from '@/types/product'; // Certifique-se de importar corretamente a interface ProductImage
 
 
@@ -58,28 +59,27 @@ export default function Formulario({ screens }) {
     if (typeof window !== 'undefined') {
       event.preventDefault();
       try {
-        // const formData = new FormData();
-        // // formData.append('name', name);
-        // // formData.append('description', description);
-        // // formData.append('quantity', quantity);
-        // // formData.append('price', price);
-        // // formData.append('category', category);
-        // console.log(quantity, price, images)
-        // for (let index = 0; index < images.length; index++) {
-        //   formData.append(`images[${index}]`, images[index]);
-        // }
-        // console.log(formData)
-        // if (images.length)
-        const response = await api.post('/products/', { name, description, quantity, price, category, images: (images[0], images[1]) }, {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('description', description);
+        formData.append('quantity', quantity);
+        formData.append('price', price);
+        formData.append('category', category);
+
+        for (let i = 0; i < images.length; i++) {
+          formData.append('images', images[i]);
+        }
+
+        const response = await api.post('/products/', formData, {
           headers: {
-            'Authorization': 'Token 856c410d23d4913544ee6daa87e7cbe516715c9a',
+            'Authorization': `Token ${getCookie('token')}`,
             'Content-Type': 'multipart/form-data',
-          }
+          },
         });
 
-        console.log('Formulário enviado:', response.data);
+        console.log('Imagens enviadas:', response.data);
       } catch (error) {
-        console.error('Erro ao enviar formulário:', error);
+        console.error('Erro ao enviar imagens:', error);
       }
     }
   };

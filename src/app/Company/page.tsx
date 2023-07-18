@@ -20,7 +20,7 @@ import {
 import Settings from '@/components/organisms/company/Settings_Company';
 
 
-export default function Company() {
+export default function company() {
   const [activeItem, setActiveItem] = useState(0);
   const [activeNavbar, setActiveNavbar] = useState(0);
   const [alingLists, setAlingLists] = useState('');
