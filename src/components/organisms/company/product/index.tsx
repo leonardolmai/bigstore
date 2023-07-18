@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { api } from '@/utils/api'
 import { setCookie, getCookie } from 'cookies-next'
 import { ProductImage } from '@/types/product'; // Certifique-se de importar corretamente a interface ProductImage
-
+import Modal from 'react-modal';
 
 export default function Formulario({ screens }) {
   const [name, setName] = useState('');
@@ -11,6 +11,7 @@ export default function Formulario({ screens }) {
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState('');
   const [images, setImages] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [alingForm, setAlingForm] = useState('');
   const [formInput, setFormInput] = useState('');
@@ -77,6 +78,15 @@ export default function Formulario({ screens }) {
           },
         });
 
+        // Limpar os campos após alguns segundos
+        console.log('Imagens enviadas:', response.data);
+        setName('');
+        setDescription('');
+        setQuantity(0);
+        setPrice(0);
+        setCategory('');
+        setImages([]);
+        setIsModalOpen(true);
         console.log('Imagens enviadas:', response.data);
       } catch (error) {
         console.error('Erro ao enviar imagens:', error);
@@ -85,7 +95,37 @@ export default function Formulario({ screens }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={`flex flex-col items-center ${alingForm} h-full`}>
+    <form onSubmit={handleSubmit} className={`flex flex-col  items-center ${alingForm} h-full`}>
+
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          },
+          content: {
+            width: '300px',
+            height: '75px',
+            margin: 'auto',
+            display: 'flex',
+            fontWeight: '700',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+            border: '1px solid #ccc',
+            borderRadius: '14px',
+            background: 'green',
+            outline: 'none',
+          },
+        }}
+
+        onClick={() => setIsModalOpen(false)}
+      >
+        Cadastro do produto concluído.
+      </Modal>
+
       <div className="flex flex-col  items-start">
         <div className={`gap-6 flex ${screens.isSmallScreen === true ? "flex-row" : "flex-col"}  justify-center items-center`}>
           <div className="flex flex-col w-48">
@@ -180,6 +220,6 @@ export default function Formulario({ screens }) {
           </button>
         </div>
       </div>
-    </form>
+    </form >
   );
 }
