@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import User from "@/components/organisms/Account/User"
-import Product from '@/components/organisms/company/product';
+import Product from '@/components/organisms/Account/Product';
 // import Employer from '@/components/organisms/company/Employer';
 // import Settings_Company from "@/components/organisms/company/Settings_Company"
 import { useMediaQuery } from 'react-responsive';
@@ -146,15 +146,15 @@ export default function company() {
           {activeNavbar === 1 ? <>
             <nav>
               <div className="flex flex-row h-fit font-sans justify-center pl-3 pr-3 p-2 m-1 text-lg font-bold">
-                <p>Required New Product</p>
+                <p>My Products</p>
               </div>
             </nav>
-            {/* <Card screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} /> */}
+            <Product screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} items={20} />
           </> : ''}
           {activeNavbar === 2 ? <>
             <nav>
               <div className="flex flex-row h-fit font-sans justify-center pl-3 pr-3 p-2 m-1 text-lg font-bold">
-                <p>Employers List</p>
+                <p>Cards</p>
               </div>
             </nav>
             {/* <Address screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} items={20} /> */}
@@ -162,7 +162,7 @@ export default function company() {
           {activeNavbar === 3 ? <>
             <nav>
               <div className="flex flex-row  font-sans justify-center pl-3 pr-3 p-2 m-1 text-lg font-bold">
-                <p>Settings</p>
+                <p>Addresses</p>
               </div>
             </nav>
             {/* <Product screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} /> */}

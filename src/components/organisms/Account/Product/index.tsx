@@ -1,84 +1,81 @@
 'use client'
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
+import {
+  BadgeDollarSign as Badge,
+  PlusCircle
+} from 'lucide-react'
+import Product_forms from './Product_forms';
+export default function Product({ screens, items }) {
+  const [boolforms, setBoolForms] = useState(false);
+  const [widthlist, setwidthlist] = useState('');
 
-export default function Settings_Company({ activeItem, screens, alingLists }) {
-  const [widthform, setAlingForm] = useState('')
-  const [formcase, setFormCase] = useState(false);
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if (screens.isLargeScreen) {
-        setAlingForm('w-[1145px]');
-
+        setwidthlist("w-56");
       } else if (screens.isMediumScreen) {
-        setAlingForm('w-[880px]');
-
-
+        setwidthlist("w-44 self-center items-center");
       } else if (screens.isSmallScreen) {
-        setAlingForm('w-[666px]');
-
+        setwidthlist("w-28  flex flex-col text-xs break-all self-center items-center");
       } else if (screens.isNanoScreen) {
-        setAlingForm('w-[380px]');
+        setwidthlist(" w-[70px] flex flex-col text-xs break-all justif  self-center items-center ");
+
 
       } else if (screens.isSmallNanoScreen) {
-        setAlingForm('w-[280px]');
+        setwidthlist(" w-[44px] flex flex-col  text-xs break-all justif  self-center items-center ");
+
 
       } else {
-        setAlingForm('w-[183px]');
-
+        setwidthlist(" w-[33px] flex flex-col  text-xs break-all justif  self-center items-center ");
       }
     }
-  }, [
-    screens.isLargeScreen,
-    screens.isMediumScreen,
-    screens.isSmallScreen,
-    screens.isNanoScreen,
-    screens.isSmallNanoScreen,
-  ]);
-  const handleAlterform = () => {
-    if (typeof window !== "undefined") {
-      if (formcase === false) {
-        setFormCase(true)
-      } else {
-        setFormCase(false)
-      }
+  }, [screens.isLargeScreen, screens.isMediumScreen, screens.isSmallScreen, screens.isNanoScreen, screens.isSmallNanoScreen]);
 
+  const handleformClick = () => {
+    if (typeof window !== 'undefined') {
+      setBoolForms(true)
     }
+
   }
+
+
   return (
-    <div className={`${widthform}`}>
-      <div className="flex flex-col items-center">
+    <div className={` select-none `}>
+      {boolforms ? <><Product_forms screens={screens} boolforms={boolforms} setBoolForms={setBoolForms} /> </> : <>
 
-        {formcase ?
-          <>
-            <div className="flex flex-col gap-2">
-              <label className="font-bold">Company Name</label>
-              <input type="text" value={'textinfo'} className="w-fit max-w-[700px] rounded-lg bg-[#FFFFFF] border-solid active:outline-[#ffae00] focus:outline-[#FEBD2F]  mb-4" ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label className="font-bold">CNPJ</label>
-              <input type="text" value={'XXXXXXXXXXXXXX'} className="w-fit max-w-[700px] rounded-lg bg-[#FFFFFF] border-solid  active:outline-[#ffae00]  focus:outline-[#FEBD2F]   mb-4" ></input>
-            </div>
-            <div className="flex flex-row flex-wrap gap-6">
-              <button className="flex items-center w-fit max-w-[300px] bg-[#8888] text-black active:bg-black active:text-[#8888] pl-2 pr-2 rounded-xl " onClick={handleAlterform}>Back</button>
-              <button className="flex items-center w-fit max-w-[300px] bg-green-400 text-green-950 active:bg-green-950 active:text-green-400 pl-2 pr-2 rounded-xl " onClick={handleAlterform}>Edit Company</button>
+        <div className={`flex flex-row  m-2 p-2   bg-[#ffffff] justify-between items-start rounded-t-xl`}>
+          <div className={`flex justify-center   ${widthlist}  border-e-2 `}><p>Id</p></div>
+          <div className={`flex justify-center   ${widthlist}  border-e-2 `}><p>Product name</p></div>
+          <div className={`flex justify-center ${widthlist}  border-e-2 `}><p>Quantity</p></div>
+          <div className={`flex justify-center ${widthlist}  border-e-2 `}><p>CNPJ</p></div>
+          <div className={`flex justify-center ${widthlist}  border-e-2 `}><p>State</p></div>
+          <div className={`flex justify-center ${widthlist}  cursor-default `}><p>Repayment</p></div>
+        </div>
+        {Array.from({ length: items }).map((_, index) => (
+          <div key={index}>
 
-            </div>
+            <div className={`flex flex-row m-2 p-2 ${index % 2 == 0 ? ("bg-[#F5F6F7]") : "bg-[#b8b8b8]"} justify-between items-start rounded-md  shadow-lg shadow-orange-200 hover:shadow-3xl hover:shadow-orange-500  transition-all`}>
+              <div className={`flex justify-center ${widthlist}  border-e-2 `}><p>{index}</p></div>
+              <div className={`flex justify-center ${widthlist}  border-e-2 `}><p>Name...</p></div>
+              <div className={`flex justify-center ${widthlist}  border-e-2 `}><p>X</p></div>
+              <div className={`flex justify-center ${widthlist}  border-e-2 `}><p>xxxxxxxxxxxxxx</p></div>
+              <div className={`flex justify-center ${widthlist}  border-e-2 `}><p className="font-bold">Send</p></div>
+              <div className={`flex justify-center ${widthlist}    cursor-pointer `}>
 
-          </>
-          :
-          <>
-            <div className="flex flex-col gap-2">
-              <label className="font-bold">info 1</label>
-              <input type="text" value={'textinfo'} className="w-fit max-w-[700px] rounded-lg bg-[#888888] border-solid border-2  hover:border-black cursor-no-drop mb-4" disabled></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label className="font-bold">CNPJ</label>
-              <input type="text" value={'XXXXXXXXXXXXXX'} className="w-fit max-w-[700px] rounded-lg bg-[#888888] border-solid border-2  hover:border-black cursor-no-drop mb-4" disabled></input>
-            </div>
-            <button className="flex items-center w-fit max-w-[300px] bg-green-400 text-green-950 active:bg-green-950 active:text-green-400 pl-2 pr-2 rounded-xl " onClick={handleAlterform}>Edit Company</button>
+                <div className='flex flex-col justify-center items-center '>
+                  <Badge onClick={handleformClick} size={24} className='w-max   h-8  bg-[#FEBD2F] hover:stroke-amber-950 cursor-pointer rounded-3xl shadow-md shadow-black hover:shadow-amber-400 active:bg-[#f7aa02] active:bg-[#9e7620]' />
+                </div>
 
-          </>}
-      </div>
-    </div>
+              </div>
+            </div>
+          </div>
+        ))}
+
+      </>}
+    </div >
   )
+
+
 }
+
+
