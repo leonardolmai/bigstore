@@ -8,7 +8,7 @@ import InputField from '@/components/atoms/inputs'
 import { B_forms } from '@/components/atoms/buttons';
 import { Addresses } from '@/components/molecules/addresses';
 import PaymentWithQueryClientProvider from '@/components/molecules/payment';
-import Cookies from 'js-cookie';
+import { hasCookie, getCookie } from 'cookies-next'
 import { api } from '@/utils/api';
 import Freight_router from '@/components/molecules/freight_router';
 import { ToastContainer, toast } from 'react-toastify';
@@ -76,11 +76,9 @@ export function LocalStorageData() {
 
     }
   }, [ListItems, isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen]);
-  //tokens
-  useEffect(() => {
-    Cookies.set('accessToken', '3a8e363d71ca88ed56a45d931057756f1249381b', { expires: 700000 });
-  }, []);
-  const [accessToken, setAccessToken] = useState(Cookies.get('accessToken'));
+
+  // const accessToken = window && getCookie('token')
+  const [accessToken, setAccessToken] = useState(getCookie('token'));
   //payments
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('');
   const [selectedCardId, setSelectedCardId] = useState('');
@@ -126,7 +124,7 @@ export function LocalStorageData() {
   };
 
   const handlePostOrder = () => {
-    // const token = Cookies.get('accessToken');
+
     const headers = {
       'Authorization': `Token ${accessToken}`,
       'Content-Type': 'application/json',
@@ -172,10 +170,10 @@ export function LocalStorageData() {
 
 
 
-  useEffect(() => {
-    const token = Cookies.get('accessToken');
-    setAccessToken(token || '');
-  }, []);
+  // useEffect(() => {
+  //   const token = Cookies.get('token');
+  //   setAccessToken(token || '');
+  // }, []);
 
   useEffect(() => {
     const items = getLocalStorage();
@@ -244,13 +242,18 @@ export function LocalStorageData() {
     setCupomActivate(true);
   };
 
+
   const [addresses, setAddresses] = useState<Address[]>([]);
 
   useEffect(() => {
+
     const fetchAddresses = async () => {
+
       try {
         const response = await api.get('/addresses/', {
-          headers: { 'Authorization': `Token ${accessToken}` }
+          headers: {
+            'Authorization': `Token ${accessToken}`
+          }
         });
         setAddresses(response.data);
       } catch (error) {
@@ -259,6 +262,7 @@ export function LocalStorageData() {
     };
 
     fetchAddresses();
+
   }, []);
 
   return (
@@ -282,11 +286,11 @@ export function LocalStorageData() {
               const isChecked = JSON.parse(localStorage.getItem('orders') || '[]').includes(item.key);
 
               return (
-                <div className={`${ListItems}  place-items-center mb-6 p-3 bg-[#D9D9D9] w-full min-w-[300px] h-full min-h-full rounded-xl`} key={index}>
+                <div className={`${ListItems} place - items - center mb - 6 p - 3 bg - [#D9D9D9] w - full min - w - [300px] h - full min - h - full rounded - xl`} key={index}>
                   {firstImage && (
                     <>
                       <div >
-                        <a href={`products/${item.key}`} className='item'>
+                        <a href={`products / ${item.key} `} className='item'>
                           <Image src={firstImage} width={96} height={96} className='rounded-xl' />
                         </a>
                       </div>
@@ -296,7 +300,7 @@ export function LocalStorageData() {
                           <strong>ID:</strong>
                           {item.key}
                         </h1>
-                        <h1 className={`min-w-full `}>
+                        <h1 className={`min - w - full`}>
                           <strong>Name:</strong>
                           {product.name}
                         </h1>
@@ -322,7 +326,7 @@ export function LocalStorageData() {
                         </div>
                       </div>
                       <div>
-                        <div className={`flex flex-row w-full ${infotrash} justify-end`}>
+                        <div className={`flex flex - row w - full ${infotrash} justify - end`}>
                           <Trash color={'red'} size={24} className='cursor-pointer active:stroke-red-950 place-self-center' onClick={() => handleDeleteItem(item.key)} />
                         </div>
                       </div>
@@ -376,7 +380,7 @@ export function LocalStorageData() {
               ) : null}
             </div>
             <div className='flex flex-col mb-auto font-bold  w-68 rounded-xl text-start mt-6 mb-6'>
-              {accessToken !== null ? (
+              {hasCookie('token') !== null ? (
                 <div>
                   <select
                     className="mb-6 p-3 bg-[#FEBD2F]  w-min-full rounded-xl text-start"

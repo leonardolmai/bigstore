@@ -4,7 +4,7 @@ import { CreditCard } from 'lucide-react';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 import { api } from '@/utils/api';
 import { Cards } from '@/types/cards';
-import Cookies from 'js-cookie';
+import { hasCookie, getCookie } from 'cookies-next'
 const queryClient = new QueryClient();
 
 export function Payment({ onPaymentOptionChange }) {
@@ -43,7 +43,8 @@ export function Payment({ onPaymentOptionChange }) {
   };
 
   async function fetchCreditCards() {
-    const token = Cookies.get('accessToken')
+    const token = getCookie('token')
+    console.log(token)
     try {
       const response = await api.get('/cards/', {
         headers: { 'Authorization': `Token ${token}` }

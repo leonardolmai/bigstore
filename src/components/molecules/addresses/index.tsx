@@ -2,16 +2,18 @@
 import React, { useEffect, useState } from 'react';
 import { api } from '@/utils/api';
 import { Address } from '@/types/addresses';
+import { hasCookie, getCookie } from 'cookies-next'
 
 export async function Addresses({ onAddressChange }) {
   const [selectedAddress, setSelectedAddress] = useState('');
 
   const response = await api.get('/addresses/', {
-    headers: { 'Authorization': 'Token 3a8e363d71ca88ed56a45d931057756f1249381b' }
+    headers: { 'Authorization': `Token ${getCookie('token')}` }
+
   });
 
-  const addresses: Address[] = response.data
 
+  const addresses: Address[] = response.data
 
 
 
