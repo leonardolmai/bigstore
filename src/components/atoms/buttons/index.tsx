@@ -45,17 +45,17 @@ export function B_forms({ name, size, onclick, type }: B_form) {
   }
   let text_info: React.ReactNode = '';
   if (type === 'freight') {
-    text_info = <React.Fragment><p>Calculate</p></React.Fragment>;
+    text_info = <React.Fragment><p>Calcule</p></React.Fragment>;
 
   } else if (type === 'Buy_now') {
     text_info = <React.Fragment>
-      <CreditCard color="black" size={15} />
+      <CreditCard color="black" size={15} stroke={'white'} strokeWidth={'2'} />
       <p className='px-1'>{name}</p>
     </React.Fragment>
 
   } else if (type === 'Cart') {
     text_info = <React.Fragment>
-      <Cart color="black" size={15} />
+      <Cart color="black" size={15} stroke={'white'} />
       <p className='px-1'>{name}</p>
     </React.Fragment>
 
@@ -74,7 +74,7 @@ export function B_forms({ name, size, onclick, type }: B_form) {
     <button
       onClick={onclick}
       type="submit"
-      className={` ${buttonWidthClass} px-2 py-2 font-bold bg-[#FEBD2F] active:bg-[#604201] text-black rounded-md shadow-md hover:bg-[#FFBD1F]`}
+      className={` ${buttonWidthClass} px-2 py-2 font-bold bg-primary active:bg-primary-dark text-white rounded-md shadow-md hover:bg-primary-dark`}
     >
       <div className='flex flex-row items-center justify-center'>{text_info}
       </div>
