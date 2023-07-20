@@ -6,7 +6,6 @@ import { Counter } from '@/components/molecules/CountValue';
 import { Trash2 as Trash } from 'lucide-react';
 import InputField from '@/components/atoms/inputs'
 import { B_forms } from '@/components/atoms/buttons';
-import { Addresses } from '@/components/molecules/addresses';
 import PaymentWithQueryClientProvider from '@/components/molecules/payment';
 import { hasCookie, getCookie } from 'cookies-next'
 import { api } from '@/utils/api';
@@ -117,7 +116,7 @@ export function LocalStorageData() {
 
     document.body.appendChild(alertElement);
 
-    // Remover o alerta após alguns segundos (opcional)
+
     setTimeout(() => {
       alertElement.remove();
     }, 3000);
@@ -138,23 +137,29 @@ export function LocalStorageData() {
         localStorage.removeItem(item.key);
       }
     });
-
-    const orderData = {
+    const orderData = (selectedPaymentOption === 'card' ? {
       payment_method: selectedPaymentOption,
       card_id: selectedPaymentOption === 'card' ? selectedCardId : null,
       address_id: selectedAddressId,
       products: selectedProducts,
-    };
+    } :
+      {
+        payment_method: selectedPaymentOption,
+        address_id: selectedAddressId,
+        products: selectedProducts,
+      })
+
+
 
     api.post('/orders/', orderData, { headers })
       .then((response) => {
         // Processar a resposta do servidor, se necessário
         settoastactive(true)
 
-        // Exibir o toast de compra efetuada com sucesso após a atualização da página
+
         toast.success('Compra efetuada com sucesso', {
           onClose: () => {
-            // Redirecionar para a página /cart após o fechamento do toast
+
             window.location.href = '/cart';
           },
         });
@@ -162,7 +167,7 @@ export function LocalStorageData() {
         console.log(response.data);
       })
       .catch((error) => {
-        // Tratar erros da chamada POST
+
         console.error(error);
       });
 
@@ -170,10 +175,7 @@ export function LocalStorageData() {
 
 
 
-  // useEffect(() => {
-  //   const token = Cookies.get('token');
-  //   setAccessToken(token || '');
-  // }, []);
+
 
   useEffect(() => {
     const items = getLocalStorage();
@@ -268,12 +270,12 @@ export function LocalStorageData() {
   return (
     <div>
 
-      <div className="flex flex-row">
+      <div className="flex flex-col-reverse justify-center items-center md:items-start md:flex-row">
 
-        <div className='w-11/12 ml-4 mr-4 w-full h-full item-center'>
-          <article className='flex flex-row justify-start mt-12'>
+        <div className=' w-full md:w-11/12 md:ml-5  h-full item-center'>
+          <article className='flex flex-row justify-center md:justify-start md:mt-12'>
             <div className='mb-3 p-3 bg-[#D9D9D9] w-42 rounded-xl text-start'>
-              <h1>My Cart</h1>
+              <h1>Meu Carrinho</h1>
             </div>
           </article>
           <article className='flex flex-col justify-start mt-2'>
@@ -286,12 +288,12 @@ export function LocalStorageData() {
               const isChecked = JSON.parse(localStorage.getItem('orders') || '[]').includes(item.key);
 
               return (
-                <div className={`${ListItems} place - items - center mb - 6 p - 3 bg - [#D9D9D9] w - full min - w - [300px] h - full min - h - full rounded - xl`} key={index}>
+                <div className={`${ListItems} place-items-center mb-6 p-3 bg-[#D9D9D9] w-full min-w-[300px] h-full min-h-full rounded-xl`} key={index}>
                   {firstImage && (
                     <>
-                      <div >
+                      <div className='items-center'>
                         <a href={`products / ${item.key} `} className='item'>
-                          <Image src={firstImage} width={96} height={96} className='rounded-xl' />
+                          <Image src={firstImage} width={'50'} height={'50'} className="rounded-xl max-w-[50px]" />
                         </a>
                       </div>
 
@@ -301,11 +303,11 @@ export function LocalStorageData() {
                           {item.key}
                         </h1>
                         <h1 className={`min - w - full`}>
-                          <strong>Name:</strong>
+                          <strong>Nome:</strong>
                           {product.name}
                         </h1>
                         <h1>
-                          <strong>price: R$</strong>
+                          <strong>preço: R$</strong>
                           {value.product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </h1>
 
@@ -322,7 +324,7 @@ export function LocalStorageData() {
                             defaultChecked={isChecked}
                             onChange={() => handleCheckboxChange(item.key)}
                           />
-                          <h6>select to buy</h6>
+                          <h6>Selecione sua Compra</h6>
                         </div>
                       </div>
                       <div>
@@ -339,10 +341,10 @@ export function LocalStorageData() {
         </div>
 
 
-        <div className='w-auto ml-4 mt-10 mr-4 mb-60 p-3 h-auto item-center bg-[#F1F1F4] rounded-xl'>
+        <div className='w-auto max-w-[400px] md:ml-4 mt-2 md:mt-10 md:mr-5 mb-60  p-6 md:p-3 h-auto jsutify-center md:item-center bg-[#F1F1F4] rounded-xl'>
           <article className='flex flex-row justify-center mt-4 ml-4 mr-4'>
             <div className='mb-auto p-3 bg-[#D9D9D9] w-max rounded-xl text-center'>
-              <h1>Complete purchase</h1>
+              <h1>Complete a Compra</h1>
             </div>
           </article>
           <div>
@@ -363,7 +365,7 @@ export function LocalStorageData() {
                   className="text-black active:bg-green-200 rounded-xl bg-green-500 hover:bg-green-700 cursor-pointer rounder-xl p-1 pointer"
                   onClick={() => setCupomActivate(true)}
                 >
-                  Click-me
+                  Ativar
                 </span>
               </p>
             ) : cupom === "" ? null : (
@@ -372,11 +374,11 @@ export function LocalStorageData() {
               </p>
             )}
             <div className='mb-6 font-bold'>
-              <p className='mb-6'>Products Value: {totalValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+              <p className='mb-6'>Valor do(s) produto(s) : {totalValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
               <Freight_router quantity={selectedItemsCount} cep={selectedAddressCep} onFinalFreightValue={handleFinalFreightValue} />
-              <p className='mb-6'>Quantity Product Selected: {selectedItemsCount}</p>
+              <p className='mb-6'>Quantidade de Proutos Selecinadas: {selectedItemsCount}</p>
               {finalValue !== 0 ? (
-                <p className='mb-6 font-extrabold'>Final Value: {finalValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                <p className='mb-6 font-extrabold'>valor Final: {finalValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
               ) : null}
             </div>
             <div className='flex flex-col mb-auto font-bold  w-68 rounded-xl text-start mt-6 mb-6'>
@@ -392,38 +394,38 @@ export function LocalStorageData() {
                       setSelectedAddressId(selectedValue);
 
                       if (selectedValue === 'new') {
-                        window.location.href = '/cadastro-endereco';
+                        window.location.href = '/account';
                       } else {
                         const selectedAddress = addresses.find((address) => address.id === parseInt(selectedValue));
                         handleAddresssesOptionChange(selectedAddress?.postal_code, selectedAddress?.id);
                       }
                     }}
                   >
-                    <option value="">Select an address</option>
+                    <option value="">Selecione o endereço</option>
                     {addresses.map((address) => (
                       <option key={address.id} value={address.id}>
                         {address.postal_code}, {address.street}, {address.number}
                       </option>
                     ))}
-                    <option value="new">Cadastrar novo endereço</option>
+                    <option value="new" className="cursor-pointer ">Cadastrar novo endereço</option>
                   </select>
                   <PaymentWithQueryClientProvider onPaymentOptionChange={handlePaymentOptionChange} />
                 </div>
               ) : (
                 <>
                   <Link href={"account/login"} className='mb-6 p-3 bg-[#FEBD2F] active::bg-[#FF9730] w-min-full rounded-xl text-start mt-6 mb-6'>Adicionar Endereço</Link>
-                  <Link href={"account/login"} className='mb-6 p-3 bg-[#FEBD2F] active::bg-[#FF9730] w-min-full rounded-xl text-start mt-6 mb-6'>Payment Method</Link>
+                  <Link href={"account/login"} className='mb-6 p-3 bg-[#FEBD2F] active::bg-[#FF9730] w-min-full rounded-xl text-start mt-6 mb-6'>Metodo de pagamento</Link>
                 </>
               )}
             </div>
             {!selectedAddressCep || !selectedPaymentOption || (selectedPaymentOption === 'card' && !selectedCardId) || selectedItemsCount === 0 ? (
               <button className="mb-6 p-3 cursor-default bg-[#FEBD2F] active::bg-[#FF9730] w-min-full rounded-xl text-start">
-                Botão B
+                Finalize aqui
               </button>
             ) : (toastactive !== true ? <> < button className="mb-6 p-3 bg-[#FEBD2F] active::bg-[#FF9730] w-min-full rounded-xl text-start" onClick={handlePostOrder}>
-              Botão A
+              Finalize aqui
             </button></> : <><button className="mb-6 p-3 cursor-default bg-[#FEBD2F] active::bg-[#FF9730] w-min-full rounded-xl text-start">
-              Botão Await
+              Finalizando...
             </button></>
 
             )}

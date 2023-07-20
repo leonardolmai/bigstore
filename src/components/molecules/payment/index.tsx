@@ -58,15 +58,15 @@ export function Payment({ onPaymentOptionChange }) {
 
   return (
     <div>
-      <div className='flex flex-row flex-wrap gap-5 mb-6'>
+      <div className='flex flex-col flex-wrap gap-5 mb-6'>
         <select
           className="mb-6 p-3 bg-[#FEBD2F]  w-min-full rounded-xl text-start"
           name="payment-option"
           id="payment-option"
           onChange={handlePaymentOptionChange}
         >
-          <option value="">Select payment option</option>
-          <option value="bank_slip">Bank Slip</option>
+          <option value="">Selecione o Pagamento</option>
+          <option value="bank_slip">Boleto</option>
           <option value="pix">Pix</option>
           <option value="card">Card</option>
         </select>
@@ -81,7 +81,7 @@ export function Payment({ onPaymentOptionChange }) {
                 value={selectedCreditCard}
                 onChange={handleCreditCardOptionChange}
               >
-                <option value="">Select a card</option>
+                <option value="">Selecione seu Cartão</option>
                 {creditCards.map((card) => (
                   <option key={card.id} value={card.name}>{card.name}</option>
                 ))}
@@ -95,16 +95,15 @@ export function Payment({ onPaymentOptionChange }) {
         )}
 
         {selectedCardInfo && (
-          <div className="w-96 fmax-w-lg mx-auto">
+          <div className="w-56 flex flex-col justify-start ">
             <details className="text-stone-950  bg-zinc-200 hover:open:bg-white open:ring-1 open:ring-black dark:open:ring-white/10 open:shadow-lg p-6 rounded-lg" open>
               <summary className=" cursor-pointer text-sm leading-6 text-slate-900 dark:text-black font-semibold select-none">
                 {selectedCardInfo.name}
               </summary>
               <div className="mt-3 text-sm leading-6 text-stone-950 dark:text-stone-950">
-                <p>Number: {selectedCardInfo.id}</p>
-                <p>Card name: {selectedCardInfo.name}</p>
-                <p>Number: {selectedCardInfo.number}</p>
-                <p>Expiration: {selectedCardInfo.expiration_month}/{selectedCardInfo.expiration_year}</p>
+                <p>Titular: {selectedCardInfo.name}</p>
+                <p>Numero: {selectedCardInfo.number}</p>
+                <p>Data expiração: {selectedCardInfo.expiration_month}/{selectedCardInfo.expiration_year}</p>
               </div>
             </details>
           </div>
