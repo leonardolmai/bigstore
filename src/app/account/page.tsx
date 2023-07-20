@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import User from "@/components/organisms/Account/User"
 import Product from '@/components/organisms/Account/Product';
-import User_Cards from '@/components/organisms/Account/User_Cards';
 import UserCardsWrapper from '@/components/organisms/Account/User_Cards'; // Verifique se o caminho está correto
+import UserAddressesWrapper from "@/components/organisms/Account/Address";
 // import Employer from '@/components/organisms/company/Employer';
 // import Settings_Company from "@/components/organisms/company/Settings_Company"
 import { useMediaQuery } from 'react-responsive';
@@ -198,6 +198,7 @@ export default function company() {
                 <p>Addresses</p>
               </div>
             </nav>
+            <UserAddressesWrapper screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} />
             {/* <Product screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} /> */}
           </> : ''}
         </div>
