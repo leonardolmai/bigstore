@@ -37,11 +37,11 @@ export default function InputField({ label, name, id, style, size, value, onChan
   let inputtype = '';
 
   if (size === "small") {
-    inputclassSize = 'w-42';
+    inputclassSize = 'min-w-42';
   } else if (size === "medium") {
-    inputclassSize = 'w-72';
+    inputclassSize = 'min-w-72';
   } else if (size === "large") {
-    inputclassSize = 'w-80';
+    inputclassSize = 'min-w-80';
   }
 
   if (style === "input-text-sales") {
