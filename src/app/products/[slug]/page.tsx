@@ -16,8 +16,8 @@ export default function Products({ params }: { params: { slug: string } }) {
 
               <CarouselComponent product={fetchedProduct} />
             </div>
-            <p>Descrição Geral:</p>
-            {fetchedProduct && <p>{fetchedProduct.description}</p>}
+            <p className='py-1 px-4 font-bold'>Descrição Geral:</p>
+            {fetchedProduct && <p className='py-5 px-4'>{fetchedProduct.description}</p>}
           </div>
           <div className="bg-[#F1F1F4] w-10/12 basis-40 md:px-6 px-4 max-md:mb-8 max-md:items-center ml-0 md:ml-14 rounded-xl pb-2 items-center">
             <Detail_sale product={fetchedProduct} />
