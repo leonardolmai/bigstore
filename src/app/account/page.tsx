@@ -7,7 +7,7 @@ import UserCardsWrapper from '@/components/organisms/Account/User_Cards'; // Ver
 // import Employer from '@/components/organisms/company/Employer';
 // import Settings_Company from "@/components/organisms/company/Settings_Company"
 import { useMediaQuery } from 'react-responsive';
-import { hasCookie, getCookie, setCookie } from 'cookies-next'
+import { hasCookie, getCookie, setCookie, deleteCookie } from 'cookies-next'
 import {
   Award,
   User as Usericon,
@@ -15,6 +15,7 @@ import {
   UserCog2 as ConfCompany,
   Package2 as Package,
   MapPin as Addresses,
+  LogOutIcon,
 } from 'lucide-react';
 
 
@@ -34,9 +35,27 @@ export default function company() {
   const isSmallNanoScreen = useMediaQuery({ minWidth: 280 }, undefined, (matches) => matches);
 
   useEffect(() => {
+
+
+
     if (typeof window !== 'undefined') {
-      if (hasCookie('position') === false) {
-        setCookie('position', '0')
+      if (hasCookie('token') === false) {
+        if (hasCookie('position')) {
+          deleteCookie('position')
+        }
+        window.location.href = '/login';
+      }
+      else if (hasCookie('token') !== false) {
+        if (hasCookie('position') === false) {
+          setCookie('position', '0')
+        }
+
+      }
+      if (getCookie('position') === '4') {
+        deleteCookie('position')
+        deleteCookie('typeUser')
+        deleteCookie('token')
+        window.location.href = '/login';
       }
 
       if (isLargeScreen) {
@@ -68,8 +87,10 @@ export default function company() {
         setAlignNavbar('flex flex-row pl-6 pr-6')
         setAlingLists(activeItem === 1 ? 'flex flex-col' : 'flex flex-col justify-center gap-3 items-center');
       }
-
     }
+
+
+
   }, [activeItem, isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen]);
 
   const handleItemClick = (index: number) => {
@@ -89,7 +110,7 @@ export default function company() {
   return (
 
     <div className={`${alignFirstNavbar}`}>
-      <div className={` justify-center items-center border-2 pt-6 pb-6 bg-[#ffffffab]${alignNavbar} `} >
+      {hasCookie('token') && hasCookie('typeUser') ? <div className={` justify-center items-center border-2 pt-6 pb-6 bg-[#ffffffab]${alignNavbar} `} >
         <div className={` justify-center items-center gap-6 text-center break-words ${alignNavbar} `}>
           <div className={`ustify-center items-center ${(isLargeScreen === true || isMediumScreen === true ? alignNavbar : 'hidden')} `}>
             <Award size={40} className='stroke-[#FA4907] ' />
@@ -107,15 +128,20 @@ export default function company() {
           <div className={` justify-center items-center  pt-6 pb-6  text-center break-words ${alignNavbar}`}>
             <Addresses className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick('3')} />
           </div>
+          <div className={` justify-center items-center  pt-6 pb-6  text-center break-words ${alignNavbar}`}>
+            <LogOutIcon color='red' className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick('4')} />
+          </div>
         </div>
 
         <div>
 
         </div>
       </div>
+        : <></>}
+
       <div className="flex flex-1 justify-center mt-24 mb-20">
         <div className="flex flex-col w-[1244px] min-h-[683px] max-w-max h-full rounded-3xl bg-[#febc2f36]  shadow">
-          {activeNavbar !== '1' && activeNavbar !== '2' && activeNavbar !== '3' ? <>
+          {activeNavbar !== '1' && activeNavbar !== '2' && activeNavbar !== '3' && hasCookie('position') ? <>
             {/* <nav>
               <div className="flex flex-row font-sans justify-between pl-3 pr-3 p-2 m-1 text-lg font-bold">
                 <div className={`${isItemActive(0)}`} onClick={() => handleItemClick(0)}>
