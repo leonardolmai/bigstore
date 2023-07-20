@@ -46,7 +46,7 @@ export function B_forms({ name, size, onclick, type }: B_form) {
   if (type === 'freight') {
     text_info = (
       <React.Fragment>
-        <p>Calcule</p>
+        <p>Calcular</p>
       </React.Fragment>
     )
   } else if (type === 'Buy_now') {
@@ -75,10 +75,6 @@ export function B_forms({ name, size, onclick, type }: B_form) {
         <p className="px-1">{name}</p>
       </React.Fragment>
     )
-  }
-
-  const renderHTML = () => {
-    return { __html: text_info }
   }
 
   return (

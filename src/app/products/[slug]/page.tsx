@@ -20,7 +20,7 @@ export default function Products({ params }: { params: { slug: string } }) {
               <p className="px-4 py-5">{fetchedProduct.description}</p>
             )}
           </div>
-          <div className="ml-0 w-10/12 basis-40 items-center rounded-xl bg-[#F1F1F4] px-4 pb-2 max-md:mb-8 max-md:items-center md:ml-14 md:px-6">
+          <div className="ml-0 w-10/12 basis-40 items-center rounded-xl bg-[#F1F1F4] pb-2 max-md:mb-8 max-md:items-center md:ml-14 md:px-6">
             <Detail_sale product={fetchedProduct} />
           </div>
         </div>

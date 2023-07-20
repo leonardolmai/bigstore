@@ -38,7 +38,7 @@ export default function CarouselComponent({
   product,
 }: ProductProps): React.JSX.Element {
   return (
-    <div className="relative m-auto flex h-full w-full max-w-[1400px] flex-row justify-center  rounded-xl px-4 py-4 shadow-xl max-md:h-60  max-md:w-60">
+    <div className="relative m-auto flex h-full w-full max-w-[1400px] flex-row justify-center  rounded-xl px-4 py-4 shadow-xl max-md:h-60">
       <Carousel product={product} />
     </div>
   )

@@ -58,7 +58,7 @@ export default function Freight({ multiply }) {
   return (
     <div>
       <InputField
-        label="Your Cep:"
+        label="CEP:"
         name="input"
         id="input-field"
         style="input-text-sales"
@@ -71,41 +71,40 @@ export default function Freight({ multiply }) {
         size="small"
         name="Calculate"
         type="freight"
-        name="freight"
       />
 
       {loading && <p>Calculando frete...</p>}
       <div className="flex flex-row">
-        <p className="mb-3 mt-3 flex flex-row font-bold">
-          Freight Value: R${' '}
+        <p className="mb-3 mt-3 font-bold">
+          Valor do frete: R${' '}
           {multiply == 1 && multiply && freightPrice && (
-            <p className="font-light">
+            <span className="font-light">
               {freightPrice.valor.toLocaleString('pt-BR', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
-            </p>
+            </span>
           )}
           {multiply % 2 === 0 && freightPrice && (
-            <p className="font-light">
+            <span className="font-light">
               {(freightPrice.valor * multiply).toLocaleString('pt-BR', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
-            </p>
+            </span>
           )}
           {multiply % 2 !== 0 && multiply > 1 && freightPrice && (
-            <p className="font-light">
+            <span className="font-light">
               {(freightPrice.valor * (multiply - 1)).toLocaleString('pt-BR', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
-            </p>
+            </span>
           )}
         </p>
       </div>
-      <div className="flex flex-row">
-        <p className="mb-3 mt-3 font-bold">Send to:ㅤ</p>
+      <div className="flex flex-col">
+        <p className="mb-3 mt-3 font-bold">Enviar para:ㅤ</p>
         {freightLocale && (
           <p className="flex flex-row items-center">
             {' '}

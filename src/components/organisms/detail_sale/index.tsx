@@ -1,13 +1,15 @@
 'use client'
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { B_forms } from '@/components/atoms/buttons'
 import Freight from '@/components/molecules/freight'
 import { Counter } from '@/components/molecules/CountValue/'
 import { ProductProps } from '@/types/product'
 
 export default function DetailSale({ product }: ProductProps) {
-  const [cont, setCont] = useState(1)
   const [QuantitySelect, setQuantitySelect] = useState(1)
+  const router = useRouter()
+
   const handleCountChange = (count: number) => {
     setQuantitySelect(count)
   }
@@ -27,23 +29,23 @@ export default function DetailSale({ product }: ProductProps) {
       product,
     }
     localStorage.setItem(product.id.toString(), JSON.stringify(cartItem))
-    window.location.href = '/cart'
+    router.push('/login')
   }
 
   return (
     <div className="flex flex-col  items-center">
-      <div className="item-center ml-4 mr-4  h-full w-11/12 w-full">
+      <div className="item-center ml-4 mr-4  h-full md:w-64">
         {product.quantity > 0 ? (
           <React.Fragment>
             <article className="mt-4 flex flex-row justify-center">
-              <div className="  mb-6  w-full rounded-xl bg-[#D9D9D9] p-3 text-center  ">
+              <div className="  mb-6 rounded-xl bg-[#D9D9D9] p-3 text-center md:w-full  ">
                 <h1>{product.name}</h1>
               </div>
             </article>
             <div className="m-1 rounded-xl bg-[#F9EDC8] bg-gradient-to-r from-transparent p-2">
               <Freight multiply={QuantitySelect} />
               <div className="mb-6 mt-6">
-                <h1>Quantity |{product.quantity}|</h1>
+                <h1>Em estoque |{product.quantity}|</h1>
                 <Counter
                   maxLimit={product.quantity}
                   initialQuantity={1}
@@ -51,29 +53,22 @@ export default function DetailSale({ product }: ProductProps) {
                 />
               </div>
               <p>
-                Valor: R${' '}
+                Total: R${' '}
                 {product &&
                   (product.price * QuantitySelect).toLocaleString('pt-BR', {
                     minimumFractionDigits: 2,
                   })}
               </p>
               <div className="mb-3 mt-6">
-                <h1 className=" mb-1 mt-1">Send The Product to Cart</h1>
                 <B_forms
                   size="small"
                   onclick={handleAddToCart}
-                  name="add to Cart"
+                  name="Adicionar"
                   type="Cart"
                 />
               </div>
               <div className=" mb-6 mt-6" onClick={handleAddToCartnow}>
-                <h1 className=" mb-1 mt-1">Finish Order now</h1>
-                <B_forms
-                  size="small"
-                  name="Carrinho"
-                  type="Buy_now"
-                  name="Buy Now"
-                />
+                <B_forms size="small" name="Comprar agora" type="Buy_now" />
               </div>
             </div>
             <div className="mt-14 text-center">
@@ -96,19 +91,19 @@ export default function DetailSale({ product }: ProductProps) {
         ) : (
           <React.Fragment>
             <article className="mt-4 flex flex-row justify-center">
-              <div className="  mb-6  w-full rounded-xl bg-[#D9D9D9] p-3 text-center  ">
+              <div className="  mb-6 rounded-xl bg-[#D9D9D9] p-3 text-center md:w-full  ">
                 <h1>{product.name}</h1>
               </div>
             </article>
-            <div className="m-1 mt-6 w-4/5 rounded-xl bg-[#F9EDC8] bg-gradient-to-r from-transparent pb-16 pl-6 pr-6 pt-16">
+            <div className="m-1 mt-6 min-w-[200px] rounded-xl bg-[#F9EDC8] bg-gradient-to-r from-transparent pb-16 pl-6 pr-6 pt-16">
               <span> O poduto no momento se encontra fora de estoque</span>
             </div>
             <div>
               <p>
                 Fique atento na hora de consumir online, não deixe de exigir
-                seus direitos Brasileiros. acesse essa pagina para entender
-                melhor dos teus Direitosacompanhado de todo código de defesa do
-                consumidor.
+                seus direitos brasileiros. Acesse essa página para entender
+                melhor dos teus direitos, acompanhado de todo código de defesa
+                do consumidor.
               </p>
               <a
                 href="https://www.planalto.gov.br/ccivil_03/leis/l8078compilado.htm"
