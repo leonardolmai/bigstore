@@ -7,7 +7,7 @@ import UserCardsWrapper from '@/components/organisms/Account/User_Cards'; // Ver
 // import Employer from '@/components/organisms/company/Employer';
 // import Settings_Company from "@/components/organisms/company/Settings_Company"
 import { useMediaQuery } from 'react-responsive';
-
+import { hasCookie, getCookie, setCookie } from 'cookies-next'
 import {
   Award,
   User as Usericon,
@@ -16,12 +16,12 @@ import {
   Package2 as Package,
   MapPin as Addresses,
 } from 'lucide-react';
-import Settings from '@/components/organisms/company/Product';
+
 
 
 export default function company() {
   const [activeItem, setActiveItem] = useState(0);
-  const [activeNavbar, setActiveNavbar] = useState(0);
+  const [activeNavbar, setActiveNavbar] = useState(getCookie('position'))
   const [alingLists, setAlingLists] = useState('');
   const [alignNavbar, setAlignNavbar] = useState('');
   const [alignFirstNavbar, setalignFirstNavbar] = useState('');
@@ -35,6 +35,10 @@ export default function company() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      if (hasCookie('position') === false) {
+        setCookie('position', '0')
+      }
+
       if (isLargeScreen) {
         setAlignNavbar('flex flex-col w-32')
         setalignFirstNavbar('flex flex-row')
@@ -61,7 +65,6 @@ export default function company() {
         setSizeIcons(16)
         setAlingLists(activeItem === 1 ? 'flex flex-col' : 'flex flex-col justify-center gap-3 items-center');
       } else {
-        setAlignNavbar(8)
         setAlignNavbar('flex flex-row pl-6 pr-6')
         setAlingLists(activeItem === 1 ? 'flex flex-col' : 'flex flex-col justify-center gap-3 items-center');
       }
@@ -69,15 +72,17 @@ export default function company() {
     }
   }, [activeItem, isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen]);
 
-  const handleItemClick = (index) => {
+  const handleItemClick = (index: number) => {
     setActiveItem(index);
   };
 
-  const handleNavbarClick = (index) => {
-    setActiveNavbar(index);
-    setActiveItem(0);
+  const handleNavbarClick = (index: String) => {
+    if (typeof window !== 'undefined') {
+      setCookie('position', index);
+      window.location.href = '/account';
+    }
   }
-  const isItemActive = (index) => {
+  const isItemActive = (index: number) => {
     return index === activeItem ? 'text-[#FA4907] border-[#FA4907] ' : 'text-black border-black hover:text-[#3676ff] pt-22  hover:border-[#3676ff] ';
   };
 
@@ -91,16 +96,16 @@ export default function company() {
             <h1 className='break-all font-bold'> Account</h1>
           </div>
           <div className={` justify-center items-center  pt-6 pb-6  text-center break-words ${alignNavbar} `}>
-            <Usericon className='hover:cursor-pointer hover:stroke-[#FA4907] ' size={sizeicons} onClick={() => handleNavbarClick(0)} />
+            <Usericon className='hover:cursor-pointer hover:stroke-[#FA4907] ' size={sizeicons} onClick={() => handleNavbarClick('0')} />
           </div>
           <div className={` justify-center items-center  pt-6 pb-6  text-center break-words ${alignNavbar}`}>
-            <Package className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick(1)} />
+            <Package className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick('1')} />
           </div>
           <div className={` justify-center items-center  pt-6 pb-6  text-center break-words ${alignNavbar}`}>
-            <Cards className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick(2)} />
+            <Cards className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick('2')} />
           </div>
           <div className={` justify-center items-center  pt-6 pb-6  text-center break-words ${alignNavbar}`}>
-            <Addresses className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick(3)} />
+            <Addresses className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick('3')} />
           </div>
         </div>
 
@@ -110,7 +115,7 @@ export default function company() {
       </div>
       <div className="flex flex-1 justify-center mt-24 mb-20">
         <div className="flex flex-col w-[1244px] min-h-[683px] max-w-max h-full rounded-3xl bg-[#febc2f36]  shadow">
-          {activeNavbar === 0 ? <>
+          {activeNavbar !== '1' && activeNavbar !== '2' && activeNavbar !== '3' ? <>
             {/* <nav>
               <div className="flex flex-row font-sans justify-between pl-3 pr-3 p-2 m-1 text-lg font-bold">
                 <div className={`${isItemActive(0)}`} onClick={() => handleItemClick(0)}>
@@ -145,7 +150,7 @@ export default function company() {
             </nav> */}
             <User screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} />
           </> : ''}
-          {activeNavbar === 1 ? <>
+          {activeNavbar === '1' ? <>
             <nav>
               <div className="flex flex-row h-fit font-sans justify-center pl-3 pr-3 p-2 m-1 text-lg font-bold">
                 <p>My Products</p>
@@ -153,7 +158,7 @@ export default function company() {
             </nav>
             <Product screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} items={20} />
           </> : ''}
-          {activeNavbar === 2 ? <>
+          {activeNavbar === '2' ? <>
             <nav>
               <div className="flex flex-row h-fit font-sans justify-center pl-3 pr-3 p-2 m-1 text-lg font-bold">
                 <p>Cards</p>
@@ -161,7 +166,7 @@ export default function company() {
             </nav>
             <UserCardsWrapper screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} />
           </> : ''}
-          {activeNavbar === 3 ? <>
+          {activeNavbar === '3' ? <>
             <nav>
               <div className="flex flex-row  font-sans justify-center pl-3 pr-3 p-2 m-1 text-lg font-bold">
                 <p>Addresses</p>

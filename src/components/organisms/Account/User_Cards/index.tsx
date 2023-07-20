@@ -90,7 +90,7 @@ export function User_Cards({ screens }) {
 
       // Se o cartão foi criado com sucesso, você pode fazer algo aqui, como exibir uma mensagem de sucesso ou atualizar a lista de cartões.
       console.log('Cartão criado:', response.data);
-
+      window.location.href = '/account';
       // Limpar o formulário após criar o cartão
       setName('');
       setNumber('');
@@ -127,7 +127,7 @@ export function User_Cards({ screens }) {
           'Authorization': `Token ${getCookie('token')}`,
         },
       });
-
+      window.location.href = '/account';
       // Verificar se a requisição foi bem-sucedida e exibir o alerta
       if (response.status === 200) {
         alert('Cartão atualizado com sucesso!');
@@ -235,7 +235,7 @@ export function User_Cards({ screens }) {
           'Authorization': `Token ${getCookie('token')}`,
         },
       });
-
+      window.location.href = '/account';
 
     } catch (error) {
       console.error('Erro ao obter detalhes do cartão:', error);
@@ -286,7 +286,7 @@ export function User_Cards({ screens }) {
         <div className={` gap-6 flex ${screens.isSmallScreen === true ? "flex-row" : "flex-col"}  justify-center items-center`}>
           {createdform ? <div className='flex flex-col gap-6'>
             <div className='flex flex-col'>
-              <label>Name Card</label>
+              <label>Titular</label>
               <input
                 type='text'
                 value={name}
@@ -295,7 +295,7 @@ export function User_Cards({ screens }) {
               />
             </div>
             <div className='flex flex-col'>
-              <label>Number Card</label>
+              <label>Numero do Cartão</label>
               <input
                 type='text'
                 value={number}
@@ -304,7 +304,7 @@ export function User_Cards({ screens }) {
               />
             </div>
             <div className='flex flex-col'>
-              <label>Expiration Date</label>
+              <label>Data de Validade</label>
               <div className='flex flex-row gap-2'>
                 <input
                   type='number'
@@ -335,17 +335,17 @@ export function User_Cards({ screens }) {
             </div>
             <div>
               <button onClick={toform} className='no-select p-1 mt-2 w-full active:bg-white active:text-black text-white rounded-xl shadow-md cursor-pointer bg-[#000000]'>
-                Back
+                Voltar
               </button>
               <button onClick={handleCreateCard} className='no-select p-1 mt-2 w-full active:bg-orange-500 rounded-xl shadow-md cursor-pointer bg-[#FEBF2F]'>
-                Create Card
+                Criar Cartão
               </button>
             </div>
 
 
           </div> : <>{createdform2 ? <div className='flex flex-col gap-6'>
             <div className='flex flex-col'>
-              <label>nameCard2</label>
+              <label>Titular</label>
               <input
                 type='text'
                 className='pl-1 min-w-full max-w-[550px] rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'
@@ -354,7 +354,7 @@ export function User_Cards({ screens }) {
               />
             </div>
             <div className='flex flex-col'>
-              <label>number Card2</label>
+              <label>Numero do catão</label>
               <input
                 type='number'
                 className='pl-1 min-w-full max-w-[550px] rounded-lg shadow-md outline-2 focus:outline-[#FEDB2F]'
@@ -363,7 +363,7 @@ export function User_Cards({ screens }) {
               />
             </div>
             <div className='flex flex-col'>
-              <label>number Card2</label>
+              <label>Data de Validade</label>
               <div className='flex flex-row gap-2'>
                 <input
                   type='number'
@@ -385,7 +385,7 @@ export function User_Cards({ screens }) {
               </div>
             </div>
             <div className='flex flex-col'>
-              <label>CVC2</label>
+              <label>CVC</label>
               <input
                 type='password'
                 pattern='[0-9]{3}'
@@ -396,10 +396,10 @@ export function User_Cards({ screens }) {
             </div>
             <div>
               <button onClick={toform2} className='no-select p-1 mt-2 w-full active:bg-white active:text-black text-white rounded-xl shadow-md cursor-pointer bg-[#000000]'>
-                Back
+                Voltar
               </button>
               <button onClick={handlePatchCard} className='no-select p-1 mt-2 w-full active:bg-orange-500 rounded-xl shadow-md cursor-pointer bg-[#FEBF2F]'>
-                Update Card
+                Atualizar Cartão
               </button>
             </div>
 
@@ -408,14 +408,14 @@ export function User_Cards({ screens }) {
 
               {selectcard !== null ? <div className={`flex   ${aligncard} gap-2`}>
                 <div className='bg-gradient-to-r from-purple-600 to-blue-600 text-white w-[250px]  h-[130px] ml-10  p-2 items-start rounded-xl shadow shadow-black'>
-                  <p className='mt-1 mb-1 no-select'>Name: {selectcard.name}</p>
-                  <p className='mt-1 mb-1 no-select'>Number: {selectcard.number}</p>
-                  <p className='mt-1 mb-1 no-select'>Validate: {selectcard.expiration_month}/{selectcard.expiration_year}</p>
+                  <p className='mt-1 mb-1 no-select'>Titular: {selectcard.name}</p>
+                  <p className='mt-1 mb-1 no-select'>Numero: {selectcard.number}</p>
+                  <p className='mt-1 mb-1 no-select'>Validade: {selectcard.expiration_month}/{selectcard.expiration_year}</p>
                   <p className='mt-1 mb-1 no-select'>CVC: {selectcard.cvc}</p>
                 </div>
                 <div className={`flex ${alignbutton}  gap-3   justify-center ml-2 items-center`}>
-                  <button onClick={toform2} className='bg-green-400 shadow rounded-lg p-1 w-14 hover:bg-green-800 active:bg-green-200'>Edit</button>
-                  <button onClick={() => toformDelete(selectcard.id)} className='bg-red-500 shadow  rounded-lg p-1 w-14 hover:bg-red-800 active:bg-red-200'>Delete</button>
+                  <button onClick={toform2} className='bg-green-400 shadow rounded-lg p-1 w-16 hover:bg-green-800 active:bg-green-200'>Editar</button>
+                  <button onClick={() => toformDelete(selectcard.id)} className='bg-red-500 shadow  rounded-lg p-1 w-16 hover:bg-red-800 active:bg-red-200'>Deletar</button>
                 </div>
               </div> : <div className='mb-32'></div>}
 
@@ -428,7 +428,7 @@ export function User_Cards({ screens }) {
                   onChange={(e) => handleCardSelection(e.target.value)}
                 >
                   <option value="" disabled>
-                    List Cards
+                    Lista de Cartões
                   </option>
                   {cards.map((card) => (
                     <option key={card.id} value={card.id}>
@@ -437,7 +437,7 @@ export function User_Cards({ screens }) {
                   ))}
                 </select>
 
-                <button onClick={toform} className='no-select p-1 mt-2 w-full active:bg-orange-500 rounded-xl shadow cursor-pointer bg-[#FEBF2F]'>Create new Card</button>
+                <button onClick={toform} className='no-select p-1 mt-2 w-full active:bg-orange-500 rounded-xl shadow cursor-pointer bg-[#FEBF2F]'>Criar novo Cartão</button>
               </div>
 
 
