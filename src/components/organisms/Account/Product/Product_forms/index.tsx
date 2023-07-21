@@ -2,13 +2,40 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function Product_forms({ screens, boolforms, setBoolForms }) {
+export default function Product_forms({ screens, boolforms, setBoolForms, order }) {
   const [title, setTitle] = useState("");
   const [information, setInformation] = useState("");
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alingForm, setAlingForm] = useState('');
   const [formInput, setFormInput] = useState('');
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/report/`,
+        {
+          title,
+          information,
+          orderId: order.id, // Pass the order id as a parameter for the POST request
+        }
+      );
+
+      setAlertMessage("Employee added successfully.");
+    } catch (error) {
+      setAlertMessage("Request failed. Please try again.");
+    }
+
+    setLoading(false);
+  };
+
+  const handleBackClick = () => {
+    setBoolForms(false);
+  };
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -47,28 +74,7 @@ export default function Product_forms({ screens, boolforms, setBoolForms }) {
     setInformation(e.target.value)
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    setLoading(true);
-
-    try {
-      const response = await axios.post(
-        `http://localhost:8000/api/report/`,
-        { title, information }
-      );
-
-      setAlertMessage("Employee added successfully.");
-    } catch (error) {
-      setAlertMessage("Request failed. Please try again.");
-    }
-
-    setLoading(false);
-  };
-
-  const handleBackClick = () => {
-    setBoolForms(false);
-  };
 
   return (
     <div className={`${alingForm} flex flex-col justify-center self-center`}>

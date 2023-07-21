@@ -79,12 +79,12 @@ export default function company() {
         setSizeIcons(18)
         setAlingLists(activeItem === 1 ? 'flex flex-col' : 'flex flex-col justify-center gap-3 items-center');
       } else if (isSmallNanoScreen) {
-        setAlignNavbar('flex flex-row pl-6 pr-6')
+        setAlignNavbar('flex flex-row ')
         setalignFirstNavbar('flex flex-col')
         setSizeIcons(16)
         setAlingLists(activeItem === 1 ? 'flex flex-col' : 'flex flex-col justify-center gap-3 items-center');
       } else {
-        setAlignNavbar('flex flex-row pl-6 pr-6')
+        setAlignNavbar('flex flex-row ')
         setAlingLists(activeItem === 1 ? 'flex flex-col' : 'flex flex-col justify-center gap-3 items-center');
       }
     }
@@ -182,7 +182,7 @@ export default function company() {
                 <p>My Products</p>
               </div>
             </nav>
-            <Product screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} items={20} />
+            <Product screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} />
           </> : ''}
           {activeNavbar === '2' ? <>
             <nav>
