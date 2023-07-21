@@ -5,6 +5,7 @@ import Product from '@/components/organisms/company/product';
 import Employer from '@/components/organisms/company/Employer';
 import Settings_Company from "@/components/organisms/company/Settings_Company"
 import { useMediaQuery } from 'react-responsive';
+import { getCookie, hasCookie, deleteCookie, setCookie } from 'cookies-next';
 
 import {
   UserPlus as MoreCompany,
@@ -17,12 +18,12 @@ import {
   Users,
   SettingsIcon,
 } from 'lucide-react';
-import Settings from '@/components/organisms/company/Settings_Company';
+
 
 
 export default function company() {
   const [activeItem, setActiveItem] = useState(0);
-  const [activeNavbar, setActiveNavbar] = useState(0);
+  const [activeNavbar, setActiveNavbar] = useState(getCookie('position'))
   const [alingLists, setAlingLists] = useState('');
   const [alignNavbar, setAlignNavbar] = useState('');
   const [alignFirstNavbar, setalignFirstNavbar] = useState('');
@@ -36,6 +37,14 @@ export default function company() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      if (hasCookie('token') === true) {
+        if (hasCookie('navbar_company') === false) {
+          setCookie('navbar_company', '0');
+          deleteCookie('position')
+        }
+      } else {
+        window.location.href = '/login'
+      }
       if (isLargeScreen) {
         setAlignNavbar('flex flex-col w-32')
         setalignFirstNavbar('flex flex-row')
@@ -75,8 +84,10 @@ export default function company() {
   };
 
   const handleNavbarClick = (index) => {
-    setActiveNavbar(index);
-    setActiveItem(0);
+    if (typeof window !== 'undefined') {
+      setCookie('navbar_company', index);
+      window.location.href = '/Company';
+    }
   }
   const isItemActive = (index) => {
     return index === activeItem ? 'text-[#FA4907] border-[#FA4907] ' : 'text-black border-black hover:text-[#3676ff] pt-22  hover:border-[#3676ff] ';
@@ -92,16 +103,16 @@ export default function company() {
             <h1 className='break-all'> Company Nameeeed</h1>
           </div>
           <div className={` justify-center items-center  pt-6 pb-6  text-center break-words ${alignNavbar} `}>
-            <Home_page className='hover:cursor-pointer hover:stroke-[#FA4907] ' size={sizeicons} onClick={() => handleNavbarClick(0)} />
+            <Home_page className='hover:cursor-pointer hover:stroke-[#FA4907] ' size={sizeicons} onClick={() => handleNavbarClick("0")} />
           </div>
           <div className={` justify-center items-center  pt-6 pb-6  text-center break-words ${alignNavbar}`}>
-            <PackagePlus className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick(1)} />
+            <PackagePlus className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick("1")} />
           </div>
           <div className={` justify-center items-center  pt-6 pb-6  text-center break-words ${alignNavbar}`}>
-            <Users className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick(2)} />
+            <Users className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick("2")} />
           </div>
           <div className={` justify-center items-center  pt-6 pb-6  text-center break-words ${alignNavbar}`}>
-            <SettingsIcon className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick(3)} />
+            <SettingsIcon className='hover: cursor-pointer hover:stroke-[#FA4907]' size={sizeicons} onClick={() => handleNavbarClick("3")} />
           </div>
         </div>
 
@@ -111,7 +122,7 @@ export default function company() {
       </div>
       <div className="flex flex-1 justify-center mt-24 mb-20">
         <div className="flex flex-col w-[1244px] min-h-[683px] max-w-max h-full rounded-3xl bg-[#febc2f36]">
-          {activeNavbar === 0 ? <>         <nav>
+          {activeNavbar !== '1' && activeNavbar !== '2' && activeNavbar !== '3' && hasCookie('navbar_company') ? <>         <nav>
             <div className="flex flex-row font-sans justify-between pl-3 pr-3 p-2 m-1 text-lg font-bold">
               <div className={`${isItemActive(0)}`} onClick={() => handleItemClick(0)}>
                 <div className="flex flex-row gap-2 cursor-pointer">
@@ -143,7 +154,7 @@ export default function company() {
               </div>
             </div>
           </nav>
-            <Home activeItem={activeItem} screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} alingLists={alingLists} /></> : ''}
+            <Home activeItem={activeItem} screens={{ isLargeScreen, isMediumScreen, isSmallScreen, isNanoScreen, isSmallNanoScreen }} /></> : ''}
           {activeNavbar === 1 ? <>
             <nav>
               <div className="flex flex-row h-fit font-sans justify-center pl-3 pr-3 p-2 m-1 text-lg font-bold">
