@@ -34,7 +34,7 @@ export function ProductCard({ product }: ProductProps) {
                 })}
               </span>
             </Link>
-            <AddToCart />
+            <AddToCart product={product} />
           </div>
         </div>
       </div>
