@@ -1,4 +1,5 @@
 'use client'
+import { hasCookie, getCookie } from 'cookies-next'
 import { CategorySelect } from '@/components/molecules/CategorySelect'
 import { SearchBar } from '@/components/molecules/SearchBar'
 import Link from 'next/link'
@@ -11,6 +12,17 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const isAuthenticated = window && hasCookie('token')
+  const typeUser = window && hasCookie('typeUser') && getCookie('typeUser')
+  const isEmployeeBigstore = () => {
+    if (
+      (typeUser && typeUser === 'Bigstore') ||
+      typeUser === 'Employee (Bigstore)'
+    ) {
+      return true
+    }
+    return false
+  }
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -29,15 +41,42 @@ export function Header() {
       >
         <CategorySelect />
         <SearchBar />
-        <Link href={'/signup'} className="font-bold hover:text-primary-dark">
-          Cadastrar
-        </Link>
-        <Link
-          href={'/login'}
-          className="rounded-md bg-primary px-4 py-2 font-bold text-white hover:bg-primary-dark"
-        >
-          Login
-        </Link>
+
+        {!isAuthenticated && (
+          <>
+            <Link
+              href={'/signup'}
+              className="font-bold hover:text-primary-dark"
+            >
+              Cadastrar
+            </Link>
+            <Link
+              href={'/login'}
+              className="rounded-md bg-primary px-4 py-2 font-bold text-white hover:bg-primary-dark"
+            >
+              Login
+            </Link>
+          </>
+        )}
+
+        {isAuthenticated && (
+          <>
+            {isEmployeeBigstore() && (
+              <Link
+                href={'/company'}
+                className="font-bold hover:text-primary-dark"
+              >
+                Empresa
+              </Link>
+            )}
+            <Link
+              href={'/account'}
+              className="font-bold hover:text-primary-dark"
+            >
+              Conta
+            </Link>
+          </>
+        )}
         <Link href={'/cart'} className="self-center lg:pr-6">
           <LuShoppingCart
             className="cursor-pointer hover:stroke-primary-dark"
