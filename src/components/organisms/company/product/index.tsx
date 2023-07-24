@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '@/utils/api'
-import { setCookie, getCookie } from 'cookies-next'
+import { setCookie, getCookie, hasCookie } from 'cookies-next'
 import { ProductImage } from '@/types/product'; // Certifique-se de importar corretamente a interface ProductImage
 import Modal from 'react-modal';
+
 
 export default function Formulario({ screens }) {
   const [name, setName] = useState('');
@@ -130,7 +131,7 @@ export default function Formulario({ screens }) {
         <div className={`gap-6 flex ${screens.isSmallScreen === true ? "flex-row" : "flex-col"}  justify-center items-center`}>
           <div className="flex flex-col w-48">
             <label className="font-bold" htmlFor="name">
-              Title:
+              Titulo:
             </label>
             <input
               className="border-[#B1B1B1] border-2 focus:outline-[#FEBD2F] rounded-lg"
@@ -142,7 +143,7 @@ export default function Formulario({ screens }) {
           </div>
           <div className={`flex flex-col  ${screens.isSmallScreen === true ? "" : "items-center"}`}>
             <label className="font-bold" htmlFor="images">
-              Photo List:
+              Update das IMG's:
             </label>
             <div>
               <input type="file" id="images" accept="image/*" className={`flex flex-col  ${screens.isSmallScreen === true ? "w-60" : "w-[150px]"}`} multiple onChange={handleFileChange} />
@@ -152,7 +153,7 @@ export default function Formulario({ screens }) {
 
         <div className="flex flex-col w-36">
           <label className="font-bold" htmlFor="description">
-            Text:
+            Texto:
           </label>
           <textarea
             className={`resize-none border-[#B1B1B1] ${formInput} border-2 focus:outline-[#FEBD2F] rounded-lg`}
@@ -165,7 +166,7 @@ export default function Formulario({ screens }) {
         <div className={`flex  ${screens.isSmallScreen === true ? "flex-row" : "flex-col"} items-center gap-6`}>
           <div className="flex flex-col w-36">
             <label className="font-bold" htmlFor="quantity">
-              Quantity:
+              Quantidade:
             </label>
             <input
               className="border-[#B1B1B1] border-2 focus:outline-[#FEBD2F] rounded-lg"
@@ -178,7 +179,7 @@ export default function Formulario({ screens }) {
 
           <div className="flex flex-col">
             <label className="font-bold" htmlFor="price">
-              Price:
+              Preço:
             </label>
             <input
               className="border-[#B1B1B1] border-2 focus:outline-[#FEBD2F] rounded-lg"
@@ -192,7 +193,7 @@ export default function Formulario({ screens }) {
 
           <div className="flex flex-col">
             <label className="font-bold" htmlFor="category">
-              Category:
+              Categoria:
             </label>
             <select
               className="border-[#B1B1B1] border-2 focus:outline-[#FEBD2F] rounded-lg"
@@ -200,7 +201,7 @@ export default function Formulario({ screens }) {
               value={category}
               onChange={(event) => setCategory(event.target.value)}
             >
-              <option value="">Select a category</option>
+              <option value="">Selecione uma Categoria'</option>
               <option value="electronics">Electronics</option>
               <option value="clothing">Clothing</option>
               <option value="home">Home</option>
@@ -215,11 +216,13 @@ export default function Formulario({ screens }) {
         </div>
 
         <div className="flex flex-row justify-center items-center self-center m-2">
-          <button className="p-1 pl-2 pr-2 bg-green-300 text-green-950 text-xl rounded-3xl" type="submit">
-            Send
+          <button className="px-2 py-2 bg-primary text-black active:bg-primary-dark text-xl rounded-md" type="submit">
+            Enviar
           </button>
         </div>
       </div>
+      {hasCookie('token') ? <> <div className='flex flex-row  my-3 mx-3 md:mx-12 md:my-12 flex-wrap justify-center md:flex-nowrap gap-5 md:gap-2 rounded-xl px-1 py-1 w-fit min-w-[300px] bg-primary-dark text-center'>Meu Token:<p className='font-bold'>{getCookie('token')}</p></div></> : <></>}
+
     </form >
   );
 }

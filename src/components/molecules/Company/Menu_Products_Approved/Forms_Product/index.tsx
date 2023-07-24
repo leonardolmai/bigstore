@@ -12,6 +12,8 @@ export default function Forms_Product_approved({ screens }) {
   const [modifymsg, setModifymsg] = useState('')
   const [modifysizeinput, selfmodifysizeinput] = useState('')
   const [productDetails, setProductDetails] = useState<Product | null>(null);
+  const [cnpjCompany, setCnpjCompany] = useState('await...')
+  const [created_by, setCreatedBy] = useState('await...')
 
   const handleVerifyClick = () => {
     setCookie('boolform_1', false)
@@ -32,6 +34,33 @@ export default function Forms_Product_approved({ screens }) {
 
     getProductDetails();
   }, []);
+
+  useEffect(() => {
+    const CNPJinfo = async () => {
+      try {
+        const console = await api.get(`/companies/${productDetails?.company}/`, {
+          headers: {
+            'Authorization': `Token ${getCookie('token')}`,
+          },
+        });
+        const console1 = await api.get(`/users/${productDetails?.company}/`, {
+          headers: {
+            'Authorization': `Token ${getCookie('token')}`,
+          },
+        });
+        setCnpjCompany(console.data.cnpj)
+        setCreatedBy(console.data.name)
+        setCookie('boolform', false)
+
+
+      } catch (error) {
+        console.error('Error updating product:', error);
+      }
+    }
+    CNPJinfo();
+  })
+
+
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -153,17 +182,17 @@ export default function Forms_Product_approved({ screens }) {
         </div>
         <div >
           <div className='flex flex-col gap-2 md:flex-wrap'>
-            <label className='font-bold'>CNPJ</label>
-            <input type='text' className=' px-2 py-2 bg-[#E8E8E8] text-[#6B6B6B] rounded-md min-w-[full]  md:w-80  ' value={productDetails?.company || ''} disabled={true} />
+            <label className='font-bold'>Titulo</label>
+            <input type='text' className=' px-2 py-2 bg-[#E8E8E8] text-[#6B6B6B] rounded-md min-w-[full]  md:w-80  ' value={productDetails?.name || ''} disabled={true} />
           </div>
           <div className='flex flex-row gap-2 flex-wrap'>
             <div className='flex flex-col gap-2 '>
-              <label className='font-bold'>Titulo</label>
-              <input type='text' className=' px-2 py-2 bg-[#E8E8E8] text-[#6B6B6B] rounded-md min-w-[full]  md:w-72  ' value={` ${productDetails?.name}`} disabled={true} />
+              <label className='font-bold'>Empresa</label>
+              <input type='text' className=' px-2 py-2 bg-[#E8E8E8] text-[#6B6B6B] rounded-md min-w-[full]  md:w-72  ' value={` ${created_by}`} disabled={true} />
             </div>
             <div className='flex flex-col gap-2'>
-              <label className='font-bold'>Criado por</label>
-              <input type='text' className=' px-2 py-2 bg-[#E8E8E8] text-[#6B6B6B] rounded-md min-w-[full]  md:w-72  ' value={` ${productDetails?.created_by}`} disabled={true} />
+              <label className='font-bold'>CNPJ</label>
+              <input type='text' className=' px-2 py-2 bg-[#E8E8E8] text-[#6B6B6B] rounded-md min-w-[full]  md:w-72  ' value={` ${cnpjCompany}`} disabled={true} />
             </div>
           </div>
           <textarea class={`msg bg-[#E8E8E8] font-light text-[#6B6B6B] mt-3 mb-3 border rounded-md shadow-md outline-4 focus:outline-[#FEBD2F] px-3   ${modifymsg}  resize-none`}
