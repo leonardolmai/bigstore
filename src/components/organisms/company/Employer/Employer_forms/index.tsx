@@ -1,11 +1,10 @@
-'use client'
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { api } from "@/utils/api";
+import { getCookie } from 'cookies-next'
 
-export default function Employer_forms({ screens, boolforms, setBoolForms }) {
+export default function Employer_forms({ screens, setBoolForms, companyId }) {
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+
   const [alingForm, setAlingForm] = useState('');
   const [formInput, setFormInput] = useState('');
 
@@ -17,7 +16,6 @@ export default function Employer_forms({ screens, boolforms, setBoolForms }) {
       } else if (screens.isMediumScreen) {
         setAlingForm('w-[880px]');
         setFormInput('w-[600px] h-[300px]');
-
       } else if (screens.isSmallScreen) {
         setAlingForm('w-[666px]');
         setFormInput('w-[500px] h-[300px]');
@@ -40,57 +38,50 @@ export default function Employer_forms({ screens, boolforms, setBoolForms }) {
     screens.isSmallNanoScreen,
   ]);
 
-
   const handleInputChange = (e) => {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    setLoading(true);
-
+  const handleAddEmployee = async () => {
     try {
-      const response = await axios.post(
-        `http://localhost:8000/api/companies/{id da minha empresa}/employees/`,
-        { email }
-      );
+      await api.post(`/companies/${companyId}/employees/`, { email }, {
+        headers: {
+          Authorization: `Token ${getCookie('token')}`,
+        },
+      });
 
-      setAlertMessage("Employee added successfully.");
+      alert("Funcionário Cadastrado com sucesso")
+      window.location.href = '/company';
     } catch (error) {
-      setAlertMessage("Request failed. Please try again.");
+      alert("erro, Usuario não pode ser cadastrado")
     }
-
-    setLoading(false);
   };
 
   const handleBackClick = () => {
     setBoolForms(false);
   };
 
+
   return (
     <div className={`${alingForm} flex flex-col justify-center self-center`}>
-      <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-6">
+      <form className="flex flex-col justify-center items-center gap-6">
         <input
-          className="w-full max-w-[400px] rounded-lg focus:outline-[#FEBD2F] bg-white"
+          className="w-full max-w-[400px] rounded-md px-2 py-2 focus:outline-[#FEBD2F] bg-white"
           type="email"
           value={email}
           onChange={handleInputChange}
           placeholder="Enter employee email"
           required
         />
-        <div className="flex flex-wrap flex-row gap-10"  >
-          <button className="bg-[#FEBD2F] rounded-xl active:bg-black active:text-[#FEBD2F] p-1" type="submit" disabled={loading}>
-            {loading ? "Adding Employee..." : "Add Employee"}
+        <div className="flex flex-wrap flex-row gap-10">
+          <button className="bg-[#FEBD2F] rounded-md px-2 py-2 active:bg-primary-dark active:text-black p-1" type="button" onClick={handleAddEmployee}>
+            Adicionar Funcionario
           </button>
-          <button className="bg-slate-200 rounded-xl active:bg-black active:text-white p-1" onClick={handleBackClick}>Back</button>
+          <button className="bg-slate-200 rounded-md px-2 py-2 active:bg-black active:text-white p-1" onClick={handleBackClick}>Back</button>
         </div>
-      </form >
+      </form>
 
-      {alertMessage && (
-        <div className="alert">{alertMessage}</div>
-      )
-      }
-    </div >
+
+    </div>
   );
 }
