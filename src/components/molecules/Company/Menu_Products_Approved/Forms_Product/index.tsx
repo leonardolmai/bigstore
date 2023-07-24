@@ -6,7 +6,7 @@ import { api } from '@/utils/api';
 import { Product } from '@/types/product'
 
 // label, name, id, style, size, value, onChange
-export default function Forms_Product({ screens }) {
+export default function Forms_Product_approved({ screens }) {
   const [modifypage, setModifyPage] = useState('')
   const [modifycarousel, setModifycarousel] = useState('')
   const [modifymsg, setModifymsg] = useState('')
@@ -14,7 +14,7 @@ export default function Forms_Product({ screens }) {
   const [productDetails, setProductDetails] = useState<Product | null>(null);
 
   const handleVerifyClick = () => {
-    setCookie('boolform', false)
+    setCookie('boolform_1', false)
     window.location.href = '/company'
 
   };
@@ -25,8 +25,6 @@ export default function Forms_Product({ screens }) {
         const response = await api.get(`/products/${getCookie('select_product')}/`);
         const selectedProduct = response.data;
         setProductDetails(selectedProduct);
-        // setCookie('boolform', false);
-        // window.location.href = '/company';
       } catch (error) {
         console.error('Error fetching product details:', error);
       }
@@ -98,7 +96,7 @@ export default function Forms_Product({ screens }) {
   const handleApproveClick = async () => {
     try {
       const updatedProductData = {
-        is_approved: true,
+        is_approved: false,
       };
       await api.patch(`/products/${getCookie('select_product')}/`, updatedProductData, {
         headers: {
@@ -108,8 +106,8 @@ export default function Forms_Product({ screens }) {
       });
 
 
-      setCookie('boolform', false)
-      alert('Produto aprovada com sucesso!')
+      setCookie('boolform_1', false)
+      alert('Produto desativado com sucesso!')
       window.location.href = '/company'
     } catch (error) {
       console.error('Error updating product:', error);
@@ -125,7 +123,7 @@ export default function Forms_Product({ screens }) {
         },
       });
 
-      setCookie('boolform', false)
+      setCookie('boolform_1', false)
       alert('Produto Reprovado!')
       window.location.href = '/company'
     } catch (error) {
@@ -142,8 +140,8 @@ export default function Forms_Product({ screens }) {
             <div className=" w-fit p-2 rounded-3xl  cursor-pointer active:bg-[#7a7a7a]">
               <input className="cursor-pointer" type="button" value="Voltar" onClick={handleVerifyClick} />
             </div>
-            <div className="bg-[#6cbe7a83] w-fit p-2 rounded-3xl text-[#6CBE79] cursor-pointer active:bg-[#518f5b]">
-              <input className="cursor-pointer" type="button" value="aprovar" onClick={handleApproveClick} />
+            <div className="bg-[#8152ed] w-fit p-2 rounded-3xl text-[#120a22] cursor-pointer active:bg-[#4a2898] active:text-[#8152ed]">
+              <input className="cursor-pointer" type="button" value="Desativar" onClick={handleApproveClick} />
             </div>
             <div className="bg-[#fa480771] w-fit p-2 rounded-3xl text-[#FA4907] cursor-pointer active:bg-[hsl(16,70%,33%)]">
               <input className="cursor-pointer" type="button" value="Reprovar" onClick={handleDeleteClick} />
