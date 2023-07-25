@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const authenticatedRoutes = ['/become-company']
+const authenticatedRoutes = ['/become-company', '/account', '/company']
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value
