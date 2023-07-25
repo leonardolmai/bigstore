@@ -1,50 +1,48 @@
-import { useState, useEffect } from "react";
-import { api } from "@/utils/api";
-import { headers } from "next/headers";
+import { useState, useEffect } from 'react'
+import { api } from '@/utils/api'
 import { getCookie } from 'cookies-next'
 
 export default function Settings_Company({ screens }) {
-  const [widthform, setAlingForm] = useState("");
-  const [formcase, setFormCase] = useState(false);
+  const [widthform, setAlingForm] = useState('')
+  const [formcase, setFormCase] = useState(false)
 
-  const [companyName, setCompanyName] = useState("await information");
-  const [cnpj, setCnpj] = useState("await information");
+  const [companyName, setCompanyName] = useState('await information')
+  const [cnpj, setCnpj] = useState('await information')
 
   useEffect(() => {
     const activecompanyinfo = async () => {
       try {
-        const response = await api.get("companies/1", {
+        const response = await api.get('companies/me', {
           headers: {
             Authorization: `Token ${getCookie('token')}`,
           },
-        });
-        setCompanyName(response.data.name);
-        setCnpj(response.data.cnpj);
+        })
+        setCompanyName(response.data[0].name)
+        setCnpj(response.data[0].cnpj)
       } catch (error) {
-        console.error("Error fetching company information:", error);
+        console.error('Error fetching company information:', error)
       }
-    };
-    activecompanyinfo();
-  }, []);
+    }
+    activecompanyinfo()
+  }, [])
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       if (getCookie('typeUser') === 'Bigstore') {
-
       }
 
       if (screens.isLargeScreen) {
-        setAlingForm("w-[1145px]");
+        setAlingForm('w-[1145px]')
       } else if (screens.isMediumScreen) {
-        setAlingForm("w-[880px]");
+        setAlingForm('w-[880px]')
       } else if (screens.isSmallScreen) {
-        setAlingForm("w-[666px]");
+        setAlingForm('w-[666px]')
       } else if (screens.isNanoScreen) {
-        setAlingForm("w-[380px]");
+        setAlingForm('w-[380px]')
       } else if (screens.isSmallNanoScreen) {
-        setAlingForm("w-[280px]");
+        setAlingForm('w-[280px]')
       } else {
-        setAlingForm("w-[183px]");
+        setAlingForm('w-[183px]')
       }
     }
   }, [
@@ -53,30 +51,34 @@ export default function Settings_Company({ screens }) {
     screens.isSmallScreen,
     screens.isNanoScreen,
     screens.isSmallNanoScreen,
-  ]);
+  ])
 
   const handleAlterform = () => {
-    setFormCase(!formcase);
-  };
+    setFormCase(!formcase)
+  }
 
   const handlePatchCompany = async () => {
     if (typeof window !== 'undefined') {
       try {
-        await api.patch("/companies/1/", { name: companyName, cnpj: cnpj }, {
-          headers: {
-            Authorization: `Token ${getCookie('token')}`,
+        await api.patch(
+          '/companies/1/',
+          { name: companyName, cnpj },
+          {
+            headers: {
+              Authorization: `Token ${getCookie('token')}`,
+            },
           },
-        });
+        )
 
-        alert("informação atualizada com sucesso!")
+        alert('Informação atualizada com sucesso!')
         window.location.href = '/company'
       } catch (error) {
         // Exibir uma mensagem de erro
-        alert("Erro em atualizar as informações")
-        console.error("Error updating company information:", error);
+        alert('Erro em atualizar as informações')
+        console.error('Error updating company information:', error)
       }
     }
-  };
+  }
 
   return (
     <div className={`${widthform}`}>
@@ -84,12 +86,12 @@ export default function Settings_Company({ screens }) {
         {formcase ? (
           <>
             <div className="flex flex-col gap-2">
-              <label className="font-bold">Company Name</label>
+              <label className="font-bold">Nome da empresa</label>
               <input
                 type="text"
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
-                className="w-fit max-w-[700px] rounded-md px-2 py-2 bg-[#FFFFFF] border-solid active:outline-[#ffae00] focus:outline-[#FEBD2F]  mb-4"
+                className="mb-4 w-fit max-w-[700px] rounded-md border-solid bg-[#FFFFFF] px-2 py-2 focus:outline-[#FEBD2F]  active:outline-[#ffae00]"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -98,32 +100,32 @@ export default function Settings_Company({ screens }) {
                 type="text"
                 value={cnpj}
                 onChange={(e) => setCnpj(e.target.value)}
-                className="w-fit max-w-[700px] rounded-md px-2 py-2 bg-[#FFFFFF] border-solid active:outline-[#ffae00]  focus:outline-[#FEBD2F]   mb-4"
+                className="mb-4 w-fit max-w-[700px] rounded-md border-solid bg-[#FFFFFF] px-2 py-2  focus:outline-[#FEBD2F]   active:outline-[#ffae00]"
               />
             </div>
             <div className="flex flex-row flex-wrap gap-6">
               <button
-                className="flex items-center w-fit max-w-[300px] bg-[#8888] text-black active:bg-black active:text-[#8888] pl-2 pr-2 rounded-xl"
+                className="flex w-fit max-w-[300px] items-center rounded-xl bg-[#8888] pl-2 pr-2 text-black active:bg-black active:text-[#8888]"
                 onClick={handleAlterform}
               >
-                Back
+                Voltar
               </button>
               <button
-                className="flex items-center w-fit max-w-[300px] bg-primary text-black active:bg-primary-dark active:text-black px-1 py-1 rounded-md shadow-md active:shadow-orange-700"
+                className="flex w-fit max-w-[300px] items-center rounded-md bg-primary px-1 py-1 text-black shadow-md active:bg-primary-dark active:text-black active:shadow-orange-700"
                 onClick={handlePatchCompany}
               >
-                Save Changes
+                Salvar
               </button>
             </div>
           </>
         ) : (
           <>
             <div className="flex flex-col gap-2">
-              <label className="font-bold">Company Name</label>
+              <label className="font-bold">Nome da empresa</label>
               <input
                 type="text"
                 value={companyName}
-                className="w-fit max-w-[700px] rounded-md px-2 py-2 bg-[#888888] border-solid border-2  hover:border-black cursor-no-drop mb-4"
+                className="mb-4 w-fit max-w-[700px] cursor-no-drop rounded-md border-2 border-solid bg-[#888888]  px-2 py-2 hover:border-black"
                 disabled
               />
             </div>
@@ -132,19 +134,19 @@ export default function Settings_Company({ screens }) {
               <input
                 type="text"
                 value={cnpj}
-                className="w-fit max-w-[700px] rounded-md px-2 py-2 bg-[#888888] border-solid border-2  hover:border-black cursor-no-drop mb-4"
+                className="mb-4 w-fit max-w-[700px] cursor-no-drop rounded-md border-2 border-solid bg-[#888888]  px-2 py-2 hover:border-black"
                 disabled
               />
             </div>
             <button
-              className="flex items-center w-fit max-w-[300px] bg-primary text-black active:bg-primary-dark active:text-black px-1 py-1 rounded-md shadow-md active:shadow-orange-700"
+              className="flex w-fit max-w-[300px] items-center rounded-md bg-primary px-1 py-1 text-black shadow-md active:bg-primary-dark active:text-black active:shadow-orange-700"
               onClick={handleAlterform}
             >
-              Edit Company
+              Editar empresa
             </button>
           </>
         )}
       </div>
     </div>
-  );
+  )
 }
