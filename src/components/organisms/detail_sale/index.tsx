@@ -29,7 +29,7 @@ export default function DetailSale({ product }: ProductProps) {
       product,
     }
     localStorage.setItem(product.id.toString(), JSON.stringify(cartItem))
-    router.push('/login')
+    router.push('/cart')
   }
 
   return (
