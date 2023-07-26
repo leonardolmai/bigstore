@@ -14,7 +14,7 @@ export function Footer() {
   }
 
   return (
-    <footer className="flex flex-col justify-between bg-gray-200 p-6">
+    <footer className="flex flex-col justify-between  bg-[#f6e8e6] p-6">
       <div className="flex flex-col items-center justify-center gap-3 pb-4 lg:flex-row lg:items-start lg:justify-around">
         <Logo />
         <div className="text-center lg:text-left">
@@ -30,7 +30,7 @@ export function Footer() {
         </div>
 
         <div>
-          <div className="pb-4 text-center lg:text-left">
+          {/* <div className="pb-4 text-center lg:text-left">
             <h2 className="pb-2 font-bold">Documentação da API</h2>
             <a
               href=""
@@ -38,8 +38,8 @@ export function Footer() {
             >
               Referencia da API
             </a>
-          </div>
-          {isAuthenticated && canBecomeACompany() && (
+          </div> */}
+          {/* {isAuthenticated && canBecomeACompany() && (
             <div className="text-center lg:text-left">
               <h2 className="pb-2 font-bold">Torne-se uma empresa</h2>
               <Link
@@ -49,7 +49,7 @@ export function Footer() {
                 Junte-se à nossa rede
               </Link>
             </div>
-          )}
+          )} */}
         </div>
         <div>
           <h2 className="pb-2 text-center font-bold lg:text-left">

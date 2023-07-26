@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Counter } from '@/components/molecules/CountValue'
 import { Trash2 as Trash } from 'lucide-react'
 import InputField from '@/components/atoms/inputs'
-import PaymentWithQueryClientProvider from '@/components/molecules/payment'
+
 import { hasCookie, getCookie } from 'cookies-next'
 import { api } from '@/utils/api'
 import Freight_router from '@/components/molecules/freight_router'
@@ -322,7 +322,7 @@ export function LocalStorageData() {
                         <div className="flex flex-row items-center gap-6">
                           <br />
                           <input
-                            className="h-4 w-4 rounded-xl active:bg-[#FEBD2F]"
+                            className="h-4 w-4 rounded-xl active:bg-primary"
                             type="checkbox"
                             defaultChecked={isChecked}
                             onChange={() => handleCheckboxChange(item.key)}
@@ -352,7 +352,7 @@ export function LocalStorageData() {
 
         <div className="jsutify-center md:item-center mb-60 mt-2 h-auto w-auto max-w-[400px]  rounded-xl bg-[#F1F1F4] p-6 md:ml-4 md:mr-5 md:mt-10 md:p-3">
           <article className="ml-4 mr-4 mt-4 flex flex-row justify-center">
-            <div className="mb-auto w-max rounded-xl bg-[#D9D9D9] p-3 text-center">
+            <div className="mb-auto w-max rounded-xl  bg-[#f6e8e6] p-3 text-center">
               <h1>Complete a Compra</h1>
             </div>
           </article>
@@ -415,7 +415,7 @@ export function LocalStorageData() {
               {hasCookie('token') !== null ? (
                 <div>
                   <select
-                    className="w-min-full mb-6 rounded-xl  bg-[#FEBD2F] p-3 text-start"
+                    className="w-min-full mb-6 rounded-xl text-white bg-primary p-3 text-start"
                     name="address"
                     id="address"
                     value={selectedAddressId}
@@ -455,13 +455,13 @@ export function LocalStorageData() {
                 <>
                   <Link
                     href={'account/login'}
-                    className="active::bg-[#FF9730] w-min-full mb-6 mt-6 rounded-xl bg-[#FEBD2F] p-3 text-start"
+                    className="active::bg-primary-dark w-min-full mb-6 mt-6 rounded-xl text-white bg-primary p-3 text-start"
                   >
                     Adicionar Endereço
                   </Link>
                   <Link
                     href={'account/login'}
-                    className="active::bg-[#FF9730] w-min-full mb-6 mt-6 rounded-xl bg-[#FEBD2F] p-3 text-start"
+                    className="active::bg-primary-dark w-min-full mb-6 mt-6 rounded-xl text-white bg-primary p-3 text-start"
                   >
                     Metodo de pagamento
                   </Link>
@@ -472,14 +472,14 @@ export function LocalStorageData() {
             !selectedPaymentOption ||
             (selectedPaymentOption === 'card' && !selectedCardId) ||
             selectedItemsCount === 0 ? (
-              <button className="active::bg-[#FF9730] w-min-full mb-6 cursor-default rounded-xl bg-[#FEBD2F] p-3 text-start">
+              <button className="active::bg-[#FF9730] w-min-full mb-6 cursor-default rounded-xl bg-primary text-white p-3 text-start">
                 Finalizar
               </button>
             ) : toastactive !== true ? (
               <>
                 {' '}
                 <button
-                  className="active::bg-[#FF9730] w-min-full mb-6 rounded-xl bg-[#FEBD2F] p-3 text-start"
+                  className="active::bg-[#FF9730] w-min-full mb-6 rounded-xl bg-primary text-white p-3 text-start"
                   onClick={handlePostOrder}
                 >
                   Finalizar
@@ -487,7 +487,7 @@ export function LocalStorageData() {
               </>
             ) : (
               <>
-                <button className="active::bg-[#FF9730] w-min-full mb-6 cursor-default rounded-xl bg-[#FEBD2F] p-3 text-start">
+                <button className="active::bg-[#FF9730] w-min-full mb-6 cursor-default rounded-xl bg-primary text-white p-3 text-start">
                   Finalizando...
                 </button>
               </>

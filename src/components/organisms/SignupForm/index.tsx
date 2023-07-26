@@ -39,7 +39,7 @@ export function SignupForm() {
   }
 
   return (
-    <section className="flex max-w-7xl flex-col items-center justify-center bg-transparent p-0 sm:w-6/12 sm:bg-gray-200 sm:p-8 md:p-16">
+    <section className="flex max-w-7xl flex-col items-center justify-center bg-transparent p-0 sm:w-6/12 sm:bg-[#f6e8e6] sm:p-8 md:p-16">
       <h1 className="mb-4 text-2xl font-bold">Cadastrar-se</h1>
       <ButtonGoogle />
       <form onSubmit={handleSignup} className="flex w-full flex-col">
