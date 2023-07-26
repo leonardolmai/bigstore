@@ -7,7 +7,7 @@ import { Footer } from '@/components/organisms/Footer'
 const openSans = OpenSans({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Bigstore',
+  title: 'SmallStore',
   description: 'O lugar perfeito para encontrar o que você procura.',
 }
 

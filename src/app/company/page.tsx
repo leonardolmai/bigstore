@@ -58,6 +58,14 @@ export default function company() {
   const position_navbar = 'navbar_company'
 
   useEffect(() => {
+    if ((getCookie(type) === 'Bigstore') === true) {
+      // setCookie(type, 'Company')
+      window.location.href = '/'
+    }
+    if ((getCookie(type) === 'Employee (Bigstore)') === true) {
+      // setCookie(type, 'Employee')
+      window.location.href = '/'
+    }
     if (hasCookie('token') === true) {
       if (typeof window !== 'undefined') {
         if (getCookie(type) === 'Customer') {
@@ -68,6 +76,7 @@ export default function company() {
             (getCookie(type) === 'Bigstore' ||
               getCookie(type) === 'Employee (Bigstore)') == true
           ) {
+
             setCookie('navbar_company', '0')
             if (hasCookie('activeiItem') === false) {
               setCookie('activeItem', '0')
