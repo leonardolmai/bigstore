@@ -138,7 +138,7 @@ export default function company() {
   }
   const isItemActive = (index: number) => {
     return index === activeItem
-      ? 'text-[#FA4907] border-[#FA4907] '
+      ? 'text-primary border-primary '
       : 'text-black border-black hover:text-[#3676ff] pt-22  hover:border-[#3676ff] '
   }
 
@@ -152,20 +152,19 @@ export default function company() {
             className={` items-center justify-center gap-6 break-words text-center ${alignNavbar} `}
           >
             <div
-              className={`ustify-center items-center ${
-                isLargeScreen === true || isMediumScreen === true
-                  ? alignNavbar
-                  : 'hidden'
-              } `}
+              className={`ustify-center items-center ${isLargeScreen === true || isMediumScreen === true
+                ? alignNavbar
+                : 'hidden'
+                } `}
             >
-              <Award size={40} className="stroke-[#FA4907] " />
+              <Award size={40} className="stroke-primary-dark " />
               <h1 className="break-all font-bold">Conta</h1>
             </div>
             <div
               className={` items-center justify-center  break-words pb-6  pt-6 text-center ${alignNavbar} `}
             >
               <Usericon
-                className="hover:cursor-pointer hover:stroke-[#FA4907] "
+                className="hover:cursor-pointer hover:stroke-primary "
                 size={sizeicons}
                 onClick={() => handleNavbarClick('0')}
               />
@@ -174,7 +173,7 @@ export default function company() {
               className={` items-center justify-center  break-words pb-6  pt-6 text-center ${alignNavbar}`}
             >
               <Package
-                className="hover: cursor-pointer hover:stroke-[#FA4907]"
+                className="hover: cursor-pointer hover:stroke-primary"
                 size={sizeicons}
                 onClick={() => handleNavbarClick('1')}
               />
@@ -183,7 +182,7 @@ export default function company() {
               className={` items-center justify-center  break-words pb-6  pt-6 text-center ${alignNavbar}`}
             >
               <Cards
-                className="hover: cursor-pointer hover:stroke-[#FA4907]"
+                className="hover: cursor-pointer hover:stroke-primary"
                 size={sizeicons}
                 onClick={() => handleNavbarClick('2')}
               />
@@ -192,7 +191,7 @@ export default function company() {
               className={` items-center justify-center  break-words pb-6  pt-6 text-center ${alignNavbar}`}
             >
               <Addresses
-                className="hover: cursor-pointer hover:stroke-[#FA4907]"
+                className="hover: cursor-pointer hover:stroke-primary"
                 size={sizeicons}
                 onClick={() => handleNavbarClick('3')}
               />
@@ -202,7 +201,7 @@ export default function company() {
             >
               <LogOutIcon
                 color="red"
-                className="hover: cursor-pointer hover:stroke-[#FA4907]"
+                className="hover: cursor-pointer hover:stroke-primary"
                 size={sizeicons}
                 onClick={() => handleNavbarClick('4')}
               />
@@ -216,11 +215,11 @@ export default function company() {
       )}
 
       <div className="mb-20 mt-24 flex flex-1 justify-center">
-        <div className="flex h-full min-h-[683px] w-[1244px] max-w-max flex-col rounded-3xl bg-[#febc2f36]  shadow">
+        <div className="flex h-full min-h-[683px] w-[1244px] max-w-max flex-col rounded-3xl bg-[#ffe9da] shadow">
           {activeNavbar !== '1' &&
-          activeNavbar !== '2' &&
-          activeNavbar !== '3' &&
-          hasCookie('position') ? (
+            activeNavbar !== '2' &&
+            activeNavbar !== '3' &&
+            hasCookie('position') ? (
             <>
               {/* <nav>
               <div className="flex flex-row font-sans justify-between pl-3 pr-3 p-2 m-1 text-lg font-bold">

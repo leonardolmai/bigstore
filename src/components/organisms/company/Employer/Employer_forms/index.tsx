@@ -69,7 +69,7 @@ export default function Employer_forms({ screens, setBoolForms, companyId }) {
     <div className={`${alingForm} flex flex-col justify-center self-center`}>
       <form className="flex flex-col items-center justify-center gap-6">
         <input
-          className="w-full max-w-[400px] rounded-md bg-white px-2 py-2 focus:outline-[#FEBD2F]"
+          className="w-full max-w-[400px] rounded-md bg-white px-2 py-2 focus:outline-primary"
           type="email"
           value={email}
           onChange={handleInputChange}
@@ -78,7 +78,7 @@ export default function Employer_forms({ screens, setBoolForms, companyId }) {
         />
         <div className="flex flex-row flex-wrap gap-10">
           <button
-            className="rounded-md bg-[#FEBD2F] p-1 px-2 py-2 active:bg-primary-dark active:text-black"
+            className="rounded-md bg-primary text-white p-1 px-2 py-2 active:bg-primary-dark active:text-black"
             type="button"
             onClick={handleAddEmployee}
           >

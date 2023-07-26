@@ -231,9 +231,8 @@ export function User_Addresses({ screens }) {
     <div className={`flex flex-col  items-center ${alingForm} h-full`}>
       <div className="flex flex-col  items-start ">
         <div
-          className={` flex gap-6 ${
-            screens.isSmallScreen === true ? 'flex-row' : 'flex-col'
-          }  items-center justify-center`}
+          className={` flex gap-6 ${screens.isSmallScreen === true ? 'flex-row' : 'flex-col'
+            }  items-center justify-center`}
         >
           {createdform ? (
             <form
@@ -244,7 +243,7 @@ export function User_Addresses({ screens }) {
                 <label>CEP</label>
                 <input
                   type="text"
-                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                   value={updatedpostal_code}
                   onChange={(e) => setUpdatedpostal_code(e.target.value)}
                 />
@@ -253,7 +252,7 @@ export function User_Addresses({ screens }) {
                 <label>Estado</label>
                 <input
                   type="text"
-                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                   value={updatedUf}
                   onChange={(e) => setUpdatedUf(e.target.value)}
                 />
@@ -262,7 +261,7 @@ export function User_Addresses({ screens }) {
                 <label>Cidade</label>
                 <input
                   type="text"
-                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                   value={updatedCity}
                   onChange={(e) => setUpdatedCity(e.target.value)}
                 />
@@ -271,7 +270,7 @@ export function User_Addresses({ screens }) {
                 <label>Bairro</label>
                 <input
                   type="text"
-                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                   value={updatedNeighborhood}
                   onChange={(e) => setUpdatedNeighborhood(e.target.value)}
                 />
@@ -280,7 +279,7 @@ export function User_Addresses({ screens }) {
                 <label>Rua</label>
                 <input
                   type="text"
-                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                   value={updatedStreet}
                   onChange={(e) => setUpdatedStreet(e.target.value)}
                 />
@@ -289,7 +288,7 @@ export function User_Addresses({ screens }) {
                 <label>Número</label>
                 <input
                   type="number"
-                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                   value={updatedNumber}
                   onChange={(e) => setUpdatedNumber(e.target.value)}
                 />
@@ -298,7 +297,7 @@ export function User_Addresses({ screens }) {
                 <label>Complemento</label>
                 <input
                   type="text"
-                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                   value={updatedComplement}
                   onChange={(e) => setUpdatedComplement(e.target.value)}
                 />
@@ -312,7 +311,7 @@ export function User_Addresses({ screens }) {
                 </button>
                 <button
                   type="submit"
-                  className="no-select mt-2 w-full cursor-pointer rounded-xl bg-[#FEBF2F] p-1 shadow-md active:bg-orange-500"
+                  className="no-select mt-2 w-full cursor-pointer rounded-xl bg-primary p-1 shadow-md active:bg-primary-dark text-white "
                 >
                   Criar Endereço
                 </button>
@@ -329,7 +328,7 @@ export function User_Addresses({ screens }) {
                     <label>CEP</label>
                     <input
                       type="text"
-                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                       value={
                         updatedpostal_code ||
                         (selectaddress && selectaddress.postal_code) ||
@@ -342,7 +341,7 @@ export function User_Addresses({ screens }) {
                     <label>Estado</label>
                     <input
                       type="text"
-                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                       value={
                         updatedUf || (selectaddress && selectaddress.uf) || ''
                       }
@@ -353,7 +352,7 @@ export function User_Addresses({ screens }) {
                     <label>Cidade</label>
                     <input
                       type="text"
-                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                       value={
                         updatedCity ||
                         (selectaddress && selectaddress.city) ||
@@ -366,7 +365,7 @@ export function User_Addresses({ screens }) {
                     <label>Bairro</label>
                     <input
                       type="text"
-                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                       value={
                         updatedNeighborhood ||
                         (selectaddress && selectaddress.neighborhood) ||
@@ -379,7 +378,7 @@ export function User_Addresses({ screens }) {
                     <label>Rua</label>
                     <input
                       type="text"
-                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                       value={
                         updatedStreet ||
                         (selectaddress && selectaddress.street) ||
@@ -392,7 +391,7 @@ export function User_Addresses({ screens }) {
                     <label>Número</label>
                     <input
                       type="number"
-                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                       value={
                         updatedNumber ||
                         (selectaddress && selectaddress.number) ||
@@ -405,7 +404,7 @@ export function User_Addresses({ screens }) {
                     <label>Complemento</label>
                     <input
                       type="text"
-                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                       value={
                         updatedComplement ||
                         (selectaddress && selectaddress.complement) ||
@@ -513,7 +512,7 @@ export function User_Addresses({ screens }) {
 
                         <button
                           onClick={toform}
-                          className="no-select ml-6 w-fit cursor-pointer rounded-xl bg-[#FEBF2F] shadow active:bg-orange-500 sm:ml-0 sm:mt-2 sm:w-full sm:p-1"
+                          className="no-select ml-6 w-fit cursor-pointer rounded-xl bg-primary text-white shadow active:bg-primary-dark sm:ml-0 sm:mt-2 sm:w-full sm:p-1"
                         >
                           Criar novo Endereço
                         </button>

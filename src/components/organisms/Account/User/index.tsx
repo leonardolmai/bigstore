@@ -30,7 +30,7 @@ export default function Settings_User({ screens }) {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      ;async () => {
+      ; async () => {
         try {
           const response = await api.get(`/users/${userData?.id}/`, {
             headers: {
@@ -266,7 +266,7 @@ export default function Settings_User({ screens }) {
             type="text"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
-            className="mb-4 w-fit max-w-[700px] rounded-lg bg-[#FFFFFF] px-2 py-2  focus:outline-[#FEBD2F]   active:outline-[#ffae00]"
+            className="mb-4 w-fit max-w-[700px] rounded-lg bg-[#FFFFFF] px-2 py-2  focus:outline-primary   active:outline-primary-dark text-white"
           />
         </div>
         <div className="flex flex-row flex-wrap gap-6">
@@ -277,7 +277,7 @@ export default function Settings_User({ screens }) {
             Voltar
           </button>
           <button
-            className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
+            className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md text-white bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
             onClick={() => handleUpdateName(newName)} // Chama a função handleUpdateName com o novo nome digitado
           >
             Salvar nome
@@ -298,7 +298,7 @@ export default function Settings_User({ screens }) {
             type="email"
             value={oldEmail}
             onChange={(e) => setOldEmail(e.target.value)}
-            className="mb-4 w-fit max-w-[700px] rounded-lg bg-[#FFFFFF] px-2 py-2  focus:outline-[#FEBD2F]   active:outline-[#ffae00]"
+            className="mb-4 w-fit max-w-[700px] rounded-lg bg-[#FFFFFF] px-2 py-2  focus:outline-primary   active:outline-primary-dark text-white"
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -307,7 +307,7 @@ export default function Settings_User({ screens }) {
             type="email"
             value={newEmail}
             onChange={(e) => setNewEmail(e.target.value)}
-            className="mb-4 w-fit max-w-[700px] rounded-lg bg-[#FFFFFF] px-2 py-2  focus:outline-[#FEBD2F]   active:outline-[#ffae00]"
+            className="mb-4 w-fit max-w-[700px] rounded-lg bg-[#FFFFFF] px-2 py-2  focus:outline-primary   active:outline-primary-dark text-white"
           />
         </div>
         <div className="flex flex-row flex-wrap gap-6">
@@ -318,7 +318,7 @@ export default function Settings_User({ screens }) {
             Voltar
           </button>
           <button
-            className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
+            className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md bg-primary pl-2 pr-2 focus:outline-primary   active:outline-primary-dark text-white"
             onClick={() => handleUpdateEmail(oldEmail, newEmail)}
           >
             Salvar novo Email
@@ -349,7 +349,7 @@ export default function Settings_User({ screens }) {
             Voltar
           </button>
           <button
-            className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
+            className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md text-white bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
             onClick={() => handleUpdatePhone(newNumber)} // Chama a função handleUpdateName com o novo nome digitado
           >
             Salvar Numero
@@ -380,7 +380,7 @@ export default function Settings_User({ screens }) {
             Voltar
           </button>
           <button
-            className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
+            className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md text-white bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
             onClick={() => handleUpdateCpf(newcpf)}
           >
             Salvar CPF
@@ -421,7 +421,7 @@ export default function Settings_User({ screens }) {
             Voltar
           </button>
           <button
-            className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
+            className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md text-white bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
             onClick={() => handleUpdatePassword(oldpassword, newpassword)}
           >
             Salvar nova Senha
@@ -450,14 +450,13 @@ export default function Settings_User({ screens }) {
               <input
                 type="text"
                 value={userData?.name || 'ainda não tem um nome...'}
-                className={`mb-4 w-fit max-w-[700px] cursor-no-drop rounded-md border-2 border-solid bg-[#FFFfFF]  px-2 py-2 hover:border-black ${
-                  userData?.name !== '' ? '' : 'font-semibold text-red-600'
-                }`}
+                className={`mb-4 w-fit max-w-[700px] cursor-no-drop rounded-md border-2 border-solid bg-[#FFFfFF]  px-2 py-2 hover:border-black ${userData?.name !== '' ? '' : 'font-semibold text-red-600'
+                  }`}
                 disabled
               />
             </div>
             <button
-              className="mt-2 flex  max-h-[35px] w-fit max-w-[300px] items-center rounded-md bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
+              className="mt-2 flex  max-h-[35px] w-fit max-w-[300px] items-center rounded-md text-white bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
               onClick={() => handleOptionSelection('name')}
             >
               Editar
@@ -469,14 +468,13 @@ export default function Settings_User({ screens }) {
               <input
                 type="text"
                 value={userData?.email}
-                className={`mb-4 w-fit max-w-[700px] cursor-no-drop rounded-md border-2 border-solid bg-[#FFFFfF]  px-2 py-2 hover:border-black ${
-                  userData?.email !== '' ? '' : 'font-semibold text-red-600'
-                }`}
+                className={`mb-4 w-fit max-w-[700px] cursor-no-drop rounded-md border-2 border-solid bg-[#FFFFfF]  px-2 py-2 hover:border-black ${userData?.email !== '' ? '' : 'font-semibold text-red-600'
+                  }`}
                 disabled
               />
             </div>
             <button
-              className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
+              className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center text-white rounded-md bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
               onClick={() => handleOptionSelection('email')}
             >
               Editar
@@ -488,14 +486,13 @@ export default function Settings_User({ screens }) {
               <input
                 type="text"
                 value={userData?.phone || 'não há Informação'}
-                className={`mb-4 w-fit max-w-[700px] cursor-no-drop rounded-md border-2 border-solid bg-[#FFFFfF]  px-2 py-2 hover:border-black ${
-                  userData?.phone !== '' ? '' : 'font-semibold text-red-600'
-                }`}
+                className={`mb-4 w-fit max-w-[700px] cursor-no-drop rounded-md border-2 border-solid bg-[#FFFFfF]  px-2 py-2 hover:border-black ${userData?.phone !== '' ? '' : 'font-semibold text-red-600'
+                  }`}
                 disabled
               />
             </div>
             <button
-              className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
+              className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md text-white bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
               onClick={() => handleOptionSelection('ddd')}
             >
               Editar
@@ -507,14 +504,13 @@ export default function Settings_User({ screens }) {
               <input
                 type="text"
                 value={userData?.cpf || 'não há Informação'}
-                className={`mb-4 w-fit max-w-[700px] cursor-no-drop rounded-md border-2 border-solid bg-[#FFFFfF]  px-2 py-2 hover:border-black ${
-                  userData?.phone !== '' ? '' : 'font-semibold text-red-600'
-                }`}
+                className={`mb-4 w-fit max-w-[700px] cursor-no-drop rounded-md border-2 border-solid bg-[#FFFFfF]  px-2 py-2 hover:border-black ${userData?.phone !== '' ? '' : 'font-semibold text-red-600'
+                  }`}
                 disabled
               />
             </div>
             <button
-              className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
+              className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md text-white bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
               onClick={() => handleOptionSelection('cpf')}
             >
               Editar
@@ -531,7 +527,7 @@ export default function Settings_User({ screens }) {
               />
             </div>
             <button
-              className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
+              className="mt-2 flex max-h-[35px] w-fit max-w-[300px] cursor-pointer items-center rounded-md text-white bg-primary pl-2 pr-2 hover:bg-primary-dark active:bg-primary-dark-bold active:text-primary-dark"
               onClick={() => handleOptionSelection('password')}
             >
               Editar

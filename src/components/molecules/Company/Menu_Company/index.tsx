@@ -169,7 +169,7 @@ export default function Menu_componente({ screens, alingLists }) {
           id="filterType"
           value={filterType}
           onChange={handleFilterTypeChange}
-          className="w-fit rounded-md border border-primary-dark bg-primary p-2 font-semibold outline-none"
+          className="w-fit rounded-md border border-primary-dark text-white bg-primary p-2 font-semibold outline-none"
         >
           <option value="name">Name</option>
           <option value="cnpj">CNPJ</option>
@@ -194,9 +194,8 @@ export default function Menu_componente({ screens, alingLists }) {
         </div>
         {filteredCompanies.map((company, index) => (
           <div
-            className={`m-2 flex flex-row p-2 ${
-              index % 2 === 0 ? 'bg-[#F5F6F7]' : 'bg-[#b8b8b8]'
-            } hover:shadow-3xl items-start justify-between rounded-md shadow-lg shadow-orange-200 transition-all hover:shadow-orange-500`}
+            className={`m-2 flex flex-row p-2 ${index % 2 === 0 ? 'bg-[#F5F6F7]' : 'bg-[#b8b8b8]'
+              } hover:shadow-3xl items-start justify-between rounded-md shadow-lg shadow-orange-200 transition-all hover:shadow-primary`}
             key={company.id}
           >
             <div className={`flex justify-center ${widthlist} border-e-2`}>

@@ -123,7 +123,7 @@ export default function Employer({ screens }) {
             <PlusCircle
               onClick={handleformClick}
               size={24}
-              className="h-8 w-full max-w-[350px] cursor-pointer rounded-lg bg-[#FEBD2F] pb-1 pt-1 active:bg-[#8d691a] active:stroke-amber-950"
+              className="h-8 w-full max-w-[350px] cursor-pointer rounded-lg bg-primary stroke-white   pb-1 pt-1 active:bg-[#8d691a] active:stroke-amber-950"
             />
           </div>
           <div
@@ -148,9 +148,8 @@ export default function Employer({ screens }) {
           {employees.map((user, index) => (
             <div key={user.id}>
               <div
-                className={`m-2 flex flex-row p-2 ${
-                  index % 2 == 0 ? 'bg-[#F5F6F7]' : 'bg-[#b8b8b8]'
-                } hover:shadow-3xl items-start justify-between rounded-md shadow-lg shadow-orange-200 transition-all hover:shadow-orange-500`}
+                className={`m-2 flex flex-row p-2 ${index % 2 == 0 ? 'bg-[#F5F6F7]' : 'bg-[#b8b8b8]'
+                  } hover:shadow-3xl items-start justify-between rounded-md shadow-lg shadow-[#f6e8e6] transition-all hover:shadow-primary`}
               >
                 <div className={`flex justify-center ${widthlist} border-e-2`}>
                   <p>{user.id}</p>
@@ -178,10 +177,10 @@ export default function Employer({ screens }) {
                     <>
                       <button
                         onClick={() => handleDelete(user.email)}
-                        className="flex cursor-pointer flex-row items-center    justify-center rounded-xl bg-primary active:bg-red-600 active:ring-4"
+                        className="flex cursor-pointer flex-row items-center    justify-center rounded-xl stroke-white bg-primary active:bg-red-600 active:ring-4"
                       >
                         <p>
-                          <Badge color={'black'} />
+                          <Badge color={'black'} stroke='white' />
                         </p>
                       </button>
                     </>

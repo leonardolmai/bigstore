@@ -91,7 +91,7 @@ export default function Settings_Company({ screens }) {
                 type="text"
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
-                className="mb-4 w-fit max-w-[700px] rounded-md border-solid bg-[#FFFFFF] px-2 py-2 focus:outline-[#FEBD2F]  active:outline-[#ffae00]"
+                className="mb-4 w-fit max-w-[700px] rounded-md border-solid bg-[#FFFFFF] px-2 py-2 focus:outline-primary  active:outline-primary"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -111,7 +111,7 @@ export default function Settings_Company({ screens }) {
                 Voltar
               </button>
               <button
-                className="flex w-fit max-w-[300px] items-center rounded-md bg-primary px-1 py-1 text-black shadow-md active:bg-primary-dark active:text-black active:shadow-orange-700"
+                className="flex w-fit max-w-[300px] items-center rounded-md text-white bg-primary px-1 py-1 text-black shadow-md active:bg-primary-dark active:text-black active:shadow-orange-700"
                 onClick={handlePatchCompany}
               >
                 Salvar
@@ -139,7 +139,7 @@ export default function Settings_Company({ screens }) {
               />
             </div>
             <button
-              className="flex w-fit max-w-[300px] items-center rounded-md bg-primary px-1 py-1 text-black shadow-md active:bg-primary-dark active:text-black active:shadow-orange-700"
+              className="flex w-fit max-w-[300px] items-center rounded-md text-white bg-primary px-1 py-1 text-black shadow-md active:bg-primary-dark active:text-black active:shadow-orange-700"
               onClick={handleAlterform}
             >
               Editar empresa

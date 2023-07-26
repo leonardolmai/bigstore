@@ -49,7 +49,7 @@ export default function Menu_repayment({ screens, items, alingLists }) {
         Array.from({ length: items }).map((_, index) => (
           <div
             key={index}
-            className={`hover:shadow-3xl  flex h-[216px] w-[266px] min-w-0 select-none  flex-col rounded-3xl bg-[#F5F5F5]  p-2 shadow-lg shadow-orange-200 transition-all  hover:shadow-orange-500`}
+            className={`hover:shadow-3xl  flex h-[216px] w-[266px] min-w-0 select-none  flex-col rounded-3xl bg-[#F5F5F5]  p-2 shadow-lg shadow-orange-200 transition-all  hover:shadow-primary`}
           >
             <div className="flex justify-center gap-2">
               <Calendar className="stroke-slate-400" />
@@ -99,7 +99,7 @@ export default function Menu_repayment({ screens, items, alingLists }) {
                   <input
                     className="cursor-pointer"
                     type="button"
-                    value="Desaprovar"
+                    value="Reprovar"
                   />
                 </div>
               </article>

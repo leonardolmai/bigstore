@@ -138,7 +138,7 @@ export default function Menu_Products({ screens, items, alingLists }) {
               <select
                 value={searchType}
                 onChange={handleSearchTypeChange}
-                className="w-fit  rounded-md border  border-primary-dark bg-primary p-2 font-semibold outline-none"
+                className="w-fit  rounded-md border  border-primary-dark bg-primary text-white p-2 font-semibold outline-none"
               >
                 <option value="name">Nome</option>
                 <option value="id">Id</option>
@@ -162,7 +162,7 @@ export default function Menu_Products({ screens, items, alingLists }) {
               <>
                 <div
                   key={product.id}
-                  className={`hover:shadow-3xl flex h-[216px] w-[266px] min-w-0 select-none  flex-col rounded-3xl bg-[#F5F5F5]  p-2 shadow-lg shadow-orange-200 transition-all  hover:shadow-orange-500`}
+                  className={`hover:shadow-3xl flex h-[216px] w-[266px] min-w-0 select-none  flex-col rounded-3xl bg-[#F5F5F5]  p-2 shadow-lg shadow-orange-200 transition-all  hover:shadow-primary`}
                 >
                   <div className="flex justify-center gap-2">
                     <Calendar className="stroke-slate-400" />

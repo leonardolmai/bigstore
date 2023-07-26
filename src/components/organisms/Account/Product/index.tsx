@@ -124,11 +124,10 @@ export default function Product({ screens }) {
                   {order.order_items.map((orderItem) => (
                     <tr
                       key={orderItem.id}
-                      className={`${
-                        order.id % 2 === 0
-                          ? 'bg-[#F5F6F7]'
-                          : 'b-1 bg-[#b8b8b8] shadow-xl'
-                      } `}
+                      className={`${order.id % 2 === 0
+                        ? 'bg-[#F5F6F7]'
+                        : 'b-1 bg-[#b8b8b8] shadow-xl'
+                        } `}
                     >
                       <td className="break-all border-e-2 p-2 text-center md:w-[100px] lg:w-[130px] xl:w-[150px] 2xl:w-[165px]">
                         {order.id}
@@ -188,7 +187,7 @@ export default function Product({ screens }) {
                       >
                         <Badge
                           size={24}
-                          className="h-8 w-max cursor-pointer self-center rounded-3xl bg-[#FEBD2F] shadow-md shadow-black hover:stroke-amber-950 hover:shadow-amber-400 active:bg-[#9e7620] active:bg-[#f7aa02]"
+                          className="h-8 w-max cursor-pointer self-center rounded-3xl bg-[#FEBD2F] shadow-md shadow-black hover:stroke-amber-950 hover:shadow-primary active:bg-primary-dark active:bg-primary"
                         />
                       </td>
                     </tr>

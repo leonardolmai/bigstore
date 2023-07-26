@@ -176,24 +176,23 @@ export default function company() {
           className={` items-center justify-center gap-6 break-words text-center ${alignNavbar} `}
         >
           <div
-            className={`ustify-center items-center ${
-              isLargeScreen === true || isMediumScreen === true
-                ? alignNavbar
-                : 'hidden'
-            } `}
+            className={`ustify-center items-center ${isLargeScreen === true || isMediumScreen === true
+              ? alignNavbar
+              : 'hidden'
+              } `}
           >
-            <Building2 size={40} className="stroke-[#FA4907] " />
+            <Building2 size={40} className="stroke-primary " />
             <h1 className="break-all">Empresa</h1>
           </div>
 
           {getCookie(type) == 'Bigstore' ||
-          getCookie(type) == 'Employee (Bigstore)' ? (
+            getCookie(type) == 'Employee (Bigstore)' ? (
             <>
               <div
                 className={` items-center justify-center  break-words pb-6  pt-6 text-center ${alignNavbar} `}
               >
                 <Home_page
-                  className="hover:cursor-pointer hover:stroke-[#FA4907] "
+                  className="hover:cursor-pointer hover:stroke-primary "
                   size={sizeicons}
                   onClick={() => handleNavbarClick('0')}
                 />
@@ -204,15 +203,15 @@ export default function company() {
           )}
 
           {getCookie(type) === 'Bigstore' ||
-          getCookie(type) === 'Employee (Bigstore)' ||
-          getCookie(type) === 'Company' ||
-          getCookie(type) === 'Employee' ? (
+            getCookie(type) === 'Employee (Bigstore)' ||
+            getCookie(type) === 'Company' ||
+            getCookie(type) === 'Employee' ? (
             <>
               <div
                 className={` items-center justify-center  break-words pb-6  pt-6 text-center ${alignNavbar}`}
               >
                 <PackagePlus
-                  className="hover: cursor-pointer hover:stroke-[#FA4907]"
+                  className="hover: cursor-pointer hover:stroke-primary"
                   size={sizeicons}
                   onClick={() => handleNavbarClick('1')}
                 />
@@ -227,7 +226,7 @@ export default function company() {
                 className={` items-center justify-center  break-words pb-6  pt-6 text-center ${alignNavbar}`}
               >
                 <Users
-                  className="hover: cursor-pointer hover:stroke-[#FA4907]"
+                  className="hover: cursor-pointer hover:stroke-primary"
                   size={sizeicons}
                   onClick={() => handleNavbarClick('2')}
                 />
@@ -243,7 +242,7 @@ export default function company() {
                 className={` items-center justify-center  break-words pb-6  pt-6 text-center ${alignNavbar}`}
               >
                 <SettingsIcon
-                  className="hover: cursor-pointer hover:stroke-[#FA4907]"
+                  className="hover: cursor-pointer hover:stroke-primary"
                   size={sizeicons}
                   onClick={() => handleNavbarClick('3')}
                 />
@@ -257,14 +256,14 @@ export default function company() {
         <div></div>
       </div>
       <div className="mb-20 mt-24 flex flex-1 justify-center">
-        <div className="flex h-full min-h-[683px] w-[1244px] max-w-max flex-col rounded-3xl bg-[#febc2f36]">
+        <div className="flex h-full min-h-[683px] w-[1244px] max-w-max flex-col rounded-3xl bg-[#ffe9da]">
           {activeNavbar !== '1' &&
-          activeNavbar !== '2' &&
-          activeNavbar !== '3' &&
-          activeNavbar !== '4' &&
-          hasCookie('navbar_company') &&
-          (getCookie(type) === 'Bigstore' ||
-            getCookie(type) == 'Employee (Bigstore)') ? (
+            activeNavbar !== '2' &&
+            activeNavbar !== '3' &&
+            activeNavbar !== '4' &&
+            hasCookie('navbar_company') &&
+            (getCookie(type) === 'Bigstore' ||
+              getCookie(type) == 'Employee (Bigstore)') ? (
             <>
               {' '}
               <nav>
@@ -358,11 +357,11 @@ export default function company() {
             ''
           )}
           {activeNavbar === '1' &&
-          hasCookie('navbar_company') &&
-          (getCookie(type) === 'Bigstore' ||
-            getCookie(type) === 'Employee (Bigstore)' ||
-            getCookie(type) === 'Company' ||
-            getCookie(type) === 'Employee') ? (
+            hasCookie('navbar_company') &&
+            (getCookie(type) === 'Bigstore' ||
+              getCookie(type) === 'Employee (Bigstore)' ||
+              getCookie(type) === 'Company' ||
+              getCookie(type) === 'Employee') ? (
             <>
               <nav>
                 <div className="m-1 flex h-fit flex-row justify-center p-2 pl-3 pr-3 font-sans text-lg font-bold">
@@ -383,8 +382,8 @@ export default function company() {
             ''
           )}
           {activeNavbar === '2' &&
-          hasCookie('navbar_company') &&
-          (getCookie(type) === 'Bigstore' || getCookie(type) === 'Company') ? (
+            hasCookie('navbar_company') &&
+            (getCookie(type) === 'Bigstore' || getCookie(type) === 'Company') ? (
             <>
               <nav>
                 <div className="m-1 flex h-fit flex-row justify-center p-2 pl-3 pr-3 font-sans text-lg font-bold">
@@ -405,8 +404,8 @@ export default function company() {
             ''
           )}
           {activeNavbar === '3' &&
-          hasCookie('navbar_company') &&
-          (getCookie(type) === 'Bigstore' || getCookie(type) === 'Company') ? (
+            hasCookie('navbar_company') &&
+            (getCookie(type) === 'Bigstore' || getCookie(type) === 'Company') ? (
             <>
               <nav>
                 <div className="m-1 flex  flex-row justify-center p-2 pl-3 pr-3 font-sans text-lg font-bold">

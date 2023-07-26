@@ -166,7 +166,7 @@ export default function Menu_componente({ screens, alingLists }) {
           id="filterType"
           value={filterType}
           onChange={handleFilterTypeChange}
-          className="w-fit rounded-md border border-primary-dark bg-primary p-2 font-semibold outline-none"
+          className="w-fit rounded-md border border-primary-dark bg-primary text-white stroke-white p-2 font-semibold outline-none"
         >
           <option value="name">Nome</option>
           <option value="cnpj">CNPJ</option>
@@ -175,7 +175,7 @@ export default function Menu_componente({ screens, alingLists }) {
       <div className={`${alingLists} ${widthlist}`}>
         {filteredCompanies.map((company) => (
           <div
-            className="hover:shadow-3xl flex h-[216px] w-[266px] min-w-0 select-none flex-col rounded-3xl bg-[#F5F5F5] p-2 shadow-lg shadow-orange-200 transition-all hover:shadow-orange-500"
+            className="hover:shadow-3xl flex h-[216px] w-[266px] min-w-0 select-none flex-col rounded-3xl bg-[#F5F5F5] p-2 shadow-lg shadow-orange-200 transition-all hover:shadow-primary"
             key={company.id}
           >
             <div className="flex justify-center gap-2">
@@ -194,7 +194,7 @@ export default function Menu_componente({ screens, alingLists }) {
               <article className="m-2 mt-5 flex flex-row flex-wrap items-center justify-center gap-5 self-center">
                 <div>
                   <input
-                    className="w-fit cursor-pointer rounded-md bg-primary px-2 py-2 text-black shadow-md active:bg-primary-dark"
+                    className="w-fit cursor-pointer rounded-md bg-primary text-white stroke-white px-2 py-2 text-black shadow-md active:bg-primary text-white stroke-white-dark"
                     type="button"
                     value="Aprovar"
                     onClick={() => activateCompany(company)}

@@ -36,7 +36,7 @@ export function Header() {
     <header className="flex h-16 items-center justify-between gap-6 bg-[#f6e8e6] shadow">
       <Logo className="ml-4 " />
       <nav
-        className={`absolute top-16 z-10 w-full rounded-3xl  flex-col items-stretch justify-between gap-6 bg-gray-300 p-2 text-center shadow lg:static lg:flex lg:flex-row lg:items-center lg:bg-transparent lg:p-0 lg:shadow-none  
+        className={`absolute top-16 z-10 w-full rounded-3xl  flex-col items-stretch justify-between gap-6 bg-[#f6e8e6] p-2 text-center shadow lg:static lg:flex lg:flex-row lg:items-center lg:bg-transparent lg:p-0 lg:shadow-none  
         ${isMenuOpen ? 'flex' : 'hidden'}`}
       >
         <CategorySelect />

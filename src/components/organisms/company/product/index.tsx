@@ -124,9 +124,8 @@ export default function Formulario({ screens }) {
 
       <div className="flex flex-col  items-start">
         <div
-          className={`flex gap-6 ${
-            screens.isSmallScreen === true ? 'flex-row' : 'flex-col'
-          }  items-center justify-center`}
+          className={`flex gap-6 ${screens.isSmallScreen === true ? 'flex-row' : 'flex-col'
+            }  items-center justify-center`}
         >
           <div className="flex w-48 flex-col">
             <label className="font-bold" htmlFor="name">
@@ -141,9 +140,8 @@ export default function Formulario({ screens }) {
             />
           </div>
           <div
-            className={`flex flex-col  ${
-              screens.isSmallScreen === true ? '' : 'items-center'
-            }`}
+            className={`flex flex-col  ${screens.isSmallScreen === true ? '' : 'items-center'
+              }`}
           >
             <label className="font-bold" htmlFor="images">
               Imagens:
@@ -153,9 +151,8 @@ export default function Formulario({ screens }) {
                 type="file"
                 id="images"
                 accept="image/*"
-                className={`flex flex-col  ${
-                  screens.isSmallScreen === true ? 'w-60' : 'w-[150px]'
-                }`}
+                className={`flex flex-col  ${screens.isSmallScreen === true ? 'w-60' : 'w-[150px]'
+                  }`}
                 multiple
                 onChange={handleFileChange}
               />
@@ -176,9 +173,8 @@ export default function Formulario({ screens }) {
         </div>
 
         <div
-          className={`flex  ${
-            screens.isSmallScreen === true ? 'flex-row' : 'flex-col'
-          } items-center gap-6`}
+          className={`flex  ${screens.isSmallScreen === true ? 'flex-row' : 'flex-col'
+            } items-center gap-6`}
         >
           <div className="flex w-36 flex-col">
             <label className="font-bold" htmlFor="quantity">
@@ -233,7 +229,7 @@ export default function Formulario({ screens }) {
 
         <div className="m-2 flex flex-row items-center justify-center self-center">
           <button
-            className="rounded-md bg-primary px-2 py-2 text-xl text-black active:bg-primary-dark"
+            className="rounded-md text-white bg-primary px-2 py-2 text-xl text-black active:bg-primary-dark"
             type="submit"
           >
             Enviar

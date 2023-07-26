@@ -237,9 +237,8 @@ export function User_Cards({ screens }) {
     <div className={`flex flex-col  items-center ${alingForm} h-full`}>
       <div className="flex flex-col  items-start ">
         <div
-          className={` flex gap-6 ${
-            screens.isSmallScreen === true ? 'flex-row' : 'flex-col'
-          }  items-center justify-center`}
+          className={` flex gap-6 ${screens.isSmallScreen === true ? 'flex-row' : 'flex-col'
+            }  items-center justify-center`}
         >
           {createdform ? (
             <form onSubmit={handleCreateCard} className="flex flex-col gap-6">
@@ -247,7 +246,7 @@ export function User_Cards({ screens }) {
                 <label>Titular</label>
                 <input
                   type="text"
-                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                   value={updatedName}
                   onChange={(e) => setUpdatedName(e.target.value)}
                 />
@@ -256,7 +255,7 @@ export function User_Cards({ screens }) {
                 <label>Número do Cartão</label>
                 <input
                   type="number"
-                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                   value={updatedNumber}
                   onChange={(e) => setUpdatedNumber(e.target.value)}
                 />
@@ -268,7 +267,7 @@ export function User_Cards({ screens }) {
                     type="number"
                     pattern="[0-9]{2}"
                     placeholder="month"
-                    className="min-w-[65px] max-w-[75px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                    className="min-w-[65px] max-w-[75px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                     value={updatedExpirationMonth}
                     onChange={(e) => setUpdatedExpirationMonth(e.target.value)}
                   />
@@ -277,7 +276,7 @@ export function User_Cards({ screens }) {
                     type="number"
                     pattern="[0-9]{4}"
                     placeholder="year"
-                    className="min-w-[65px] max-w-[75px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                    className="min-w-[65px] max-w-[75px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                     value={updatedExpirationYear}
                     onChange={(e) => setUpdatedExpirationYear(e.target.value)}
                   />
@@ -289,7 +288,7 @@ export function User_Cards({ screens }) {
                   type="password"
                   pattern="[0-9]{3}"
                   autoComplete={'false'}
-                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                  className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                   value={updatedCvc}
                   onChange={(e) => setUpdatedCvc(e.target.value)}
                 />
@@ -304,7 +303,7 @@ export function User_Cards({ screens }) {
                 <button
                   onClick={handleCreateCard}
                   type="submit"
-                  className="no-select mt-2 w-full cursor-pointer rounded-xl bg-[#FEBF2F] p-1 shadow-md active:bg-orange-500"
+                  className="no-select mt-2 w-full cursor-pointer rounded-xl text-white bg-primary p-1 shadow-md active:bg-primary-dark"
                 >
                   Criar Cartão
                 </button>
@@ -321,7 +320,7 @@ export function User_Cards({ screens }) {
                     <label>Titular</label>
                     <input
                       type="text"
-                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                       value={
                         updatedName || (selectcard && selectcard.name) || ''
                       }
@@ -332,7 +331,7 @@ export function User_Cards({ screens }) {
                     <label>Numero do catão</label>
                     <input
                       type="number"
-                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                       value={
                         updatedNumber || (selectcard && selectcard.number) || ''
                       }
@@ -346,7 +345,7 @@ export function User_Cards({ screens }) {
                         type="number"
                         onInput="this.value = this.value.slice(0, 2)"
                         placeholder="month"
-                        className="min-w-[65px] max-w-[75px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                        className="min-w-[65px] max-w-[75px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                         value={
                           updatedExpirationMonth ||
                           (selectcard && selectcard.expiration_month) ||
@@ -361,7 +360,7 @@ export function User_Cards({ screens }) {
                         type="number"
                         pattern="[0-9]{4}"
                         placeholder="year"
-                        className="min-w-[65px] max-w-[75px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                        className="min-w-[65px] max-w-[75px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                         value={
                           updatedExpirationYear ||
                           (selectcard && selectcard.expiration_year) ||
@@ -379,7 +378,7 @@ export function User_Cards({ screens }) {
                       type="password"
                       pattern="[0-9]{3}"
                       autoComplete={false}
-                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-[#FEDB2F]"
+                      className="min-w-full max-w-[550px] rounded-lg pl-1 shadow-md outline-2 focus:outline-primary"
                       value={updatedCvc || (selectcard && selectcard.cvc) || ''}
                       onChange={(e) => setUpdatedCvc(e.target.value)}
                     />
@@ -393,7 +392,7 @@ export function User_Cards({ screens }) {
                     </button>
                     <button
                       onClick={handlePatchCard}
-                      className="no-select mt-2 w-full cursor-pointer rounded-xl bg-[#FEBF2F] p-1 shadow-md active:bg-orange-500"
+                      className="no-select mt-2 w-full cursor-pointer rounded-xl bg-primary text-white p-1 shadow-md active:bg-primary-dark"
                     >
                       Atualizar Cartão
                     </button>
@@ -461,7 +460,7 @@ export function User_Cards({ screens }) {
 
                         <button
                           onClick={toform}
-                          className="no-select mt-2 w-full cursor-pointer rounded-xl bg-[#FEBF2F] p-1 shadow active:bg-orange-500"
+                          className="no-select mt-2 w-full cursor-pointer rounded-xl text-white bg-primary p-1 shadow active:bg-primary-dark"
                         >
                           Criar novo Cartão
                         </button>

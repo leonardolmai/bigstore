@@ -132,7 +132,7 @@ export default function Menu_Products({ screens, items, alingLists }) {
               <select
                 value={searchType}
                 onChange={handleSearchTypeChange}
-                className="w-fit  rounded-md border  border-primary-dark bg-primary p-2 font-semibold outline-none"
+                className="w-fit  rounded-md border  border-primary-dark bg-primary text-white p-2 font-semibold outline-none"
               >
                 <option value="name">Nome</option>
                 <option value="id">Id</option>
